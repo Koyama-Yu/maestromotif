@@ -1,0 +1,13 @@
+WARNING 03-14 14:09:36 config.py:1656] Casting torch.bfloat16 to torch.float16.
+WARNING 03-14 14:09:36 arg_utils.py:930] Chunked prefill is enabled by default for models with max_model_len > 32K. Currently, chunked prefill might not work with some features or models. If you encounter any issues, please disable chunked prefill by setting --enable-chunked-prefill=False.
+INFO 03-14 14:09:36 config.py:1010] Chunked prefill is enabled with max_num_batched_tokens=512.
+INFO 03-14 14:09:36 llm_engine.py:226] Initializing an LLM engine (v0.6.1.dev238+ge2c6e0a82) with config: model='meta-llama/Llama-3.2-3B-Instruct', speculative_config=None, tokenizer='meta-llama/Llama-3.2-3B-Instruct', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, override_neuron_config=None, rope_scaling=None, rope_theta=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.float16, max_seq_len=131072, download_dir=None, load_format=LoadFormat.AUTO, tensor_parallel_size=1, pipeline_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, quantization_param_path=None, device_config=cuda, decoding_config=DecodingConfig(guided_decoding_backend='outlines'), observability_config=ObservabilityConfig(otlp_traces_endpoint=None, collect_model_forward_time=False, collect_model_execute_time=False), seed=1516, served_model_name=meta-llama/Llama-3.2-3B-Instruct, use_v2_block_manager=False, num_scheduler_steps=1, multi_step_stream_outputs=False, enable_prefix_caching=False, use_async_output_proc=True, use_cached_outputs=False, mm_processor_kwargs=None)
+INFO 03-14 14:09:37 selector.py:217] Cannot use FlashAttention-2 backend for Volta and Turing GPUs.
+INFO 03-14 14:09:37 selector.py:116] Using XFormers backend.
+INFO 03-14 14:09:38 model_runner.py:1014] Starting to load model meta-llama/Llama-3.2-3B-Instruct...
+INFO 03-14 14:09:38 selector.py:217] Cannot use FlashAttention-2 backend for Volta and Turing GPUs.
+INFO 03-14 14:09:38 selector.py:116] Using XFormers backend.
+INFO 03-14 14:09:41 weight_utils.py:242] Using model weights format ['*.safetensors']
+INFO 03-14 14:09:44 model_runner.py:1025] Loading model weights took 6.0160 GB
+INFO 03-14 14:09:44 model_runner_base.py:120] Writing input of failed execution to /tmp/err_execute_model_input_20250314-140944.pkl...
+INFO 03-14 14:09:44 model_runner_base.py:149] Completed writing input of failed execution to /tmp/err_execute_model_input_20250314-140944.pkl.

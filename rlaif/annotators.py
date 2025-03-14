@@ -7,7 +7,7 @@ import torchvision
 
 from rlaif.annotators_transforms import BlstatsTransform, MessageTransform
 from rlaif.prompts import system_prompts, prompt_templates, goal_strings, regexes, retry_prompts
-from rlaif.llms import LocalLanguageModel, AnnotationIdx, OllamaLanguageModel   #! 追記
+from rlaif.llms import LocalLanguageModel, AnnotationIdx
 
 
 class Annotator(ABC):
@@ -117,76 +117,76 @@ class LanguageModelAnnotator(Annotator):
     
 
 #! 追記
-class OllamaModelAnnotator(Annotator):
-    """Annotator that annotates based on the output of a local Ollama model."""
-    def __init__(self, seed: int, batch_size: int, debug: int, model_name: str, annotator_string: str,
-                 num_gpus: int = 8, logdir: Optional[str] = None,
-                 prompt: str = 'original',
-                 goal_key: str = '') -> None:
+# class OllamaModelAnnotator(Annotator):
+#     """Annotator that annotates based on the output of a local Ollama model."""
+#     def __init__(self, seed: int, batch_size: int, debug: int, model_name: str, annotator_string: str,
+#                  num_gpus: int = 8, logdir: Optional[str] = None,
+#                  prompt: str = 'original',
+#                  goal_key: str = '') -> None:
 
-        self.blstats_keys = [
-           'NLE_BL_DEPTH', 'NLE_BL_GOLD', 'NLE_BL_HP',
-           'NLE_BL_HPMAX', 'NLE_BL_XP', 'NLE_BL_HUNGER'
-        ]
-        if debug:
-            self.llm = None
-        else:
-            self.llm = OllamaLanguageModel(seed=seed, system_prompt=system_prompts[prompt],
-                                           answer_regex=regexes[prompt],
-                                           retry_prompt=retry_prompts[prompt],
-                                           model_name=model_name, num_gpus=num_gpus,
-                                           logdir=logdir, annotator_string=annotator_string)
+#         self.blstats_keys = [
+#            'NLE_BL_DEPTH', 'NLE_BL_GOLD', 'NLE_BL_HP',
+#            'NLE_BL_HPMAX', 'NLE_BL_XP', 'NLE_BL_HUNGER'
+#         ]
+#         if debug:
+#             self.llm = None
+#         else:
+#             self.llm = OllamaLanguageModel(seed=seed, system_prompt=system_prompts[prompt],
+#                                            answer_regex=regexes[prompt],
+#                                            retry_prompt=retry_prompts[prompt],
+#                                            model_name=model_name, num_gpus=num_gpus,
+#                                            logdir=logdir, annotator_string=annotator_string)
 
-        self.prompt_template = prompt_templates[prompt]
-        self.goal_key = goal_key
-        super().__init__(batch_size)
+#         self.prompt_template = prompt_templates[prompt]
+#         self.goal_key = goal_key
+#         super().__init__(batch_size)
 
-    def __call__(self, batch: Dict[str, np.ndarray], logging_indices: Sequence[int] = None, iteration: int = 0) -> np.ndarray:
-        messages = list(map(lambda x: [x[0]['llm_strs'], x[1]['llm_strs']], batch))
-        prompts, preserved_indices = self.prepare_prompts(messages)
-        print('Sample prompt:')
-        print(prompts[0])
+#     def __call__(self, batch: Dict[str, np.ndarray], logging_indices: Sequence[int] = None, iteration: int = 0) -> np.ndarray:
+#         messages = list(map(lambda x: [x[0]['llm_strs'], x[1]['llm_strs']], batch))
+#         prompts, preserved_indices = self.prepare_prompts(messages)
+#         print('Sample prompt:')
+#         print(prompts[0])
 
-        results = self.llm.generate(prompts,
-                                    np.array(logging_indices)[preserved_indices] if logging_indices is not None else None,
-                                    iteration)
+#         results = self.llm.generate(prompts,
+#                                     np.array(logging_indices)[preserved_indices] if logging_indices is not None else None,
+#                                     iteration)
 
-        recomposed_results = np.full(len(messages), AnnotationIdx.TIE)
-        recomposed_results[preserved_indices] = results
-        return recomposed_results
+#         recomposed_results = np.full(len(messages), AnnotationIdx.TIE)
+#         recomposed_results[preserved_indices] = results
+#         return recomposed_results
 
-    def prepare_prompts(self, batched_messages: List[List[str]],) -> Tuple[List[str], List[int]]:
+#     def prepare_prompts(self, batched_messages: List[List[str]],) -> Tuple[List[str], List[int]]:
 
-        preserved_indices = []
-        prompts = []
-        for prompt_idx, (seq_1, seq_2) in enumerate(batched_messages):
-            seq_1 = "\n".join(seq_1)
-            seq_2 = "\n".join(seq_2)
-            preserved_indices.append(prompt_idx)
-            prompts.append(self.prompt_template.format(goal_strings[self.goal_key], seq_1, seq_2))
-        return prompts, preserved_indices
+#         preserved_indices = []
+#         prompts = []
+#         for prompt_idx, (seq_1, seq_2) in enumerate(batched_messages):
+#             seq_1 = "\n".join(seq_1)
+#             seq_2 = "\n".join(seq_2)
+#             preserved_indices.append(prompt_idx)
+#             prompts.append(self.prompt_template.format(goal_strings[self.goal_key], seq_1, seq_2))
+#         return prompts, preserved_indices
 
-    @property
-    def data_keys(self) -> List[str]:
-        needed_keys = []
-        if self.use_messages:
-            needed_keys.append('message')
-        if self.use_blstats:
-            needed_keys.append('blstats')
-        return needed_keys
+#     @property
+#     def data_keys(self) -> List[str]:
+#         needed_keys = []
+#         if self.use_messages:
+#             needed_keys.append('message')
+#         if self.use_blstats:
+#             needed_keys.append('blstats')
+#         return needed_keys
 
-    @property
-    def info_keys(self) -> Optional[List[str]]:
-        return None
+#     @property
+#     def info_keys(self) -> Optional[List[str]]:
+#         return None
 
-    @property
-    def transform(self):
-        transforms = []
-        if self.use_messages:
-            transforms.append(MessageTransform())
-        if self.use_blstats:
-            transforms.append(BlstatsTransform(self.blstats_keys))
-        return torchvision.transforms.Compose(transforms)
+#     @property
+#     def transform(self):
+#         transforms = []
+#         if self.use_messages:
+#             transforms.append(MessageTransform())
+#         if self.use_blstats:
+#             transforms.append(BlstatsTransform(self.blstats_keys))
+#         return torchvision.transforms.Compose(transforms)
 
 
 class RandomAnnotator(Annotator):
