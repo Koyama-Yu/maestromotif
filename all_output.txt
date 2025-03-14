@@ -1,0 +1,118 @@
+WARNING 03-14 14:16:20 config.py:1656] Casting torch.bfloat16 to torch.float16.
+WARNING 03-14 14:16:20 arg_utils.py:930] Chunked prefill is enabled by default for models with max_model_len > 32K. Currently, chunked prefill might not work with some features or models. If you encounter any issues, please disable chunked prefill by setting --enable-chunked-prefill=False.
+INFO 03-14 14:16:20 config.py:1010] Chunked prefill is enabled with max_num_batched_tokens=512.
+INFO 03-14 14:16:20 llm_engine.py:226] Initializing an LLM engine (v0.6.1.dev238+ge2c6e0a82) with config: model='meta-llama/Llama-3.2-3B-Instruct', speculative_config=None, tokenizer='meta-llama/Llama-3.2-3B-Instruct', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, override_neuron_config=None, rope_scaling=None, rope_theta=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.float16, max_seq_len=131072, download_dir=None, load_format=LoadFormat.AUTO, tensor_parallel_size=1, pipeline_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, quantization_param_path=None, device_config=cuda, decoding_config=DecodingConfig(guided_decoding_backend='outlines'), observability_config=ObservabilityConfig(otlp_traces_endpoint=None, collect_model_forward_time=False, collect_model_execute_time=False), seed=1516, served_model_name=meta-llama/Llama-3.2-3B-Instruct, use_v2_block_manager=False, num_scheduler_steps=1, multi_step_stream_outputs=False, enable_prefix_caching=False, use_async_output_proc=True, use_cached_outputs=False, mm_processor_kwargs=None)
+INFO 03-14 14:16:21 selector.py:217] Cannot use FlashAttention-2 backend for Volta and Turing GPUs.
+INFO 03-14 14:16:21 selector.py:116] Using XFormers backend.
+/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/xformers/ops/fmha/flash.py:211: FutureWarning: `torch.library.impl_abstract` was renamed to `torch.library.register_fake`. Please use that instead; we will remove `torch.library.impl_abstract` in a future version of PyTorch.
+  @torch.library.impl_abstract("xformers_flash::flash_fwd")
+/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/xformers/ops/fmha/flash.py:344: FutureWarning: `torch.library.impl_abstract` was renamed to `torch.library.register_fake`. Please use that instead; we will remove `torch.library.impl_abstract` in a future version of PyTorch.
+  @torch.library.impl_abstract("xformers_flash::flash_bwd")
+INFO 03-14 14:16:21 model_runner.py:1014] Starting to load model meta-llama/Llama-3.2-3B-Instruct...
+INFO 03-14 14:16:21 selector.py:217] Cannot use FlashAttention-2 backend for Volta and Turing GPUs.
+INFO 03-14 14:16:21 selector.py:116] Using XFormers backend.
+INFO 03-14 14:16:22 weight_utils.py:242] Using model weights format ['*.safetensors']
+Loading safetensors checkpoint shards:   0% Completed | 0/2 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards:  50% Completed | 1/2 [00:00<00:00,  1.64it/s]
+Loading safetensors checkpoint shards: 100% Completed | 2/2 [00:02<00:00,  1.54s/it]
+Loading safetensors checkpoint shards: 100% Completed | 2/2 [00:02<00:00,  1.40s/it]
+
+INFO 03-14 14:16:25 model_runner.py:1025] Loading model weights took 6.0160 GB
+INFO 03-14 14:16:26 model_runner_base.py:120] Writing input of failed execution to /tmp/err_execute_model_input_20250314-141626.pkl...
+INFO 03-14 14:16:26 model_runner_base.py:149] Completed writing input of failed execution to /tmp/err_execute_model_input_20250314-141626.pkl.
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/vllm/worker/model_runner_base.py", line 116, in _wrapper
+[rank0]:     return func(*args, **kwargs)
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/vllm/worker/model_runner.py", line 1590, in execute_model
+[rank0]:     hidden_or_intermediate_states = model_executable(
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/vllm/model_executor/models/llama.py", line 448, in forward
+[rank0]:     model_output = self.model(input_ids, positions, kv_caches,
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/vllm/model_executor/models/llama.py", line 329, in forward
+[rank0]:     hidden_states, residual = layer(
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/vllm/model_executor/models/llama.py", line 251, in forward
+[rank0]:     hidden_states = self.self_attn(
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/vllm/model_executor/models/llama.py", line 181, in forward
+[rank0]:     attn_output = self.attn(q, k, v, kv_cache, attn_metadata)
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/vllm/attention/layer.py", line 98, in forward
+[rank0]:     return self.impl.forward(query,
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/vllm/attention/backends/xformers.py", line 595, in forward
+[rank0]:     out = self._run_memory_efficient_xformers_forward(
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/vllm/attention/backends/xformers.py", line 739, in _run_memory_efficient_xformers_forward
+[rank0]:     out = xops.memory_efficient_attention_forward(
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/xformers/ops/fmha/__init__.py", line 304, in memory_efficient_attention_forward
+[rank0]:     return _memory_efficient_attention_forward(
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/xformers/ops/fmha/__init__.py", line 418, in _memory_efficient_attention_forward
+[rank0]:     out, *_ = op.apply(inp, needs_gradient=False)
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/xformers/ops/fmha/cutlass.py", line 258, in apply
+[rank0]:     cls.apply_bmhk(
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/xformers/ops/fmha/cutlass.py", line 281, in apply_bmhk
+[rank0]:     out, lse, rng_seed, rng_offset, _, _ = cls.OPERATOR(
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/torch/_ops.py", line 1061, in __call__
+[rank0]:     return self_._op(*args, **(kwargs or {}))
+[rank0]: RuntimeError: CUDA error: no kernel image is available for execution on the device
+[rank0]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+[rank0]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+[rank0]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+
+[rank0]: The above exception was the direct cause of the following exception:
+
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/home/ykoyama/.local/share/uv/python/cpython-3.10.16-linux-x86_64-gnu/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+[rank0]:     return _run_code(code, main_globals, None,
+[rank0]:   File "/home/ykoyama/.local/share/uv/python/cpython-3.10.16-linux-x86_64-gnu/lib/python3.10/runpy.py", line 86, in _run_code
+[rank0]:     exec(code, run_globals)
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/scripts/annotate_pairs_ult.py", line 73, in <module>
+[rank0]:     annotator = LanguageModelAnnotator(seed=seed, batch_size=flags.batch_size, 
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/rlaif/annotators.py", line 61, in __init__
+[rank0]:     self.llm = LocalLanguageModel(seed=seed, system_prompt=system_prompts[prompt],
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/rlaif/llms.py", line 33, in __init__
+[rank0]:     self.llm = LLM(model=model_name, tensor_parallel_size=num_gpus,
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/vllm/entrypoints/llm.py", line 214, in __init__
+[rank0]:     self.llm_engine = LLMEngine.from_engine_args(
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/vllm/engine/llm_engine.py", line 564, in from_engine_args
+[rank0]:     engine = cls(
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/vllm/engine/llm_engine.py", line 339, in __init__
+[rank0]:     self._initialize_kv_caches()
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/vllm/engine/llm_engine.py", line 474, in _initialize_kv_caches
+[rank0]:     self.model_executor.determine_num_available_blocks())
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/vllm/executor/gpu_executor.py", line 114, in determine_num_available_blocks
+[rank0]:     return self.driver_worker.determine_num_available_blocks()
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+[rank0]:     return func(*args, **kwargs)
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/vllm/worker/worker.py", line 223, in determine_num_available_blocks
+[rank0]:     self.model_runner.profile_run()
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+[rank0]:     return func(*args, **kwargs)
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/vllm/worker/model_runner.py", line 1236, in profile_run
+[rank0]:     self.execute_model(model_input, kv_caches, intermediate_tensors)
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+[rank0]:     return func(*args, **kwargs)
+[rank0]:   File "/mnt/home/ykoyama/work/maestromotif/.venv/lib/python3.10/site-packages/vllm/worker/model_runner_base.py", line 152, in _wrapper
+[rank0]:     raise type(err)(
+[rank0]: RuntimeError: Error in model execution (input dumped to /tmp/err_execute_model_input_20250314-141626.pkl): CUDA error: no kernel image is available for execution on the device
+[rank0]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+[rank0]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+[rank0]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+[rank0]:[W314 14:16:26.347331640 ProcessGroupNCCL.cpp:1168] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On normal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare cases this process can exit before this point and block the progress of another member of the process group. This constraint has always been present,  but this warning has only been added since PyTorch 2.4 (function operator())

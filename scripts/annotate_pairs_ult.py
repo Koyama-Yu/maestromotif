@@ -58,7 +58,7 @@ else:
     annotator_string = flags.custom_annotator_string
 
 # Load the annotator
-if flags.annotator_type == 'llama3':
+if flags.annotator_type == 'llama3.1_70B':
     model_name = 'meta-llama/Llama-3.1-70B-Instruct'
     annotator = LanguageModelAnnotator(seed=seed, batch_size=flags.batch_size, 
                                        debug=flags.debug,
@@ -68,15 +68,15 @@ if flags.annotator_type == 'llama3':
                                        prompt=flags.prompt,
                                        goal_key=flags.goal_key, 
                                        num_gpus=torch.cuda.device_count())
-elif flags.annotator_type == 'ollama':
-    model_name = 'llama3.1:8b-instruct-q3_K_S'
-    annotator = LanguageModelAnnotator(seed=seed, batch_size=flags.batch_size,
+elif flags.annotator_type == 'llama3.2_3B':
+    model_name = 'meta-llama/Llama-3.2-3B-Instruct'
+    annotator = LanguageModelAnnotator(seed=seed, batch_size=flags.batch_size, 
                                        debug=flags.debug,
-                                       model_name=model_name,
+                                       model_name=model_name, 
                                        annotator_string=annotator_string,
-                                       logdir=flags.logdir,
+                                       logdir=flags.logdir, 
                                        prompt=flags.prompt,
-                                       goal_key=flags.goal_key,
+                                       goal_key=flags.goal_key, 
                                        num_gpus=torch.cuda.device_count())
 elif flags.annotator_type == 'random':
     annotator = RandomAnnotator(batch_size=flags.batch_size)
