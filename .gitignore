@@ -2,6 +2,8 @@
 logs/
 **/checkpoints/
 **/slurm_outputs/
+test_outputs/
+prompt_logs/
 
 # Dataset
 motif_dataset/
