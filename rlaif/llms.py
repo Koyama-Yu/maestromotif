@@ -31,7 +31,7 @@ class LocalLanguageModel:
         self.answer_regex = answer_regex
         self.retry_prompt = retry_prompt
         self.llm = LLM(model=model_name, tensor_parallel_size=num_gpus,
-                       dtype='float16', seed=seed)
+                       dtype='float16', seed=seed, max_model_len=(32768 // 8))
         self.all_convs = ''
         self.system_prompt = system_prompt
         self.logdir = logdir
