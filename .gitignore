@@ -14,6 +14,7 @@ motif_dataset/
 # NetHack logs
 **.bz2
 **.xlogfile
+train_dir/skill_policy/**/ttyrecs/
 
 
 # Temporary files
@@ -164,3 +165,5 @@ dmypy.json
 # **ruff.toml
 #
 **.DS_Store
+
+/typescript

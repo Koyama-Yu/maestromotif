@@ -1,287 +1,330 @@
-diff --git a/requirements.txt b/requirements.txt
-index 94f3008..2f9bc6b 100644
---- a/requirements.txt
-+++ b/requirements.txt
-@@ -37,7 +37,7 @@ ffmpy==0.3.1
- filelock==3.12.2
- fonttools==4.42.1
- frozenlist==1.4.0
--fschat==0.2.31
-+fschat==0.2.36
- fsspec==2023.6.0
- gitdb==4.0.10
- GitPython==3.1.32
-@@ -53,7 +53,7 @@ httpcore==0.17.3
- httplib2==0.22.0
- httptools==0.6.1
- httpx==0.24.1
--huggingface-hub==0.16.4
-+huggingface-hub>=0.19.3
- humanize==4.9.0
- idna==3.4
- immutabledict==4.0.0
-@@ -106,7 +106,7 @@ pyasn1==0.5.0
- pyasn1-modules==0.3.0
- pybind11==2.10.4
- pycparser==2.21
--pydantic==1.10.13
-+pydantic>=2
- pydub==0.25.1
- Pygments==2.16.1
- pyparsing==3.0.9
-@@ -117,7 +117,7 @@ python-multipart==0.0.6
- pytz==2023.3
- pyzmq==25.1.0
- quantile-python==1.1
--ray==2.6.3
-+ray>=2.9
- redis==4.5.5
- referencing==0.30.2
- regex==2023.8.8
-@@ -125,7 +125,7 @@ requests-oauthlib==1.3.1
- rich==13.5.2
- rpds-py==0.9.2
- rsa==4.9
--safetensors==0.3.3
-+safetensors>=0.4.1
- scikit-learn==1.3.0
- scipy==1.10.1
- semantic-version==2.10.0
-@@ -146,16 +146,16 @@ tensorboard-data-server==0.7.1
- tensorboardX==2.6.1
- termcolor==2.3.0
- threadpoolctl==3.1.0
--tiktoken==0.4.0
-+tiktoken==0.6.0
- timeout-decorator==0.5.0
--tokenizers==0.15.0
-+tokenizers==0.19.1
- toml==0.10.2
- toolz==0.12.0
--torch==2.1.0
--torchvision==0.16.0
-+torch==2.2.1
-+torchvision==0.17.1
- tqdm==4.65.0
--triton==2.1.0
--typing_extensions==4.6.3
-+triton==2.2.0
-+typing_extensions>=4.8.0
- tzdata==2023.3
- uritemplate==4.1.1
- urllib3==1.26.16
-diff --git a/rlaif/annotators.py b/rlaif/annotators.py
-index 93fd04b..e69311b 100644
---- a/rlaif/annotators.py
-+++ b/rlaif/annotators.py
-@@ -7,7 +7,7 @@ import torchvision
- 
- from rlaif.annotators_transforms import BlstatsTransform, MessageTransform
- from rlaif.prompts import system_prompts, prompt_templates, goal_strings, regexes, retry_prompts
--from rlaif.llms import LocalLanguageModel, AnnotationIdx
-+from rlaif.llms import LocalLanguageModel, AnnotationIdx, OllamaLanguageModel   #! 追記
- 
- 
- class Annotator(ABC):
-@@ -114,6 +114,79 @@ class LanguageModelAnnotator(Annotator):
-         if self.use_blstats:
-             transforms.append(BlstatsTransform(self.blstats_keys))
-         return torchvision.transforms.Compose(transforms)
-+    
-+
-+#! 追記
-+class OllamaModelAnnotator(Annotator):
-+    """Annotator that annotates based on the output of a local Ollama model."""
-+    def __init__(self, seed: int, batch_size: int, debug: int, model_name: str, annotator_string: str,
-+                 num_gpus: int = 8, logdir: Optional[str] = None,
-+                 prompt: str = 'original',
-+                 goal_key: str = '') -> None:
-+
-+        self.blstats_keys = [
-+           'NLE_BL_DEPTH', 'NLE_BL_GOLD', 'NLE_BL_HP',
-+           'NLE_BL_HPMAX', 'NLE_BL_XP', 'NLE_BL_HUNGER'
-+        ]
-+        if debug:
-+            self.llm = None
-+        else:
-+            self.llm = OllamaLanguageModel(seed=seed, system_prompt=system_prompts[prompt],
-+                                           answer_regex=regexes[prompt],
-+                                           retry_prompt=retry_prompts[prompt],
-+                                           model_name=model_name, num_gpus=num_gpus,
-+                                           logdir=logdir, annotator_string=annotator_string)
-+
-+        self.prompt_template = prompt_templates[prompt]
-+        self.goal_key = goal_key
-+        super().__init__(batch_size)
-+
-+    def __call__(self, batch: Dict[str, np.ndarray], logging_indices: Sequence[int] = None, iteration: int = 0) -> np.ndarray:
-+        messages = list(map(lambda x: [x[0]['llm_strs'], x[1]['llm_strs']], batch))
-+        prompts, preserved_indices = self.prepare_prompts(messages)
-+        print('Sample prompt:')
-+        print(prompts[0])
-+
-+        results = self.llm.generate(prompts,
-+                                    np.array(logging_indices)[preserved_indices] if logging_indices is not None else None,
-+                                    iteration)
-+
-+        recomposed_results = np.full(len(messages), AnnotationIdx.TIE)
-+        recomposed_results[preserved_indices] = results
-+        return recomposed_results
-+
-+    def prepare_prompts(self, batched_messages: List[List[str]],) -> Tuple[List[str], List[int]]:
-+
-+        preserved_indices = []
-+        prompts = []
-+        for prompt_idx, (seq_1, seq_2) in enumerate(batched_messages):
-+            seq_1 = "\n".join(seq_1)
-+            seq_2 = "\n".join(seq_2)
-+            preserved_indices.append(prompt_idx)
-+            prompts.append(self.prompt_template.format(goal_strings[self.goal_key], seq_1, seq_2))
-+        return prompts, preserved_indices
-+
-+    @property
-+    def data_keys(self) -> List[str]:
-+        needed_keys = []
-+        if self.use_messages:
-+            needed_keys.append('message')
-+        if self.use_blstats:
-+            needed_keys.append('blstats')
-+        return needed_keys
-+
-+    @property
-+    def info_keys(self) -> Optional[List[str]]:
-+        return None
-+
-+    @property
-+    def transform(self):
-+        transforms = []
-+        if self.use_messages:
-+            transforms.append(MessageTransform())
-+        if self.use_blstats:
-+            transforms.append(BlstatsTransform(self.blstats_keys))
-+        return torchvision.transforms.Compose(transforms)
- 
- 
- class RandomAnnotator(Annotator):
-diff --git a/rlaif/llms.py b/rlaif/llms.py
-index d583042..b59e170 100644
---- a/rlaif/llms.py
-+++ b/rlaif/llms.py
-@@ -4,6 +4,7 @@ from vllm import LLM, SamplingParams
- import os
- from typing import List, Optional, Sequence
- import numpy as np
-+import ollama
- 
- 
- class AnnotationIdx:
-@@ -44,7 +45,7 @@ class LocalLanguageModel:
-         convs = []
- 
-         for message in messages:
--            conv = get_conversation_template(self.model_name)
-+            conv = get_conversation_template(self.model_name) # get_conversation_template は fastchat.model.model_adapter にある
-             conv.append_message(conv.roles[0], message)
-             conv.append_message(conv.roles[1], None)
-             conv.system = self.system_prompt
-@@ -111,3 +112,99 @@ class LocalLanguageModel:
-                 f.write(self.all_convs)
- 
-         return cleaned_outputs
-+
-+#! 追記
-+class OllamaLanguageModel:
-+    def __init__(
-+        self,
-+        seed: int,
-+        system_prompt: str,
-+        answer_regex: str,
-+        retry_prompt: str,
-+        model_name: str = 'ollama/llama3.1:8b-instruct-q3_K_S',
-+        num_gpus: int = 8,
-+        logdir: Optional[str] = None,
-+        annotator_string: Optional[str] = 'all_convs',
-+    ) -> None:
-+
-+        self.model_name = model_name
-+        self.answer_regex = answer_regex
-+        self.retry_prompt = retry_prompt
-+        self.llm = ollama.chat(model=model_name, num_gpus=num_gpus, seed=seed)
-+        self.all_convs = ''
-+        self.system_prompt = system_prompt
-+        self.logdir = logdir
-+        if self.logdir is not None:
-+            os.makedirs(self.logdir, exist_ok=True)
-+        self.annotator_string = annotator_string
-+
-+    def generate(self, messages: List[str], logging_indices: Sequence[int] = None, iteration: int = 0) -> List[int]:
-+        assert len(messages) == len(logging_indices)
-+        prompts = []
-+        convs = []
-+
-+        for message in messages:
-+            conv = get_conversation_template(self.model_name)
-+            conv.append_message(conv.roles[0], message)
-+            conv.append_message(conv.roles[1], None)
-+            conv.system = self.system_prompt
-+            prompt = conv.get_prompt()
-+            prompts.append(prompt)
-+            convs.append(conv)
-+
-+        outputs = self.llm.generate(prompts)
-+
-+        # Parse all the outputs
-+        cleaned_outputs = np.full(len(messages), AnnotationIdx.UNKOWN)
-+        indexes_to_retry = []
-+        prompts_to_retry = []
-+        for i, output in enumerate(outputs):
-+            text_answer = output.text
-+            result = re.search(self.answer_regex, text_answer)
-+            conv = convs[i]
-+            conv.append_message('', text_answer)
-+            if result:
-+                try:
-+                    best_sequence = int(result.group(1))
-+                    if best_sequence == 1:
-+                        best_sequence = AnnotationIdx.FIRST
-+                    elif best_sequence == 2:
-+                        best_sequence = AnnotationIdx.SECOND
-+                except ValueError:
-+                    best_sequence = AnnotationIdx.TIE
-+                cleaned_outputs[i] = best_sequence
-+            else:
-+                # Ask the model again
-+                conv.append_message(conv.roles[0], self.retry_prompt)
-+                conv.append_message(conv.roles[1], None)
-+                prompt = conv.get_prompt()
-+                prompts_to_retry.append(prompt)
-+                indexes_to_retry.append(i)
-+
-+        # Retry the prompts that were not good
-+        print("Retrying prompts")
-+        second_batch = self.llm.generate(prompts_to_retry)
-+        for i, output in zip(indexes_to_retry, second_batch):
-+            text_answer = output.text
-+            convs[i].append_message('', text_answer)
-+            result = re.search(self.answer_regex, text_answer)
-+            if result:
-+                try:
-+                    best_sequence = int(result.group(1))
-+                    if best_sequence == 1:
-+                        best_sequence = AnnotationIdx.FIRST
-+                    elif best_sequence == 2:
-+                        best_sequence = AnnotationIdx.SECOND
-+                except ValueError:
-+                    best_sequence = AnnotationIdx.TIE
-+                cleaned_outputs[i] = best_sequence
-+
-+        # Log the conversations
-+        if self.logdir is not None and logging_indices is not None:
-+            for conv, idx in zip(convs, logging_indices):
-+                text_conv = conv.get_prompt()
-+                self.all_convs += f" Index:{idx}\n {text_conv}\n"
-+            with open(os.path.join(self.logdir, f"{self.annotator_string}.txt"), 'w') as f:
-+                f.write(self.all_convs)
-+
-+        return cleaned_outputs
-\ No newline at end of file
+diff --git a/train_dir/skill_policy/default/cfg.json b/train_dir/skill_policy/default/cfg.json
+index 6b21c94..2ce22e8 100644
+--- a/train_dir/skill_policy/default/cfg.json
++++ b/train_dir/skill_policy/default/cfg.json
+@@ -3,7 +3,7 @@
+   "env": "nle_all_but_engrave",
+   "evaluation": true,
+   "eval_target": "goldenexit",
+-  "code_seed": 43,
++  "code_seed": 42,
+   "root_env": "NetHackScoreMonk-v1",
+   "max_episode_steps": 10000,
+   "get_stats": false,
+@@ -40,19 +40,19 @@
+   "experiments_root": null,
+   "help": false,
+   "train_dir": "train_dir/skill_policy/",
+-  "reward_dir": "['train_dir/skill_rewards/llama3_discoverer_default',                                        'train_dir/skill_rewards/llama3_descender_default',                                         'train_dir/skill_rewards/llama3_ascender_default',                                          'train_dir/skill_rewards/llama3_worshipper_default',                                        'train_dir/skill_rewards/llama3_merchant_default']",
++  "reward_dir": "['train_dir/skill_rewards/llama3_discoverer_default',\n                                      'train_dir/skill_rewards/llama3_descender_default',\n                                      'train_dir/skill_rewards/llama3_ascender_default',\n                                      'train_dir/skill_rewards/llama3_worshipper_default',\n                                      'train_dir/skill_rewards/llama3_merchant_default']",
+   "load_optim": false,
+   "device": "gpu",
+   "seed": 2,
+-  "extrinsic_reward": 1.0,
++  "extrinsic_reward": 0.0,
+   "save_every_sec": 120,
+-  "save_every_steps": 6000000000,
+-  "keep_checkpoints": 3,
++  "save_every_steps": 50000000,
++  "keep_checkpoints": 5,
+   "checkpoint_id": -1,
+   "save_milestones_sec": -1,
+   "stats_avg": 1000,
+   "learning_rate": 0.0001,
+-  "train_for_env_steps": 5000000000,
++  "train_for_env_steps": 4000000000,
+   "train_for_seconds": 10000000000,
+   "obs_subtract_mean": 0.0,
+   "obs_scale": 255.0,
+diff --git a/train_dir/skill_policy/default/git.diff b/train_dir/skill_policy/default/git.diff
+index b899089..e69de29 100644
+--- a/train_dir/skill_policy/default/git.diff
++++ b/train_dir/skill_policy/default/git.diff
+@@ -1,287 +0,0 @@
+-diff --git a/requirements.txt b/requirements.txt
+-index 94f3008..2f9bc6b 100644
+---- a/requirements.txt
+-+++ b/requirements.txt
+-@@ -37,7 +37,7 @@ ffmpy==0.3.1
+- filelock==3.12.2
+- fonttools==4.42.1
+- frozenlist==1.4.0
+--fschat==0.2.31
+-+fschat==0.2.36
+- fsspec==2023.6.0
+- gitdb==4.0.10
+- GitPython==3.1.32
+-@@ -53,7 +53,7 @@ httpcore==0.17.3
+- httplib2==0.22.0
+- httptools==0.6.1
+- httpx==0.24.1
+--huggingface-hub==0.16.4
+-+huggingface-hub>=0.19.3
+- humanize==4.9.0
+- idna==3.4
+- immutabledict==4.0.0
+-@@ -106,7 +106,7 @@ pyasn1==0.5.0
+- pyasn1-modules==0.3.0
+- pybind11==2.10.4
+- pycparser==2.21
+--pydantic==1.10.13
+-+pydantic>=2
+- pydub==0.25.1
+- Pygments==2.16.1
+- pyparsing==3.0.9
+-@@ -117,7 +117,7 @@ python-multipart==0.0.6
+- pytz==2023.3
+- pyzmq==25.1.0
+- quantile-python==1.1
+--ray==2.6.3
+-+ray>=2.9
+- redis==4.5.5
+- referencing==0.30.2
+- regex==2023.8.8
+-@@ -125,7 +125,7 @@ requests-oauthlib==1.3.1
+- rich==13.5.2
+- rpds-py==0.9.2
+- rsa==4.9
+--safetensors==0.3.3
+-+safetensors>=0.4.1
+- scikit-learn==1.3.0
+- scipy==1.10.1
+- semantic-version==2.10.0
+-@@ -146,16 +146,16 @@ tensorboard-data-server==0.7.1
+- tensorboardX==2.6.1
+- termcolor==2.3.0
+- threadpoolctl==3.1.0
+--tiktoken==0.4.0
+-+tiktoken==0.6.0
+- timeout-decorator==0.5.0
+--tokenizers==0.15.0
+-+tokenizers==0.19.1
+- toml==0.10.2
+- toolz==0.12.0
+--torch==2.1.0
+--torchvision==0.16.0
+-+torch==2.2.1
+-+torchvision==0.17.1
+- tqdm==4.65.0
+--triton==2.1.0
+--typing_extensions==4.6.3
+-+triton==2.2.0
+-+typing_extensions>=4.8.0
+- tzdata==2023.3
+- uritemplate==4.1.1
+- urllib3==1.26.16
+-diff --git a/rlaif/annotators.py b/rlaif/annotators.py
+-index 93fd04b..e69311b 100644
+---- a/rlaif/annotators.py
+-+++ b/rlaif/annotators.py
+-@@ -7,7 +7,7 @@ import torchvision
+- 
+- from rlaif.annotators_transforms import BlstatsTransform, MessageTransform
+- from rlaif.prompts import system_prompts, prompt_templates, goal_strings, regexes, retry_prompts
+--from rlaif.llms import LocalLanguageModel, AnnotationIdx
+-+from rlaif.llms import LocalLanguageModel, AnnotationIdx, OllamaLanguageModel   #! 追記
+- 
+- 
+- class Annotator(ABC):
+-@@ -114,6 +114,79 @@ class LanguageModelAnnotator(Annotator):
+-         if self.use_blstats:
+-             transforms.append(BlstatsTransform(self.blstats_keys))
+-         return torchvision.transforms.Compose(transforms)
+-+    
+-+
+-+#! 追記
+-+class OllamaModelAnnotator(Annotator):
+-+    """Annotator that annotates based on the output of a local Ollama model."""
+-+    def __init__(self, seed: int, batch_size: int, debug: int, model_name: str, annotator_string: str,
+-+                 num_gpus: int = 8, logdir: Optional[str] = None,
+-+                 prompt: str = 'original',
+-+                 goal_key: str = '') -> None:
+-+
+-+        self.blstats_keys = [
+-+           'NLE_BL_DEPTH', 'NLE_BL_GOLD', 'NLE_BL_HP',
+-+           'NLE_BL_HPMAX', 'NLE_BL_XP', 'NLE_BL_HUNGER'
+-+        ]
+-+        if debug:
+-+            self.llm = None
+-+        else:
+-+            self.llm = OllamaLanguageModel(seed=seed, system_prompt=system_prompts[prompt],
+-+                                           answer_regex=regexes[prompt],
+-+                                           retry_prompt=retry_prompts[prompt],
+-+                                           model_name=model_name, num_gpus=num_gpus,
+-+                                           logdir=logdir, annotator_string=annotator_string)
+-+
+-+        self.prompt_template = prompt_templates[prompt]
+-+        self.goal_key = goal_key
+-+        super().__init__(batch_size)
+-+
+-+    def __call__(self, batch: Dict[str, np.ndarray], logging_indices: Sequence[int] = None, iteration: int = 0) -> np.ndarray:
+-+        messages = list(map(lambda x: [x[0]['llm_strs'], x[1]['llm_strs']], batch))
+-+        prompts, preserved_indices = self.prepare_prompts(messages)
+-+        print('Sample prompt:')
+-+        print(prompts[0])
+-+
+-+        results = self.llm.generate(prompts,
+-+                                    np.array(logging_indices)[preserved_indices] if logging_indices is not None else None,
+-+                                    iteration)
+-+
+-+        recomposed_results = np.full(len(messages), AnnotationIdx.TIE)
+-+        recomposed_results[preserved_indices] = results
+-+        return recomposed_results
+-+
+-+    def prepare_prompts(self, batched_messages: List[List[str]],) -> Tuple[List[str], List[int]]:
+-+
+-+        preserved_indices = []
+-+        prompts = []
+-+        for prompt_idx, (seq_1, seq_2) in enumerate(batched_messages):
+-+            seq_1 = "\n".join(seq_1)
+-+            seq_2 = "\n".join(seq_2)
+-+            preserved_indices.append(prompt_idx)
+-+            prompts.append(self.prompt_template.format(goal_strings[self.goal_key], seq_1, seq_2))
+-+        return prompts, preserved_indices
+-+
+-+    @property
+-+    def data_keys(self) -> List[str]:
+-+        needed_keys = []
+-+        if self.use_messages:
+-+            needed_keys.append('message')
+-+        if self.use_blstats:
+-+            needed_keys.append('blstats')
+-+        return needed_keys
+-+
+-+    @property
+-+    def info_keys(self) -> Optional[List[str]]:
+-+        return None
+-+
+-+    @property
+-+    def transform(self):
+-+        transforms = []
+-+        if self.use_messages:
+-+            transforms.append(MessageTransform())
+-+        if self.use_blstats:
+-+            transforms.append(BlstatsTransform(self.blstats_keys))
+-+        return torchvision.transforms.Compose(transforms)
+- 
+- 
+- class RandomAnnotator(Annotator):
+-diff --git a/rlaif/llms.py b/rlaif/llms.py
+-index d583042..b59e170 100644
+---- a/rlaif/llms.py
+-+++ b/rlaif/llms.py
+-@@ -4,6 +4,7 @@ from vllm import LLM, SamplingParams
+- import os
+- from typing import List, Optional, Sequence
+- import numpy as np
+-+import ollama
+- 
+- 
+- class AnnotationIdx:
+-@@ -44,7 +45,7 @@ class LocalLanguageModel:
+-         convs = []
+- 
+-         for message in messages:
+--            conv = get_conversation_template(self.model_name)
+-+            conv = get_conversation_template(self.model_name) # get_conversation_template は fastchat.model.model_adapter にある
+-             conv.append_message(conv.roles[0], message)
+-             conv.append_message(conv.roles[1], None)
+-             conv.system = self.system_prompt
+-@@ -111,3 +112,99 @@ class LocalLanguageModel:
+-                 f.write(self.all_convs)
+- 
+-         return cleaned_outputs
+-+
+-+#! 追記
+-+class OllamaLanguageModel:
+-+    def __init__(
+-+        self,
+-+        seed: int,
+-+        system_prompt: str,
+-+        answer_regex: str,
+-+        retry_prompt: str,
+-+        model_name: str = 'ollama/llama3.1:8b-instruct-q3_K_S',
+-+        num_gpus: int = 8,
+-+        logdir: Optional[str] = None,
+-+        annotator_string: Optional[str] = 'all_convs',
+-+    ) -> None:
+-+
+-+        self.model_name = model_name
+-+        self.answer_regex = answer_regex
+-+        self.retry_prompt = retry_prompt
+-+        self.llm = ollama.chat(model=model_name, num_gpus=num_gpus, seed=seed)
+-+        self.all_convs = ''
+-+        self.system_prompt = system_prompt
+-+        self.logdir = logdir
+-+        if self.logdir is not None:
+-+            os.makedirs(self.logdir, exist_ok=True)
+-+        self.annotator_string = annotator_string
+-+
+-+    def generate(self, messages: List[str], logging_indices: Sequence[int] = None, iteration: int = 0) -> List[int]:
+-+        assert len(messages) == len(logging_indices)
+-+        prompts = []
+-+        convs = []
+-+
+-+        for message in messages:
+-+            conv = get_conversation_template(self.model_name)
+-+            conv.append_message(conv.roles[0], message)
+-+            conv.append_message(conv.roles[1], None)
+-+            conv.system = self.system_prompt
+-+            prompt = conv.get_prompt()
+-+            prompts.append(prompt)
+-+            convs.append(conv)
+-+
+-+        outputs = self.llm.generate(prompts)
+-+
+-+        # Parse all the outputs
+-+        cleaned_outputs = np.full(len(messages), AnnotationIdx.UNKOWN)
+-+        indexes_to_retry = []
+-+        prompts_to_retry = []
+-+        for i, output in enumerate(outputs):
+-+            text_answer = output.text
+-+            result = re.search(self.answer_regex, text_answer)
+-+            conv = convs[i]
+-+            conv.append_message('', text_answer)
+-+            if result:
+-+                try:
+-+                    best_sequence = int(result.group(1))
+-+                    if best_sequence == 1:
+-+                        best_sequence = AnnotationIdx.FIRST
+-+                    elif best_sequence == 2:
+-+                        best_sequence = AnnotationIdx.SECOND
+-+                except ValueError:
+-+                    best_sequence = AnnotationIdx.TIE
+-+                cleaned_outputs[i] = best_sequence
+-+            else:
+-+                # Ask the model again
+-+                conv.append_message(conv.roles[0], self.retry_prompt)
+-+                conv.append_message(conv.roles[1], None)
+-+                prompt = conv.get_prompt()
+-+                prompts_to_retry.append(prompt)
+-+                indexes_to_retry.append(i)
+-+
+-+        # Retry the prompts that were not good
+-+        print("Retrying prompts")
+-+        second_batch = self.llm.generate(prompts_to_retry)
+-+        for i, output in zip(indexes_to_retry, second_batch):
+-+            text_answer = output.text
+-+            convs[i].append_message('', text_answer)
+-+            result = re.search(self.answer_regex, text_answer)
+-+            if result:
+-+                try:
+-+                    best_sequence = int(result.group(1))
+-+                    if best_sequence == 1:
+-+                        best_sequence = AnnotationIdx.FIRST
+-+                    elif best_sequence == 2:
+-+                        best_sequence = AnnotationIdx.SECOND
+-+                except ValueError:
+-+                    best_sequence = AnnotationIdx.TIE
+-+                cleaned_outputs[i] = best_sequence
+-+
+-+        # Log the conversations
+-+        if self.logdir is not None and logging_indices is not None:
+-+            for conv, idx in zip(convs, logging_indices):
+-+                text_conv = conv.get_prompt()
+-+                self.all_convs += f" Index:{idx}\n {text_conv}\n"
+-+            with open(os.path.join(self.logdir, f"{self.annotator_string}.txt"), 'w') as f:
+-+                f.write(self.all_convs)
+-+
+-+        return cleaned_outputs
+-\ No newline at end of file
