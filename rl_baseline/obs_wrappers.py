@@ -525,7 +525,11 @@ class ModifierWrapper(gym.Wrapper):
                                                             merchant_precondition, 
                                                             worshipper_precondition
                                                             )
-
+                if skill_str not in self.skill_to_int:
+                    print("obs[blstats]: ", obs['blstats'])
+                    print(f"brancH_dlvl: {self.env.env.env.env.env.branch_dlvl}")
+                    print(f"branch_number: {self.dungeon_number}")
+                
                 self.skill = self.skill_to_int[skill_str]
 
                 self.skill_start_time = obs['blstats'][20].copy()
