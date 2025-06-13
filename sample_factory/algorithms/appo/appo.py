@@ -424,6 +424,13 @@ class APPO(ReinforcementLearningAlgorithm):
             for i in range(self.cfg.policy_workers_per_policy):
                 policy_worker_queues[policy_id].append(TorchJoinableQueue())
 
+        # 追記
+        log.info('')
+        if self.cfg.eval_target != 'none':
+            log.info('Evaluation ...')
+        else:
+            log.info('Training ...')
+
         log.info('Initializing learners...')
         policy_locks = [multiprocessing.Lock() for _ in range(self.cfg.num_policies)]
         resume_experience_collection_cv = [multiprocessing.Condition() for _ in range(self.cfg.num_policies)]
@@ -652,6 +659,7 @@ class APPO(ReinforcementLearningAlgorithm):
                     writer.writerows(zip(*self.eval_stats.values()))
 
                 if self.samples_collected[policy_id] > max_steps:
+                    log.info('Exit')
                     sys.exit()
 
     def report_train_summaries(self, stats, policy_id):
