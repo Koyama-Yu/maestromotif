@@ -456,6 +456,7 @@ class ModifierWrapper(gym.Wrapper):
     def step(self, action):
         obs, reward, done, info = self.env.step(action)
         msg_str = self.env.message[1]
+        cur_buc = 0 # 追記
         self.dlvl = dlvl = obs['blstats'][12]
         self.xlvl = xlvl = obs['blstats'][18]
         self.dungeon_number = obs['blstats'][23]

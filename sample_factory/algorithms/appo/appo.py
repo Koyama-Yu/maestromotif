@@ -599,11 +599,19 @@ class APPO(ReinforcementLearningAlgorithm):
 
         if 'reward' in self.policy_avg_stats:
             policy_reward_stats = []
+            policy_true_reward_stats = []
             for policy_id in range(self.cfg.num_policies):
                 reward_stats = self.policy_avg_stats['reward'][policy_id]
                 if len(reward_stats) > 0:
                     policy_reward_stats.append((policy_id, f'{np.mean(reward_stats):.3f}', f'{np.median(reward_stats):.3f}'))
+                # 追記
+                #true_reward_stats = self.policy_avg_stats['true_reward'][policy_id]
+                #if len(true_reward_stats) > 0:
+                    #policy_true_reward_stats.append((policy_id, f'{np.mean(true_reward_stats):.3f}', f'{np.median(true_reward_stats):.3f}'))
             log.debug('Avg, Median episode reward: %r', policy_reward_stats)
+            #log.debug('Avg, Median true reward: %r', policy_true_reward_stats)
+            # 追記
+            #log.debug('true_reward: %r', self.policy_avg_stats['true_reward'][policy_id])
 
             stats_str = ''
             policy_id = 0

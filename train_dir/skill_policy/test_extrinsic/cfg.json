@@ -40,7 +40,7 @@
   "experiments_root": null,
   "help": false,
   "train_dir": "train_dir/skill_policy/",
-  "reward_dir": "['train_dir/skill_rewards/llama3_discoverer_default',                                        'train_dir/skill_rewards/llama3_descender_default',                                         'train_dir/skill_rewards/llama3_ascender_default',                                          'train_dir/skill_rewards/llama3_worshipper_default',                                        'train_dir/skill_rewards/llama3_merchant_default']",
+  "reward_dir": "['train_dir/skill_rewards/llama3_discoverer_default',\n                                      'train_dir/skill_rewards/llama3_descender_default',\n                                      'train_dir/skill_rewards/llama3_ascender_default',\n                                      'train_dir/skill_rewards/llama3_worshipper_default',\n                                      'train_dir/skill_rewards/llama3_merchant_default']",
   "load_optim": false,
   "device": "gpu",
   "seed": 2,

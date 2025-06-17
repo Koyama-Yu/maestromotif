@@ -10,14 +10,14 @@ python3 -m scripts.main --algo APPO \
                        --seed 2 \
                        --stats_avg 1000 \
                        --train_dir train_dir/skill_policy/ \
-                       --experiment test \
+                       --experiment test_score \
                        --reward_dir "['train_dir/skill_rewards/llama3_discoverer_default',
                                       'train_dir/skill_rewards/llama3_descender_default',
                                       'train_dir/skill_rewards/llama3_ascender_default',
                                       'train_dir/skill_rewards/llama3_worshipper_default',
                                       'train_dir/skill_rewards/llama3_merchant_default']"   \
                         --evaluation True \
-                        --extrinsic_reward 0.0 \
-                        --llm_reward 0.1 \
+                        --extrinsic_reward 1.0 \
+                        --llm_reward 0.0 \
                         --ttyrec 1 \
                         --eval_target goldenexit 
