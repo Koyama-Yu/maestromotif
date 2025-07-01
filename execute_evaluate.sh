@@ -18,6 +18,6 @@ python3 -m scripts.main --algo APPO \
                                       'train_dir/skill_rewards/llama3_merchant_default']"   \
                         --evaluation True \
                         --extrinsic_reward 1.0 \
-                        --llm_reward 0.0 \
+                        --llm_reward 0.1 \
                         --ttyrec 1 \
                         --eval_target goldenexit 
