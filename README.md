@@ -114,7 +114,7 @@ python -m scripts.main --algo APPO  --num_workers 24 --num_envs_per_worker 20 \
                        --batch_size 4096 --reward_scale 0.1 --obs_scale 255.0 \
                        --train_for_env_steps 4_000_000_000 --save_every_steps 50_000_000 \
                        --keep_checkpoints 5 --stats_avg 1000 --seed 2 --code_seed 42  \
-                       --reward_dir "['train_dir/skill_rewards/llama3_discoverer_default',
+                       --reward_dir "['train_dir/skill_rewards/llama3_descender_default',
                                       'train_dir/skill_rewards/llama3_descender_default',
                                       'train_dir/skill_rewards/llama3_ascender_default',
                                       'train_dir/skill_rewards/llama3_worshipper_default',
@@ -123,6 +123,81 @@ python -m scripts.main --algo APPO  --num_workers 24 --num_envs_per_worker 20 \
                        --train_dir train_dir/skill_policy/
                        --experiment default
 ```
+
+### Running Pure Reinforcement Learning without LLM-Generated Policy
+
+To run the training purely with reinforcement learning without using the LLM-generated policy, you can set the `llm_reward` parameter to `0.0` and specify `eval_target` as `'none'`. This disables loading the meta policy class and intrinsic rewards, allowing the system to train a policy from scratch using only extrinsic rewards.
+
+Example command:
+
+```
+python -m scripts.main --algo APPO --num_workers 24 --num_envs_per_worker 20 \
+                       --batch_size 4096 --reward_scale 0.1 --obs_scale 255.0 \
+                       --train_for_env_steps 4_000_000_000 --save_every_steps 50_000_000 \
+                       --keep_checkpoints 5 --stats_avg 1000 --seed 2 --code_seed -1 \
+                       --reward_dir "[]" \
+                       --extrinsic_reward 1.0 --llm_reward 0.0 \
+                       --train_dir train_dir/skill_policy/ \
+                       --experiment default \
+                       --eval_target none
+```
+
+This configuration ensures that no LLM-generated policy is loaded, and the environment runs purely with extrinsic rewards.
+
+### Running Pure NetHackScoreMonk-v1 Score Task
+
+To run the environment purely on the NetHackScoreMonk-v1 score task without additional skill evaluation, set the `eval_target` parameter to `'none'` and `llm_reward` to `0.0`. This disables the meta policy and intrinsic rewards, running only the score task.
+
+Example command:
+
+```
+python -m scripts.main --algo APPO --num_workers 24 --num_envs_per_worker 20 \
+                       --batch_size 4096 --reward_scale 0.1 --obs_scale 255.0 \
+                       --train_for_env_steps 4_000_000_000 --save_every_steps 50_000_000 \
+                       --keep_checkpoints 5 --stats_avg 1000 --seed 2 --code_seed -1 \
+                       --reward_dir "[]" \
+                       --extrinsic_reward 1.0 --llm_reward 0.0 \
+                       --train_dir train_dir/skill_policy/ \
+                       --experiment default \
+                       --eval_target none
+```
+
+This will run the pure score task environment without any LLM or skill-based intrinsic rewards.
+
+### Running Pure Reinforcement Learning without Skill Rewards
+
+To run pure reinforcement learning training and evaluation without using any skill rewards, set the `reward_dir` parameter to an empty list, disable LLM rewards by setting `llm_reward` to `0.0`, and specify `eval_target` as `'none'`. This configuration ensures that the training and evaluation rely solely on extrinsic rewards from the environment.
+
+Example training command:
+
+```
+python -m scripts.main --algo APPO --num_workers 24 --num_envs_per_worker 20 \
+                       --batch_size 4096 --reward_scale 0.1 --obs_scale 255.0 \
+                       --train_for_env_steps 4_000_000_000 --save_every_steps 50_000_000 \
+                       --keep_checkpoints 5 --stats_avg 1000 --seed 2 --code_seed -1 \
+                       --reward_dir "[]" \
+                       --extrinsic_reward 1.0 --llm_reward 0.0 \
+                       --train_dir train_dir/skill_policy/ \
+                       --experiment default \
+                       --eval_target none
+```
+
+Example evaluation command:
+
+```
+python -m scripts.main --algo APPO --num_workers 24 --num_envs_per_worker 20 \
+                       --batch_size 4096 --reward_scale 0.1 --obs_scale 255.0 \
+                       --train_for_env_steps 0 --save_every_steps 50_000_000 \
+                       --keep_checkpoints 5 --stats_avg 1000 --seed 2 --code_seed -1 \
+                       --reward_dir "[]" \
+                       --extrinsic_reward 1.0 --llm_reward 0.0 \
+                       --train_dir train_dir/skill_policy/ \
+                       --experiment default \
+                       --eval_target none \
+                       --evaluation True
+```
+
+This setup allows you to train and evaluate purely with extrinsic rewards, without any skill reward influence.
 
 ## Citation
 If you build on our work or find it useful, please cite it using the following bibtex.

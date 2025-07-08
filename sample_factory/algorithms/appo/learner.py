@@ -808,7 +808,7 @@ class LearnerWorker:
                         # log.debug('Rewards: extrinsic %.3f, mb_rewards %.3f, llm_rewards %.3f, llm_rewards_cpu %.3f, msg_count_coeff %.3f',
                         #           self.cfg.extrinsic_reward, mb.rewards_cpu.mean().item(),
                         #           llm_rewards_cpu.mean().item(), rewards_cpu.mean().item(), msg_count_coeff.mean().item() if torch.is_tensor(msg_count_coeff) else msg_count_coeff)
-                        log.debug('rewards_cpu: %.3f', rewards_cpu.mean().item())
+                        #log.debug('rewards_cpu: %.3f', rewards_cpu.mean().item())
                         vtrace_rho = torch.min(rho_hat, ratios_cpu)
                         vtrace_c = torch.min(c_hat, ratios_cpu)
 

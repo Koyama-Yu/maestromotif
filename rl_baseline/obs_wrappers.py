@@ -455,49 +455,54 @@ class ModifierWrapper(gym.Wrapper):
 
     def step(self, action):
         obs, reward, done, info = self.env.step(action)
-        if reward > 0.:
-            log.info(f"Reward: {reward}, Action: {self.actions[action]}")
-        
+        intrinsic_reward = 0.0
+        extrinsic_reward = reward
+
+        # Calculate intrinsic reward if llm_reward > 0
+        if self.llm_reward > 0.:
+            intrinsic_reward = reward * self.llm_reward  # Example calculation, adjust as needed
+            extrinsic_reward = reward - intrinsic_reward
+
+        #if reward > 0.:
+            #log.info(f"Reward: {reward}, Action: {self.actions[action]}")
+
         msg_str = self.env.message[1]
-        cur_buc = 0 # 追記
+        cur_buc = 0
         self.dlvl = dlvl = obs['blstats'][12]
         self.xlvl = xlvl = obs['blstats'][18]
         self.dungeon_number = obs['blstats'][23]
         self.depth = obs['blstats'][12]
 
-        # update the branch dungeon level
         if self.env.env.env.env.env.branch_dlvl != -2:
             self.nethack_player.branch_depth = self.env.env.env.env.env.branch_dlvl
 
-        worshipper_precondition, merchant_precondition = self.nethack_player.skill_precondition(
+        if self.nethack_player is not None:
+            worshipper_precondition, merchant_precondition = self.nethack_player.skill_precondition(
                 self.char_ascii_encodings, 
                 self.char_ascii_colors, 
                 self.cur_num_items, 
                 self.color_map
-        )
+            )
+        else:
+            worshipper_precondition, merchant_precondition = False, False
 
         if self.llm_reward > 0.:
 
             if self.evaluation and 'discoveryhunger' in self.eval_target:
-                # Verify that the agent has eaten in the Gnomish Mines
                 if obs['blstats'][23] == 2 and info['just_eaten']:
                     self.nethack_player.eaten_food = True
                 
-                # for evaluating performance
                 if self.nethack_player.eaten_food:
                     self.env.env.env.env.env.eval_prereq_met = True
-                # for evaluating performance
 
             if self.evaluation and 'goldenexit' in self.eval_target:
                 self.nethack_player.update_gold(info['gold'])
                 if info['kill']:
                     self.nethack_player.defeat_monster()
 
-                # for evaluating performance
                 self.max_level_reached = max(self.max_level_reached, dlvl)
                 if self.nethack_player.monsters_defeated >= 25 and self.nethack_player.gold_pieces >= 20 and self.max_level_reached >= 3:
                     self.env.env.env.env.env.eval_prereq_met = True
-                # for evaluating performance
 
             if self.evaluation and 'levelupsell' in self.eval_target:
                 self.nethack_player.update_xp_level(self.xlvl)
@@ -516,8 +521,6 @@ class ModifierWrapper(gym.Wrapper):
             )
 
             if player_skill_end:
-
-                # keeping track of branch_dlvl
                 if self.env.env.env.env.env.branch_dlvl == -2 and self.dungeon_number != 0 and self.skill == 1:
                     self.env.env.env.env.env.branch_dlvl = self.previous_depth
                     self.nethack_player.branch_depth = self.env.env.env.env.env.branch_dlvl
@@ -541,7 +544,6 @@ class ModifierWrapper(gym.Wrapper):
 
             self.skill_end = player_skill_end
 
-            # some tab-keeping
             if worshipper_precondition:
                 self.altar_seen = True
             if merchant_precondition:
@@ -566,7 +568,6 @@ class ModifierWrapper(gym.Wrapper):
                 self.num_sell += 1
             else:
                 self.price_id = False
-            # some tab-keeping
 
             self.prev_xlvl = self.xlvl
             self.prev_msg = msg_str
@@ -588,7 +589,11 @@ class ModifierWrapper(gym.Wrapper):
         info['skill_start_time'] = self.skill_start_time
         info['done'] = int(done)
 
-        return obs, reward, done, info
+        info['intrinsic_reward'] = intrinsic_reward
+        info['extrinsic_reward'] = extrinsic_reward
+
+        # Return extrinsic_reward as reward, intrinsic_reward separately in info
+        return obs, extrinsic_reward, done, info
 
     def reset(self):
         self.prev_msg = b''
@@ -598,10 +603,14 @@ class ModifierWrapper(gym.Wrapper):
         self.num_price_id = 0
 
         # start with dummy values and the initiate all necessary attributes
-        self.nethack_player = self.meta_policy_class(max_depth=-1, branch_depth=-2)
-        self.nethack_player.set_initial_values()
+        if self.meta_policy_class is not None:
+            self.nethack_player = self.meta_policy_class(max_depth=-1, branch_depth=-2)
+            self.nethack_player.set_initial_values()
+            self.skill = self.skill_to_int[self.nethack_player.skill]
+        else:
+            self.nethack_player = None
+            self.skill = 0
         
-        self.skill = self.skill_to_int[self.nethack_player.skill]
         self.previous_depth = 1
         self.skill_start_time = 0
 

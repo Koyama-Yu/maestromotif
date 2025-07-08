@@ -694,6 +694,19 @@ class APPO(ReinforcementLearningAlgorithm):
             if not math.isnan(sample_throughput[policy_id]):
                 self.writers[policy_id].add_scalar('0_aux/_sample_throughput', sample_throughput[policy_id], env_steps)
 
+            # Add intrinsic and extrinsic reward stats if available
+            if 'intrinsic_reward' in self.policy_avg_stats and policy_id in self.policy_avg_stats['intrinsic_reward']:
+                intrinsic_stats = self.policy_avg_stats['intrinsic_reward'][policy_id]
+                if len(intrinsic_stats) >= intrinsic_stats.maxlen or (len(intrinsic_stats) > 10 and self.total_train_seconds > 300):
+                    intrinsic_mean = np.mean(intrinsic_stats)
+                    self.writers[policy_id].add_scalar('reward/intrinsic_reward', intrinsic_mean, env_steps)
+
+            if 'extrinsic_reward' in self.policy_avg_stats and policy_id in self.policy_avg_stats['extrinsic_reward']:
+                extrinsic_stats = self.policy_avg_stats['extrinsic_reward'][policy_id]
+                if len(extrinsic_stats) >= extrinsic_stats.maxlen or (len(extrinsic_stats) > 10 and self.total_train_seconds > 300):
+                    extrinsic_mean = np.mean(extrinsic_stats)
+                    self.writers[policy_id].add_scalar('reward/extrinsic_reward', extrinsic_mean, env_steps)
+
             for key, stat in self.policy_avg_stats.items():
                 if len(stat[policy_id]) >= stat[policy_id].maxlen or (len(stat[policy_id]) > 10 and self.total_train_seconds > 300):
                     stat_value = np.mean(stat[policy_id])

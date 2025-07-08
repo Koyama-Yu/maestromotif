@@ -518,8 +518,8 @@ class NetHackScoreMonk(base.NLE):
 
         self.penalty = self._get_time_penalty(last_observation, observation)
 
-        if reward > 0.:
-            log.info("NetHackScoreMonk: Reward: %s, Penalty: %s", reward, self.penalty)
+        #if reward > 0.:
+            #log.info("NetHackScoreMonk: Reward: %s, Penalty: %s", reward, self.penalty)
 
         return obs, reward, done, info
 
