@@ -474,7 +474,8 @@ class ModifierWrapper(gym.Wrapper):
         self.depth = obs['blstats'][12]
 
         if self.env.env.env.env.env.branch_dlvl != -2:
-            self.nethack_player.branch_depth = self.env.env.env.env.env.branch_dlvl
+            if self.nethack_player is None:
+                self.nethack_player.branch_depth = self.env.env.env.env.env.branch_dlvl
 
         if self.nethack_player is not None:
             worshipper_precondition, merchant_precondition = self.nethack_player.skill_precondition(
@@ -486,7 +487,7 @@ class ModifierWrapper(gym.Wrapper):
         else:
             worshipper_precondition, merchant_precondition = False, False
 
-        if self.llm_reward > 0.:
+        if self.llm_reward > 0. and self.nethack_player is not None:
 
             if self.evaluation and 'discoveryhunger' in self.eval_target:
                 if obs['blstats'][23] == 2 and info['just_eaten']:
