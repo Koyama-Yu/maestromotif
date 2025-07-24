@@ -507,7 +507,7 @@ class ModifierWrapper(gym.Wrapper):
 
             if self.evaluation and 'levelupsell' in self.eval_target:
                 self.nethack_player.update_xp_level(self.xlvl)
-
+ 
             preconditions = [worshipper_precondition, merchant_precondition]
 
             self.skill_time = obs['blstats'][20] - self.skill_start_time
