@@ -1,306 +1,311 @@
 diff --git a/train_dir/skill_policy/pureRL/git.diff b/train_dir/skill_policy/pureRL/git.diff
-index 12c0f4e..e69de29 100644
+index 7b10604..e69de29 100644
 --- a/train_dir/skill_policy/pureRL/git.diff
 +++ b/train_dir/skill_policy/pureRL/git.diff
-@@ -1,301 +0,0 @@
+@@ -1,306 +0,0 @@
 -diff --git a/train_dir/skill_policy/pureRL/git.diff b/train_dir/skill_policy/pureRL/git.diff
--index 9e99e41..e69de29 100644
+-index 12c0f4e..e69de29 100644
 ---- a/train_dir/skill_policy/pureRL/git.diff
 -+++ b/train_dir/skill_policy/pureRL/git.diff
--@@ -1,296 +0,0 @@
---diff --git a/README.md b/README.md
---index 5abfe72..0ee41b8 100644
------ a/README.md
---+++ b/README.md
---@@ -114,7 +114,7 @@ python -m scripts.main --algo APPO  --num_workers 24 --num_envs_per_worker 20 \
---                        --batch_size 4096 --reward_scale 0.1 --obs_scale 255.0 \
---                        --train_for_env_steps 4_000_000_000 --save_every_steps 50_000_000 \
---                        --keep_checkpoints 5 --stats_avg 1000 --seed 2 --code_seed 42  \
----                       --reward_dir "['train_dir/skill_rewards/llama3_discoverer_default',
---+                       --reward_dir "['train_dir/skill_rewards/llama3_descender_default',
---                                       'train_dir/skill_rewards/llama3_descender_default',
---                                       'train_dir/skill_rewards/llama3_ascender_default',
---                                       'train_dir/skill_rewards/llama3_worshipper_default',
---@@ -124,6 +124,81 @@ python -m scripts.main --algo APPO  --num_workers 24 --num_envs_per_worker 20 \
---                        --experiment default
--- ```
--- 
---+### Running Pure Reinforcement Learning without LLM-Generated Policy
---+
---+To run the training purely with reinforcement learning without using the LLM-generated policy, you can set the `llm_reward` parameter to `0.0` and specify `eval_target` as `'none'`. This disables loading the meta policy class and intrinsic rewards, allowing the system to train a policy from scratch using only extrinsic rewards.
---+
---+Example command:
---+
---+```
---+python -m scripts.main --algo APPO --num_workers 24 --num_envs_per_worker 20 \
---+                       --batch_size 4096 --reward_scale 0.1 --obs_scale 255.0 \
---+                       --train_for_env_steps 4_000_000_000 --save_every_steps 50_000_000 \
---+                       --keep_checkpoints 5 --stats_avg 1000 --seed 2 --code_seed -1 \
---+                       --reward_dir "[]" \
---+                       --extrinsic_reward 1.0 --llm_reward 0.0 \
---+                       --train_dir train_dir/skill_policy/ \
---+                       --experiment default \
---+                       --eval_target none
---+```
---+
---+This configuration ensures that no LLM-generated policy is loaded, and the environment runs purely with extrinsic rewards.
---+
---+### Running Pure NetHackScoreMonk-v1 Score Task
---+
---+To run the environment purely on the NetHackScoreMonk-v1 score task without additional skill evaluation, set the `eval_target` parameter to `'none'` and `llm_reward` to `0.0`. This disables the meta policy and intrinsic rewards, running only the score task.
---+
---+Example command:
---+
---+```
---+python -m scripts.main --algo APPO --num_workers 24 --num_envs_per_worker 20 \
---+                       --batch_size 4096 --reward_scale 0.1 --obs_scale 255.0 \
---+                       --train_for_env_steps 4_000_000_000 --save_every_steps 50_000_000 \
---+                       --keep_checkpoints 5 --stats_avg 1000 --seed 2 --code_seed -1 \
---+                       --reward_dir "[]" \
---+                       --extrinsic_reward 1.0 --llm_reward 0.0 \
---+                       --train_dir train_dir/skill_policy/ \
---+                       --experiment default \
---+                       --eval_target none
---+```
---+
---+This will run the pure score task environment without any LLM or skill-based intrinsic rewards.
---+
---+### Running Pure Reinforcement Learning without Skill Rewards
---+
---+To run pure reinforcement learning training and evaluation without using any skill rewards, set the `reward_dir` parameter to an empty list, disable LLM rewards by setting `llm_reward` to `0.0`, and specify `eval_target` as `'none'`. This configuration ensures that the training and evaluation rely solely on extrinsic rewards from the environment.
---+
---+Example training command:
---+
---+```
---+python -m scripts.main --algo APPO --num_workers 24 --num_envs_per_worker 20 \
---+                       --batch_size 4096 --reward_scale 0.1 --obs_scale 255.0 \
---+                       --train_for_env_steps 4_000_000_000 --save_every_steps 50_000_000 \
---+                       --keep_checkpoints 5 --stats_avg 1000 --seed 2 --code_seed -1 \
---+                       --reward_dir "[]" \
---+                       --extrinsic_reward 1.0 --llm_reward 0.0 \
---+                       --train_dir train_dir/skill_policy/ \
---+                       --experiment default \
---+                       --eval_target none
---+```
---+
---+Example evaluation command:
---+
---+```
---+python -m scripts.main --algo APPO --num_workers 24 --num_envs_per_worker 20 \
---+                       --batch_size 4096 --reward_scale 0.1 --obs_scale 255.0 \
---+                       --train_for_env_steps 0 --save_every_steps 50_000_000 \
---+                       --keep_checkpoints 5 --stats_avg 1000 --seed 2 --code_seed -1 \
---+                       --reward_dir "[]" \
---+                       --extrinsic_reward 1.0 --llm_reward 0.0 \
---+                       --train_dir train_dir/skill_policy/ \
---+                       --experiment default \
---+                       --eval_target none \
---+                       --evaluation True
---+```
---+
---+This setup allows you to train and evaluate purely with extrinsic rewards, without any skill reward influence.
---+
--- ## Citation
--- If you build on our work or find it useful, please cite it using the following bibtex.
--- 
---diff --git a/rl_baseline/env_nle.py b/rl_baseline/env_nle.py
---index f59bd64..393ca3e 100644
------ a/rl_baseline/env_nle.py
---+++ b/rl_baseline/env_nle.py
---@@ -135,9 +135,14 @@ def make_custom_env_func(full_env_name, cfg=None, env_config=None):
---         exp_folder = exploration_str
--- 
---     seed = cfg.code_seed if cfg.code_seed != -1 else cfg.seed
----    policy_name = f"meta_policies.{exp_folder}.seed{seed}"
----    player_class = "NetHackPlayer"
----    MetaPolicyClass = load_player_class(policy_name, player_class)
---+
---+    # If pure RL mode, do not load meta policy class
---+    if llm_reward > 0.0 and cfg.eval_target != 'none':
---+        policy_name = f"meta_policies.{exp_folder}.seed{seed}"
---+        player_class = "NetHackPlayer"
---+        MetaPolicyClass = load_player_class(policy_name, player_class)
---+    else:
---+        MetaPolicyClass = None
--- 
---     env = ModifierWrapper(env, llm_reward=llm_reward, experiment=cfg.experiment, 
---                           num_skills=cfg.num_skills, meta_policy_class=MetaPolicyClass)
---diff --git a/rl_baseline/monk_tasks_nle.py b/rl_baseline/monk_tasks_nle.py
---index a196c6f..00ee036 100644
------ a/rl_baseline/monk_tasks_nle.py
---+++ b/rl_baseline/monk_tasks_nle.py
---@@ -518,8 +518,8 @@ class NetHackScoreMonk(base.NLE):
--- 
---         self.penalty = self._get_time_penalty(last_observation, observation)
--- 
----        if reward > 0.:
----            log.info("NetHackScoreMonk: Reward: %s, Penalty: %s", reward, self.penalty)
---+        #if reward > 0.:
---+            #log.info("NetHackScoreMonk: Reward: %s, Penalty: %s", reward, self.penalty)
--- 
---         return obs, reward, done, info
--- 
---diff --git a/rl_baseline/obs_wrappers.py b/rl_baseline/obs_wrappers.py
---index 425708d..7ab2dbe 100644
------ a/rl_baseline/obs_wrappers.py
---+++ b/rl_baseline/obs_wrappers.py
---@@ -455,49 +455,54 @@ class ModifierWrapper(gym.Wrapper):
--- 
---     def step(self, action):
---         obs, reward, done, info = self.env.step(action)
----        if reward > 0.:
----            log.info(f"Reward: {reward}, Action: {self.actions[action]}")
----        
---+        intrinsic_reward = 0.0
---+        extrinsic_reward = reward
---+
---+        # Calculate intrinsic reward if llm_reward > 0
---+        if self.llm_reward > 0.:
---+            intrinsic_reward = reward * self.llm_reward  # Example calculation, adjust as needed
---+            extrinsic_reward = reward - intrinsic_reward
---+
---+        #if reward > 0.:
---+            #log.info(f"Reward: {reward}, Action: {self.actions[action]}")
---+
---         msg_str = self.env.message[1]
----        cur_buc = 0 # 追記
---+        cur_buc = 0
---         self.dlvl = dlvl = obs['blstats'][12]
---         self.xlvl = xlvl = obs['blstats'][18]
---         self.dungeon_number = obs['blstats'][23]
---         self.depth = obs['blstats'][12]
--- 
----        # update the branch dungeon level
---         if self.env.env.env.env.env.branch_dlvl != -2:
---             self.nethack_player.branch_depth = self.env.env.env.env.env.branch_dlvl
--- 
----        worshipper_precondition, merchant_precondition = self.nethack_player.skill_precondition(
---+        if self.nethack_player is not None:
---+            worshipper_precondition, merchant_precondition = self.nethack_player.skill_precondition(
---                 self.char_ascii_encodings, 
---                 self.char_ascii_colors, 
---                 self.cur_num_items, 
---                 self.color_map
----        )
---+            )
---+        else:
---+            worshipper_precondition, merchant_precondition = False, False
--- 
---         if self.llm_reward > 0.:
--- 
---             if self.evaluation and 'discoveryhunger' in self.eval_target:
----                # Verify that the agent has eaten in the Gnomish Mines
---                 if obs['blstats'][23] == 2 and info['just_eaten']:
---                     self.nethack_player.eaten_food = True
---                 
----                # for evaluating performance
---                 if self.nethack_player.eaten_food:
---                     self.env.env.env.env.env.eval_prereq_met = True
----                # for evaluating performance
--- 
---             if self.evaluation and 'goldenexit' in self.eval_target:
---                 self.nethack_player.update_gold(info['gold'])
---                 if info['kill']:
---                     self.nethack_player.defeat_monster()
--- 
----                # for evaluating performance
---                 self.max_level_reached = max(self.max_level_reached, dlvl)
---                 if self.nethack_player.monsters_defeated >= 25 and self.nethack_player.gold_pieces >= 20 and self.max_level_reached >= 3:
---                     self.env.env.env.env.env.eval_prereq_met = True
----                # for evaluating performance
--- 
---             if self.evaluation and 'levelupsell' in self.eval_target:
---                 self.nethack_player.update_xp_level(self.xlvl)
---@@ -516,8 +521,6 @@ class ModifierWrapper(gym.Wrapper):
---             )
--- 
---             if player_skill_end:
----
----                # keeping track of branch_dlvl
---                 if self.env.env.env.env.env.branch_dlvl == -2 and self.dungeon_number != 0 and self.skill == 1:
---                     self.env.env.env.env.env.branch_dlvl = self.previous_depth
---                     self.nethack_player.branch_depth = self.env.env.env.env.env.branch_dlvl
---@@ -541,7 +544,6 @@ class ModifierWrapper(gym.Wrapper):
--- 
---             self.skill_end = player_skill_end
--- 
----            # some tab-keeping
---             if worshipper_precondition:
---                 self.altar_seen = True
---             if merchant_precondition:
---@@ -566,7 +568,6 @@ class ModifierWrapper(gym.Wrapper):
---                 self.num_sell += 1
---             else:
---                 self.price_id = False
----            # some tab-keeping
--- 
---             self.prev_xlvl = self.xlvl
---             self.prev_msg = msg_str
---@@ -588,7 +589,11 @@ class ModifierWrapper(gym.Wrapper):
---         info['skill_start_time'] = self.skill_start_time
---         info['done'] = int(done)
--- 
----        return obs, reward, done, info
---+        info['intrinsic_reward'] = intrinsic_reward
---+        info['extrinsic_reward'] = extrinsic_reward
---+
---+        # Return extrinsic_reward as reward, intrinsic_reward separately in info
---+        return obs, extrinsic_reward, done, info
--- 
---     def reset(self):
---         self.prev_msg = b''
---@@ -598,10 +603,14 @@ class ModifierWrapper(gym.Wrapper):
---         self.num_price_id = 0
--- 
---         # start with dummy values and the initiate all necessary attributes
----        self.nethack_player = self.meta_policy_class(max_depth=-1, branch_depth=-2)
----        self.nethack_player.set_initial_values()
---+        if self.meta_policy_class is not None:
---+            self.nethack_player = self.meta_policy_class(max_depth=-1, branch_depth=-2)
---+            self.nethack_player.set_initial_values()
---+            self.skill = self.skill_to_int[self.nethack_player.skill]
---+        else:
---+            self.nethack_player = None
---+            self.skill = 0
---         
----        self.skill = self.skill_to_int[self.nethack_player.skill]
---         self.previous_depth = 1
---         self.skill_start_time = 0
--- 
---diff --git a/sample_factory/algorithms/appo/appo.py b/sample_factory/algorithms/appo/appo.py
---index eee914b..49334a0 100644
------ a/sample_factory/algorithms/appo/appo.py
---+++ b/sample_factory/algorithms/appo/appo.py
---@@ -694,6 +694,19 @@ class APPO(ReinforcementLearningAlgorithm):
---             if not math.isnan(sample_throughput[policy_id]):
---                 self.writers[policy_id].add_scalar('0_aux/_sample_throughput', sample_throughput[policy_id], env_steps)
--- 
---+            # Add intrinsic and extrinsic reward stats if available
---+            if 'intrinsic_reward' in self.policy_avg_stats and policy_id in self.policy_avg_stats['intrinsic_reward']:
---+                intrinsic_stats = self.policy_avg_stats['intrinsic_reward'][policy_id]
---+                if len(intrinsic_stats) >= intrinsic_stats.maxlen or (len(intrinsic_stats) > 10 and self.total_train_seconds > 300):
---+                    intrinsic_mean = np.mean(intrinsic_stats)
---+                    self.writers[policy_id].add_scalar('reward/intrinsic_reward', intrinsic_mean, env_steps)
---+
---+            if 'extrinsic_reward' in self.policy_avg_stats and policy_id in self.policy_avg_stats['extrinsic_reward']:
---+                extrinsic_stats = self.policy_avg_stats['extrinsic_reward'][policy_id]
---+                if len(extrinsic_stats) >= extrinsic_stats.maxlen or (len(extrinsic_stats) > 10 and self.total_train_seconds > 300):
---+                    extrinsic_mean = np.mean(extrinsic_stats)
---+                    self.writers[policy_id].add_scalar('reward/extrinsic_reward', extrinsic_mean, env_steps)
---+
---             for key, stat in self.policy_avg_stats.items():
---                 if len(stat[policy_id]) >= stat[policy_id].maxlen or (len(stat[policy_id]) > 10 and self.total_train_seconds > 300):
---                     stat_value = np.mean(stat[policy_id])
---diff --git a/sample_factory/algorithms/appo/learner.py b/sample_factory/algorithms/appo/learner.py
---index 24d51df..21f3138 100644
------ a/sample_factory/algorithms/appo/learner.py
---+++ b/sample_factory/algorithms/appo/learner.py
---@@ -808,7 +808,7 @@ class LearnerWorker:
---                         # log.debug('Rewards: extrinsic %.3f, mb_rewards %.3f, llm_rewards %.3f, llm_rewards_cpu %.3f, msg_count_coeff %.3f',
---                         #           self.cfg.extrinsic_reward, mb.rewards_cpu.mean().item(),
---                         #           llm_rewards_cpu.mean().item(), rewards_cpu.mean().item(), msg_count_coeff.mean().item() if torch.is_tensor(msg_count_coeff) else msg_count_coeff)
----                        log.debug('rewards_cpu: %.3f', rewards_cpu.mean().item())
---+                        #log.debug('rewards_cpu: %.3f', rewards_cpu.mean().item())
---                         vtrace_rho = torch.min(rho_hat, ratios_cpu)
---                         vtrace_c = torch.min(c_hat, ratios_cpu)
--- 
+-@@ -1,301 +0,0 @@
+--diff --git a/train_dir/skill_policy/pureRL/git.diff b/train_dir/skill_policy/pureRL/git.diff
+--index 9e99e41..e69de29 100644
+----- a/train_dir/skill_policy/pureRL/git.diff
+--+++ b/train_dir/skill_policy/pureRL/git.diff
+--@@ -1,296 +0,0 @@
+---diff --git a/README.md b/README.md
+---index 5abfe72..0ee41b8 100644
+------ a/README.md
+---+++ b/README.md
+---@@ -114,7 +114,7 @@ python -m scripts.main --algo APPO  --num_workers 24 --num_envs_per_worker 20 \
+---                        --batch_size 4096 --reward_scale 0.1 --obs_scale 255.0 \
+---                        --train_for_env_steps 4_000_000_000 --save_every_steps 50_000_000 \
+---                        --keep_checkpoints 5 --stats_avg 1000 --seed 2 --code_seed 42  \
+----                       --reward_dir "['train_dir/skill_rewards/llama3_discoverer_default',
+---+                       --reward_dir "['train_dir/skill_rewards/llama3_descender_default',
+---                                       'train_dir/skill_rewards/llama3_descender_default',
+---                                       'train_dir/skill_rewards/llama3_ascender_default',
+---                                       'train_dir/skill_rewards/llama3_worshipper_default',
+---@@ -124,6 +124,81 @@ python -m scripts.main --algo APPO  --num_workers 24 --num_envs_per_worker 20 \
+---                        --experiment default
+--- ```
+--- 
+---+### Running Pure Reinforcement Learning without LLM-Generated Policy
+---+
+---+To run the training purely with reinforcement learning without using the LLM-generated policy, you can set the `llm_reward` parameter to `0.0` and specify `eval_target` as `'none'`. This disables loading the meta policy class and intrinsic rewards, allowing the system to train a policy from scratch using only extrinsic rewards.
+---+
+---+Example command:
+---+
+---+```
+---+python -m scripts.main --algo APPO --num_workers 24 --num_envs_per_worker 20 \
+---+                       --batch_size 4096 --reward_scale 0.1 --obs_scale 255.0 \
+---+                       --train_for_env_steps 4_000_000_000 --save_every_steps 50_000_000 \
+---+                       --keep_checkpoints 5 --stats_avg 1000 --seed 2 --code_seed -1 \
+---+                       --reward_dir "[]" \
+---+                       --extrinsic_reward 1.0 --llm_reward 0.0 \
+---+                       --train_dir train_dir/skill_policy/ \
+---+                       --experiment default \
+---+                       --eval_target none
+---+```
+---+
+---+This configuration ensures that no LLM-generated policy is loaded, and the environment runs purely with extrinsic rewards.
+---+
+---+### Running Pure NetHackScoreMonk-v1 Score Task
+---+
+---+To run the environment purely on the NetHackScoreMonk-v1 score task without additional skill evaluation, set the `eval_target` parameter to `'none'` and `llm_reward` to `0.0`. This disables the meta policy and intrinsic rewards, running only the score task.
+---+
+---+Example command:
+---+
+---+```
+---+python -m scripts.main --algo APPO --num_workers 24 --num_envs_per_worker 20 \
+---+                       --batch_size 4096 --reward_scale 0.1 --obs_scale 255.0 \
+---+                       --train_for_env_steps 4_000_000_000 --save_every_steps 50_000_000 \
+---+                       --keep_checkpoints 5 --stats_avg 1000 --seed 2 --code_seed -1 \
+---+                       --reward_dir "[]" \
+---+                       --extrinsic_reward 1.0 --llm_reward 0.0 \
+---+                       --train_dir train_dir/skill_policy/ \
+---+                       --experiment default \
+---+                       --eval_target none
+---+```
+---+
+---+This will run the pure score task environment without any LLM or skill-based intrinsic rewards.
+---+
+---+### Running Pure Reinforcement Learning without Skill Rewards
+---+
+---+To run pure reinforcement learning training and evaluation without using any skill rewards, set the `reward_dir` parameter to an empty list, disable LLM rewards by setting `llm_reward` to `0.0`, and specify `eval_target` as `'none'`. This configuration ensures that the training and evaluation rely solely on extrinsic rewards from the environment.
+---+
+---+Example training command:
+---+
+---+```
+---+python -m scripts.main --algo APPO --num_workers 24 --num_envs_per_worker 20 \
+---+                       --batch_size 4096 --reward_scale 0.1 --obs_scale 255.0 \
+---+                       --train_for_env_steps 4_000_000_000 --save_every_steps 50_000_000 \
+---+                       --keep_checkpoints 5 --stats_avg 1000 --seed 2 --code_seed -1 \
+---+                       --reward_dir "[]" \
+---+                       --extrinsic_reward 1.0 --llm_reward 0.0 \
+---+                       --train_dir train_dir/skill_policy/ \
+---+                       --experiment default \
+---+                       --eval_target none
+---+```
+---+
+---+Example evaluation command:
+---+
+---+```
+---+python -m scripts.main --algo APPO --num_workers 24 --num_envs_per_worker 20 \
+---+                       --batch_size 4096 --reward_scale 0.1 --obs_scale 255.0 \
+---+                       --train_for_env_steps 0 --save_every_steps 50_000_000 \
+---+                       --keep_checkpoints 5 --stats_avg 1000 --seed 2 --code_seed -1 \
+---+                       --reward_dir "[]" \
+---+                       --extrinsic_reward 1.0 --llm_reward 0.0 \
+---+                       --train_dir train_dir/skill_policy/ \
+---+                       --experiment default \
+---+                       --eval_target none \
+---+                       --evaluation True
+---+```
+---+
+---+This setup allows you to train and evaluate purely with extrinsic rewards, without any skill reward influence.
+---+
+--- ## Citation
+--- If you build on our work or find it useful, please cite it using the following bibtex.
+--- 
+---diff --git a/rl_baseline/env_nle.py b/rl_baseline/env_nle.py
+---index f59bd64..393ca3e 100644
+------ a/rl_baseline/env_nle.py
+---+++ b/rl_baseline/env_nle.py
+---@@ -135,9 +135,14 @@ def make_custom_env_func(full_env_name, cfg=None, env_config=None):
+---         exp_folder = exploration_str
+--- 
+---     seed = cfg.code_seed if cfg.code_seed != -1 else cfg.seed
+----    policy_name = f"meta_policies.{exp_folder}.seed{seed}"
+----    player_class = "NetHackPlayer"
+----    MetaPolicyClass = load_player_class(policy_name, player_class)
+---+
+---+    # If pure RL mode, do not load meta policy class
+---+    if llm_reward > 0.0 and cfg.eval_target != 'none':
+---+        policy_name = f"meta_policies.{exp_folder}.seed{seed}"
+---+        player_class = "NetHackPlayer"
+---+        MetaPolicyClass = load_player_class(policy_name, player_class)
+---+    else:
+---+        MetaPolicyClass = None
+--- 
+---     env = ModifierWrapper(env, llm_reward=llm_reward, experiment=cfg.experiment, 
+---                           num_skills=cfg.num_skills, meta_policy_class=MetaPolicyClass)
+---diff --git a/rl_baseline/monk_tasks_nle.py b/rl_baseline/monk_tasks_nle.py
+---index a196c6f..00ee036 100644
+------ a/rl_baseline/monk_tasks_nle.py
+---+++ b/rl_baseline/monk_tasks_nle.py
+---@@ -518,8 +518,8 @@ class NetHackScoreMonk(base.NLE):
+--- 
+---         self.penalty = self._get_time_penalty(last_observation, observation)
+--- 
+----        if reward > 0.:
+----            log.info("NetHackScoreMonk: Reward: %s, Penalty: %s", reward, self.penalty)
+---+        #if reward > 0.:
+---+            #log.info("NetHackScoreMonk: Reward: %s, Penalty: %s", reward, self.penalty)
+--- 
+---         return obs, reward, done, info
+--- 
+---diff --git a/rl_baseline/obs_wrappers.py b/rl_baseline/obs_wrappers.py
+---index 425708d..7ab2dbe 100644
+------ a/rl_baseline/obs_wrappers.py
+---+++ b/rl_baseline/obs_wrappers.py
+---@@ -455,49 +455,54 @@ class ModifierWrapper(gym.Wrapper):
+--- 
+---     def step(self, action):
+---         obs, reward, done, info = self.env.step(action)
+----        if reward > 0.:
+----            log.info(f"Reward: {reward}, Action: {self.actions[action]}")
+----        
+---+        intrinsic_reward = 0.0
+---+        extrinsic_reward = reward
+---+
+---+        # Calculate intrinsic reward if llm_reward > 0
+---+        if self.llm_reward > 0.:
+---+            intrinsic_reward = reward * self.llm_reward  # Example calculation, adjust as needed
+---+            extrinsic_reward = reward - intrinsic_reward
+---+
+---+        #if reward > 0.:
+---+            #log.info(f"Reward: {reward}, Action: {self.actions[action]}")
+---+
+---         msg_str = self.env.message[1]
+----        cur_buc = 0 # 追記
+---+        cur_buc = 0
+---         self.dlvl = dlvl = obs['blstats'][12]
+---         self.xlvl = xlvl = obs['blstats'][18]
+---         self.dungeon_number = obs['blstats'][23]
+---         self.depth = obs['blstats'][12]
+--- 
+----        # update the branch dungeon level
+---         if self.env.env.env.env.env.branch_dlvl != -2:
+---             self.nethack_player.branch_depth = self.env.env.env.env.env.branch_dlvl
+--- 
+----        worshipper_precondition, merchant_precondition = self.nethack_player.skill_precondition(
+---+        if self.nethack_player is not None:
+---+            worshipper_precondition, merchant_precondition = self.nethack_player.skill_precondition(
+---                 self.char_ascii_encodings, 
+---                 self.char_ascii_colors, 
+---                 self.cur_num_items, 
+---                 self.color_map
+----        )
+---+            )
+---+        else:
+---+            worshipper_precondition, merchant_precondition = False, False
+--- 
+---         if self.llm_reward > 0.:
+--- 
+---             if self.evaluation and 'discoveryhunger' in self.eval_target:
+----                # Verify that the agent has eaten in the Gnomish Mines
+---                 if obs['blstats'][23] == 2 and info['just_eaten']:
+---                     self.nethack_player.eaten_food = True
+---                 
+----                # for evaluating performance
+---                 if self.nethack_player.eaten_food:
+---                     self.env.env.env.env.env.eval_prereq_met = True
+----                # for evaluating performance
+--- 
+---             if self.evaluation and 'goldenexit' in self.eval_target:
+---                 self.nethack_player.update_gold(info['gold'])
+---                 if info['kill']:
+---                     self.nethack_player.defeat_monster()
+--- 
+----                # for evaluating performance
+---                 self.max_level_reached = max(self.max_level_reached, dlvl)
+---                 if self.nethack_player.monsters_defeated >= 25 and self.nethack_player.gold_pieces >= 20 and self.max_level_reached >= 3:
+---                     self.env.env.env.env.env.eval_prereq_met = True
+----                # for evaluating performance
+--- 
+---             if self.evaluation and 'levelupsell' in self.eval_target:
+---                 self.nethack_player.update_xp_level(self.xlvl)
+---@@ -516,8 +521,6 @@ class ModifierWrapper(gym.Wrapper):
+---             )
+--- 
+---             if player_skill_end:
+----
+----                # keeping track of branch_dlvl
+---                 if self.env.env.env.env.env.branch_dlvl == -2 and self.dungeon_number != 0 and self.skill == 1:
+---                     self.env.env.env.env.env.branch_dlvl = self.previous_depth
+---                     self.nethack_player.branch_depth = self.env.env.env.env.env.branch_dlvl
+---@@ -541,7 +544,6 @@ class ModifierWrapper(gym.Wrapper):
+--- 
+---             self.skill_end = player_skill_end
+--- 
+----            # some tab-keeping
+---             if worshipper_precondition:
+---                 self.altar_seen = True
+---             if merchant_precondition:
+---@@ -566,7 +568,6 @@ class ModifierWrapper(gym.Wrapper):
+---                 self.num_sell += 1
+---             else:
+---                 self.price_id = False
+----            # some tab-keeping
+--- 
+---             self.prev_xlvl = self.xlvl
+---             self.prev_msg = msg_str
+---@@ -588,7 +589,11 @@ class ModifierWrapper(gym.Wrapper):
+---         info['skill_start_time'] = self.skill_start_time
+---         info['done'] = int(done)
+--- 
+----        return obs, reward, done, info
+---+        info['intrinsic_reward'] = intrinsic_reward
+---+        info['extrinsic_reward'] = extrinsic_reward
+---+
+---+        # Return extrinsic_reward as reward, intrinsic_reward separately in info
+---+        return obs, extrinsic_reward, done, info
+--- 
+---     def reset(self):
+---         self.prev_msg = b''
+---@@ -598,10 +603,14 @@ class ModifierWrapper(gym.Wrapper):
+---         self.num_price_id = 0
+--- 
+---         # start with dummy values and the initiate all necessary attributes
+----        self.nethack_player = self.meta_policy_class(max_depth=-1, branch_depth=-2)
+----        self.nethack_player.set_initial_values()
+---+        if self.meta_policy_class is not None:
+---+            self.nethack_player = self.meta_policy_class(max_depth=-1, branch_depth=-2)
+---+            self.nethack_player.set_initial_values()
+---+            self.skill = self.skill_to_int[self.nethack_player.skill]
+---+        else:
+---+            self.nethack_player = None
+---+            self.skill = 0
+---         
+----        self.skill = self.skill_to_int[self.nethack_player.skill]
+---         self.previous_depth = 1
+---         self.skill_start_time = 0
+--- 
+---diff --git a/sample_factory/algorithms/appo/appo.py b/sample_factory/algorithms/appo/appo.py
+---index eee914b..49334a0 100644
+------ a/sample_factory/algorithms/appo/appo.py
+---+++ b/sample_factory/algorithms/appo/appo.py
+---@@ -694,6 +694,19 @@ class APPO(ReinforcementLearningAlgorithm):
+---             if not math.isnan(sample_throughput[policy_id]):
+---                 self.writers[policy_id].add_scalar('0_aux/_sample_throughput', sample_throughput[policy_id], env_steps)
+--- 
+---+            # Add intrinsic and extrinsic reward stats if available
+---+            if 'intrinsic_reward' in self.policy_avg_stats and policy_id in self.policy_avg_stats['intrinsic_reward']:
+---+                intrinsic_stats = self.policy_avg_stats['intrinsic_reward'][policy_id]
+---+                if len(intrinsic_stats) >= intrinsic_stats.maxlen or (len(intrinsic_stats) > 10 and self.total_train_seconds > 300):
+---+                    intrinsic_mean = np.mean(intrinsic_stats)
+---+                    self.writers[policy_id].add_scalar('reward/intrinsic_reward', intrinsic_mean, env_steps)
+---+
+---+            if 'extrinsic_reward' in self.policy_avg_stats and policy_id in self.policy_avg_stats['extrinsic_reward']:
+---+                extrinsic_stats = self.policy_avg_stats['extrinsic_reward'][policy_id]
+---+                if len(extrinsic_stats) >= extrinsic_stats.maxlen or (len(extrinsic_stats) > 10 and self.total_train_seconds > 300):
+---+                    extrinsic_mean = np.mean(extrinsic_stats)
+---+                    self.writers[policy_id].add_scalar('reward/extrinsic_reward', extrinsic_mean, env_steps)
+---+
+---             for key, stat in self.policy_avg_stats.items():
+---                 if len(stat[policy_id]) >= stat[policy_id].maxlen or (len(stat[policy_id]) > 10 and self.total_train_seconds > 300):
+---                     stat_value = np.mean(stat[policy_id])
+---diff --git a/sample_factory/algorithms/appo/learner.py b/sample_factory/algorithms/appo/learner.py
+---index 24d51df..21f3138 100644
+------ a/sample_factory/algorithms/appo/learner.py
+---+++ b/sample_factory/algorithms/appo/learner.py
+---@@ -808,7 +808,7 @@ class LearnerWorker:
+---                         # log.debug('Rewards: extrinsic %.3f, mb_rewards %.3f, llm_rewards %.3f, llm_rewards_cpu %.3f, msg_count_coeff %.3f',
+---                         #           self.cfg.extrinsic_reward, mb.rewards_cpu.mean().item(),
+---                         #           llm_rewards_cpu.mean().item(), rewards_cpu.mean().item(), msg_count_coeff.mean().item() if torch.is_tensor(msg_count_coeff) else msg_count_coeff)
+----                        log.debug('rewards_cpu: %.3f', rewards_cpu.mean().item())
+---+                        #log.debug('rewards_cpu: %.3f', rewards_cpu.mean().item())
+---                         vtrace_rho = torch.min(rho_hat, ratios_cpu)
+---                         vtrace_c = torch.min(c_hat, ratios_cpu)
+--- 

@@ -473,6 +473,9 @@ class ModifierWrapper(gym.Wrapper):
         self.dungeon_number = obs['blstats'][23]
         self.depth = obs['blstats'][12]
 
+        # 基本的な統計情報更新（nethack_playerがNoneでも実行）
+        self.max_level_reached = max(self.max_level_reached, dlvl)
+
         if self.env.env.env.env.env.branch_dlvl != -2:
             if self.nethack_player is not None:
                 self.nethack_player.branch_depth = self.env.env.env.env.env.branch_dlvl
@@ -486,6 +489,28 @@ class ModifierWrapper(gym.Wrapper):
             )
         else:
             worshipper_precondition, merchant_precondition = False, False
+
+        # 基本的なメッセージ解析（nethack_playerがNoneでも実行）
+        # BUC判定
+        if b'altar' in msg_str:
+            if b'cursed' not in msg_str and b'blessed' not in msg_str and hasattr(self, 'actions') and self.actions[action] == Command.DROP:
+                self.num_buc += 1
+                cur_buc = 1
+            self.altar_seen = True
+
+        # 売却統計
+        if b'sold' in msg_str:
+            if self.price_id:
+                self.num_price_id += 1
+                self.price_id = False
+            self.num_sold += 1
+
+        if b'Sell' in msg_str:
+            self.price_id = is_item_identified(msg_str.decode('utf-8'))
+            self.num_sell += 1
+            self.shop_seen = True
+        else:
+            self.price_id = False
 
         if self.llm_reward > 0. and self.nethack_player is not None:
 
@@ -501,13 +526,12 @@ class ModifierWrapper(gym.Wrapper):
                 if info['kill']:
                     self.nethack_player.defeat_monster()
 
-                self.max_level_reached = max(self.max_level_reached, dlvl)
                 if self.nethack_player.monsters_defeated >= 25 and self.nethack_player.gold_pieces >= 20 and self.max_level_reached >= 3:
                     self.env.env.env.env.env.eval_prereq_met = True
 
             if self.evaluation and 'levelupsell' in self.eval_target:
                 self.nethack_player.update_xp_level(self.xlvl)
- 
+
             preconditions = [worshipper_precondition, merchant_precondition]
 
             self.skill_time = obs['blstats'][20] - self.skill_start_time
@@ -545,38 +569,18 @@ class ModifierWrapper(gym.Wrapper):
 
             self.skill_end = player_skill_end
 
-            if worshipper_precondition:
-                self.altar_seen = True
-            if merchant_precondition:
-                self.shop_seen = True
-
-            cur_buc = 0
-            if b'altar' in msg_str:
-                if b'cursed' not in msg_str and b'blessed' not in msg_str and self.actions[action] == Command.DROP:
-                    self.num_buc += 1
-                    cur_buc = 1
-
-            if b'sold' in msg_str:
-                if self.price_id:
-                    self.num_price_id += 1
-                    self.price_id = False
-                self.num_sold += 1
-                if self.evaluation and 'levelupsell' in self.eval_target:
-                    self.env.env.env.env.env.eval_prereq_met = True
-
-            if b'Sell' in msg_str:
-                self.price_id = is_item_identified(msg_str.decode('utf-8'))
-                self.num_sell += 1
-            else:
-                self.price_id = False
-
+            self.prev_xlvl = self.xlvl
+            self.prev_msg = msg_str
+        else:
+            # nethack_playerがNoneの場合
+            self.skill_end = False
             self.prev_xlvl = self.xlvl
             self.prev_msg = msg_str
 
         obs["blstats"] = np.append(obs["blstats"], self.skill_vector[self.skill])
         obs['option'] = np.array([self.skill]).astype(np.int64)
         obs['buc'] = np.array([cur_buc]).astype(np.int64)
-        info['branch_id'] = int(self.branch_dlvl != -2)
+        info['branch_id'] = int(getattr(self, 'branch_dlvl', -2) != -2)
         info['dungeon_number'] = self.dungeon_number
         info['depth'] = self.depth
         info['skill'] = self.skill
@@ -589,6 +593,7 @@ class ModifierWrapper(gym.Wrapper):
         info['shop_seen'] = int(self.shop_seen)
         info['skill_start_time'] = self.skill_start_time
         info['done'] = int(done)
+        info['max_level_reached'] = self.max_level_reached
 
         info['intrinsic_reward'] = intrinsic_reward
         info['extrinsic_reward'] = extrinsic_reward
@@ -617,14 +622,17 @@ class ModifierWrapper(gym.Wrapper):
 
         obs = self.env.reset()
 
+        # 共通の統計情報初期化（nethack_playerがNoneでも必要）
         self.altar_seen = False
         self.shop_seen = False
         self.price_id = False
         self.xlvl = obs['blstats'][18]
         self.prev_xlvl = self.xlvl
         self.max_level_reached = 1
+        self.skill_end = False
 
         obs["blstats"] = np.append(obs["blstats"], self.skill_vector[self.skill])
         obs['option'] = np.array([self.skill]).astype(np.int64)
+        obs['buc'] = np.array([0]).astype(np.int64)  # 初期値を明示的に設定
 
         return obs
