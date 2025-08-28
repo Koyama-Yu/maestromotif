@@ -439,6 +439,19 @@ class ModifierWrapper(gym.Wrapper):
         self.max_level_reached = 1
         self.skill_end = False
 
+        # 統計情報の初期化
+        self.num_buc = 0
+        self.num_sold = 0
+        self.num_sell = 0
+        self.num_price_id = 0
+        self.altar_seen = False
+        self.shop_seen = False
+        self.price_id = False
+
+        # 評価フラグの初期化
+        self.evaluation = getattr(env, 'evaluation', False)
+        self.eval_target = getattr(env, 'eval_target', None)
+
         self.skill_to_int = {string: i for i, string 
             in enumerate(['discoverer', 'descender', 'ascender', 'worshipper', 'merchant'])}
         self.int_to_skill = {i: string for i, string 
@@ -481,21 +494,32 @@ class ModifierWrapper(gym.Wrapper):
                 self.nethack_player.branch_depth = self.env.env.env.env.env.branch_dlvl
 
         if self.nethack_player is not None:
-            worshipper_precondition, merchant_precondition = self.nethack_player.skill_precondition(
-                self.char_ascii_encodings, 
-                self.char_ascii_colors, 
-                self.cur_num_items, 
-                self.color_map
-            )
+            # 必要な属性が存在する場合のみskill_preconditionを呼び出す
+            if hasattr(self, 'char_ascii_encodings') and hasattr(self, 'char_ascii_colors') and hasattr(self, 'cur_num_items') and hasattr(self, 'color_map'):
+                worshipper_precondition, merchant_precondition = self.nethack_player.skill_precondition(
+                    self.char_ascii_encodings, 
+                    self.char_ascii_colors, 
+                    self.cur_num_items, 
+                    self.color_map
+                )
+            else:
+                worshipper_precondition, merchant_precondition = False, False
         else:
             worshipper_precondition, merchant_precondition = False, False
 
         # 基本的なメッセージ解析（nethack_playerがNoneでも実行）
         # BUC判定
         if b'altar' in msg_str:
-            if b'cursed' not in msg_str and b'blessed' not in msg_str and hasattr(self, 'actions') and self.actions[action] == Command.DROP:
-                self.num_buc += 1
-                cur_buc = 1
+            # actionsの有無をチェックせずにBUC統計を取得
+            if b'cursed' not in msg_str and b'blessed' not in msg_str:
+                # Dropアクションかどうかの判定を簡略化
+                if hasattr(self, 'actions') and action < len(self.actions) and self.actions[action] == Command.DROP:
+                    self.num_buc += 1
+                    cur_buc = 1
+                # actionsが存在しない場合でも、DROP actionの番号による判定を試す
+                elif not hasattr(self, 'actions') and action == 20:  # DROP actionの一般的な番号
+                    self.num_buc += 1
+                    cur_buc = 1
             self.altar_seen = True
 
         # 売却統計

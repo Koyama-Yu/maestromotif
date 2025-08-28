@@ -514,14 +514,15 @@ class APPO(ReinforcementLearningAlgorithm):
                         self.policy_avg_stats[key] = [deque(maxlen=self.cfg.stats_avg) for _ in range(self.cfg.num_policies)]
 
                     # Shops/altars are not seen in every episode
-                    if key == 'shop_seen':
-                        if value == 0:
-                            self.policy_avg_stats['num_sell'][policy_id].pop()
-                            self.policy_avg_stats['num_sold'][policy_id].pop()
-                            self.policy_avg_stats['num_price_id'][policy_id].pop()
-                    elif key == 'altar_seen':
-                        if value == 0:
-                            self.policy_avg_stats['num_buc'][policy_id].pop()
+                    # 統計削除処理をコメントアウト - 0値も統計として保持する
+                    # if key == 'shop_seen':
+                    #     if value == 0:
+                    #         self.policy_avg_stats['num_sell'][policy_id].pop()
+                    #         self.policy_avg_stats['num_sold'][policy_id].pop()
+                    #         self.policy_avg_stats['num_price_id'][policy_id].pop()
+                    # elif key == 'altar_seen':
+                    #     if value == 0:
+                    #         self.policy_avg_stats['num_buc'][policy_id].pop()
 
                     self.policy_avg_stats[key][policy_id].append(value)
 
@@ -615,12 +616,13 @@ class APPO(ReinforcementLearningAlgorithm):
 
             stats_str = ''
             policy_id = 0
-            if self.cfg.eval_target != 'none':
-                keys_of_interest = ['num_sold', 'num_price_id', 'num_sell', 'num_buc', 'branch_id', 'timestep']
-                for key in keys_of_interest:
-                    stats = self.policy_avg_stats[key][policy_id]
-                    if len(stats) > 0:
-                        stats_str += f'{key}: {np.mean(stats):.3f}, '
+            # 統計情報を常に表示（eval_target='none'の場合も含む）
+            keys_of_interest = ['num_sold', 'num_price_id', 'num_sell', 'num_buc', 'branch_id', 'timestep']
+            for key in keys_of_interest:
+                stats = self.policy_avg_stats[key][policy_id]
+                if len(stats) > 0:
+                    stats_str += f'{key}: {np.mean(stats):.3f}, '
+            
             if 'altar' in self.cfg.eval_target:
                 stats = self.policy_avg_stats['num_buc'][policy_id]
                 if len(stats) > 0:
@@ -637,7 +639,9 @@ class APPO(ReinforcementLearningAlgorithm):
                 val = np.mean(self.policy_avg_stats['reached'][policy_id])
                 stats_str += f'Success Rate: {val:.3f}'
 
-            if self.cfg.eval_target != 'none':
+            # サンプル数の表示も常に行う
+            stats = self.policy_avg_stats['num_buc'][policy_id]  # どの統計でも良いのでnum_bucを使用
+            if len(stats) > 0:
                 stats_str += f'; out of {len(stats)} samples'
 
             log.debug(stats_str)

@@ -1,0 +1,142 @@
+diff --git a/execute_pureRL.sh b/execute_pureRL.sh
+index be5acb1..e245897 100644
+--- a/execute_pureRL.sh
++++ b/execute_pureRL.sh
+@@ -1,9 +1,9 @@
+ python -m scripts.main --algo APPO --num_workers 24 --num_envs_per_worker 20 \
+                        --batch_size 4096 --reward_scale 0.1 --obs_scale 255.0 \
+-                       --train_for_env_steps 4_000_000_000 --save_every_steps 50_000_000 \
++                       --train_for_env_steps 4_000_000 --save_every_steps 50_000_000 \
+                        --keep_checkpoints 5 --stats_avg 1000 --seed 2 --code_seed -1 \
+                        --reward_dir "[]" \
+                        --extrinsic_reward 1.0 --llm_reward 0.0 \
+                        --train_dir train_dir/skill_policy/ \
+-                       --experiment pureRL \
++                       --experiment debug \
+                        --eval_target none
+\ No newline at end of file
+diff --git a/rl_baseline/obs_wrappers.py b/rl_baseline/obs_wrappers.py
+index 372e191..fac21f1 100644
+--- a/rl_baseline/obs_wrappers.py
++++ b/rl_baseline/obs_wrappers.py
+@@ -439,6 +439,19 @@ class ModifierWrapper(gym.Wrapper):
+         self.max_level_reached = 1
+         self.skill_end = False
+ 
++        # 統計情報の初期化
++        self.num_buc = 0
++        self.num_sold = 0
++        self.num_sell = 0
++        self.num_price_id = 0
++        self.altar_seen = False
++        self.shop_seen = False
++        self.price_id = False
++
++        # 評価フラグの初期化
++        self.evaluation = getattr(env, 'evaluation', False)
++        self.eval_target = getattr(env, 'eval_target', None)
++
+         self.skill_to_int = {string: i for i, string 
+             in enumerate(['discoverer', 'descender', 'ascender', 'worshipper', 'merchant'])}
+         self.int_to_skill = {i: string for i, string 
+@@ -481,21 +494,32 @@ class ModifierWrapper(gym.Wrapper):
+                 self.nethack_player.branch_depth = self.env.env.env.env.env.branch_dlvl
+ 
+         if self.nethack_player is not None:
+-            worshipper_precondition, merchant_precondition = self.nethack_player.skill_precondition(
+-                self.char_ascii_encodings, 
+-                self.char_ascii_colors, 
+-                self.cur_num_items, 
+-                self.color_map
+-            )
++            # 必要な属性が存在する場合のみskill_preconditionを呼び出す
++            if hasattr(self, 'char_ascii_encodings') and hasattr(self, 'char_ascii_colors') and hasattr(self, 'cur_num_items') and hasattr(self, 'color_map'):
++                worshipper_precondition, merchant_precondition = self.nethack_player.skill_precondition(
++                    self.char_ascii_encodings, 
++                    self.char_ascii_colors, 
++                    self.cur_num_items, 
++                    self.color_map
++                )
++            else:
++                worshipper_precondition, merchant_precondition = False, False
+         else:
+             worshipper_precondition, merchant_precondition = False, False
+ 
+         # 基本的なメッセージ解析（nethack_playerがNoneでも実行）
+         # BUC判定
+         if b'altar' in msg_str:
+-            if b'cursed' not in msg_str and b'blessed' not in msg_str and hasattr(self, 'actions') and self.actions[action] == Command.DROP:
+-                self.num_buc += 1
+-                cur_buc = 1
++            # actionsの有無をチェックせずにBUC統計を取得
++            if b'cursed' not in msg_str and b'blessed' not in msg_str:
++                # Dropアクションかどうかの判定を簡略化
++                if hasattr(self, 'actions') and action < len(self.actions) and self.actions[action] == Command.DROP:
++                    self.num_buc += 1
++                    cur_buc = 1
++                # actionsが存在しない場合でも、DROP actionの番号による判定を試す
++                elif not hasattr(self, 'actions') and action == 20:  # DROP actionの一般的な番号
++                    self.num_buc += 1
++                    cur_buc = 1
+             self.altar_seen = True
+ 
+         # 売却統計
+diff --git a/sample_factory/algorithms/appo/appo.py b/sample_factory/algorithms/appo/appo.py
+index 49334a0..5cefc1a 100644
+--- a/sample_factory/algorithms/appo/appo.py
++++ b/sample_factory/algorithms/appo/appo.py
+@@ -514,14 +514,15 @@ class APPO(ReinforcementLearningAlgorithm):
+                         self.policy_avg_stats[key] = [deque(maxlen=self.cfg.stats_avg) for _ in range(self.cfg.num_policies)]
+ 
+                     # Shops/altars are not seen in every episode
+-                    if key == 'shop_seen':
+-                        if value == 0:
+-                            self.policy_avg_stats['num_sell'][policy_id].pop()
+-                            self.policy_avg_stats['num_sold'][policy_id].pop()
+-                            self.policy_avg_stats['num_price_id'][policy_id].pop()
+-                    elif key == 'altar_seen':
+-                        if value == 0:
+-                            self.policy_avg_stats['num_buc'][policy_id].pop()
++                    # 統計削除処理をコメントアウト - 0値も統計として保持する
++                    # if key == 'shop_seen':
++                    #     if value == 0:
++                    #         self.policy_avg_stats['num_sell'][policy_id].pop()
++                    #         self.policy_avg_stats['num_sold'][policy_id].pop()
++                    #         self.policy_avg_stats['num_price_id'][policy_id].pop()
++                    # elif key == 'altar_seen':
++                    #     if value == 0:
++                    #         self.policy_avg_stats['num_buc'][policy_id].pop()
+ 
+                     self.policy_avg_stats[key][policy_id].append(value)
+ 
+@@ -615,12 +616,13 @@ class APPO(ReinforcementLearningAlgorithm):
+ 
+             stats_str = ''
+             policy_id = 0
+-            if self.cfg.eval_target != 'none':
+-                keys_of_interest = ['num_sold', 'num_price_id', 'num_sell', 'num_buc', 'branch_id', 'timestep']
+-                for key in keys_of_interest:
+-                    stats = self.policy_avg_stats[key][policy_id]
+-                    if len(stats) > 0:
+-                        stats_str += f'{key}: {np.mean(stats):.3f}, '
++            # 統計情報を常に表示（eval_target='none'の場合も含む）
++            keys_of_interest = ['num_sold', 'num_price_id', 'num_sell', 'num_buc', 'branch_id', 'timestep']
++            for key in keys_of_interest:
++                stats = self.policy_avg_stats[key][policy_id]
++                if len(stats) > 0:
++                    stats_str += f'{key}: {np.mean(stats):.3f}, '
++            
+             if 'altar' in self.cfg.eval_target:
+                 stats = self.policy_avg_stats['num_buc'][policy_id]
+                 if len(stats) > 0:
+@@ -637,7 +639,9 @@ class APPO(ReinforcementLearningAlgorithm):
+                 val = np.mean(self.policy_avg_stats['reached'][policy_id])
+                 stats_str += f'Success Rate: {val:.3f}'
+ 
+-            if self.cfg.eval_target != 'none':
++            # サンプル数の表示も常に行う
++            stats = self.policy_avg_stats['num_buc'][policy_id]  # どの統計でも良いのでnum_bucを使用
++            if len(stats) > 0:
+                 stats_str += f'; out of {len(stats)} samples'
+ 
+             log.debug(stats_str)
