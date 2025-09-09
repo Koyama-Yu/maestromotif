@@ -1,4 +1,3 @@
-
 import copy
 import os
 import re
@@ -15,6 +14,7 @@ from PIL import Image, ImageDraw, ImageFont
 from nle.nethack.actions import Command, MiscDirection, WizardCommand
 
 from rl_baseline.price_id import is_item_identified
+from rl_baseline.item_tracker import ItemTracker
 from sample_factory.utils.utils import log
 from utils.forked_pdb import ForkedPdb
 
@@ -448,6 +448,13 @@ class ModifierWrapper(gym.Wrapper):
         self.shop_seen = False
         self.price_id = False
 
+        # アイテム追跡機能の初期化
+        is_training = getattr(env, 'is_training', True)  # デフォルトは学習モード
+        self.item_tracker = ItemTracker(
+            experiment_name=experiment, 
+            is_training=is_training
+        )
+
         # 評価フラグの初期化
         self.evaluation = getattr(env, 'evaluation', False)
         self.eval_target = getattr(env, 'eval_target', None)
@@ -521,6 +528,22 @@ class ModifierWrapper(gym.Wrapper):
                     self.num_buc += 1
                     cur_buc = 1
             self.altar_seen = True
+
+        # アイテム追跡機能の更新
+        self.item_tracker.update_inventory(obs)
+        
+        # if obs['inv_oclasses'] is None:
+        #     print("inv_oclasses is None")
+        # if obs['inv_letters'] is None:
+        #     print("inv_letters is None")
+        # if obs['inv_strs'] is None:
+        #     print("inv_strs is None")
+        # obsのkey, valueをprint
+        #print(obs)
+        if 'inv_oclasses' in obs:
+            print("inv_oclasses is not None")
+        print()
+        self.item_tracker.update_from_message(msg_str)
 
         # 売却統計
         if b'sold' in msg_str:
@@ -622,6 +645,19 @@ class ModifierWrapper(gym.Wrapper):
         info['intrinsic_reward'] = intrinsic_reward
         info['extrinsic_reward'] = extrinsic_reward
 
+        # エピソード終了時の処理
+        if done:
+            episode_length = obs.get('blstats', [0]*30)[20] if 'blstats' in obs else 0  # timestep
+            self.item_tracker.end_episode(
+                episode_length=episode_length,
+                episode_reward=extrinsic_reward
+            )
+            
+            # アイテム統計をinfoに追加
+            item_stats = self.item_tracker.get_episode_stats()
+            for key, value in item_stats.items():
+                info[f'item_{key}'] = value
+
         # Return extrinsic_reward as reward, intrinsic_reward separately in info
         return obs, extrinsic_reward, done, info
 
@@ -631,6 +667,9 @@ class ModifierWrapper(gym.Wrapper):
         self.num_sold = 0
         self.num_sell = 0
         self.num_price_id = 0
+
+        # アイテム追跡機能のリセット
+        self.item_tracker.reset_episode_stats()
 
         # start with dummy values and the initiate all necessary attributes
         if self.meta_policy_class is not None:
@@ -660,3 +699,30 @@ class ModifierWrapper(gym.Wrapper):
         obs['buc'] = np.array([0]).astype(np.int64)  # 初期値を明示的に設定
 
         return obs
+
+    def save_item_statistics(self, save_dir=None):
+        """
+        アイテム統計をファイルに保存
+        
+        Args:
+            save_dir: 保存ディレクトリ（Noneの場合はデフォルトディレクトリを使用）
+        """
+        if save_dir is None:
+            save_dir = os.path.join("item_stats", self.experiment)
+        
+        try:
+            csv_path, npy_path, json_path = self.item_tracker.save_stats(save_dir)
+            self.item_tracker.print_summary()
+            return csv_path, npy_path, json_path
+        except Exception as e:
+            log.error(f"Failed to save item statistics: {e}")
+            return None, None, None
+
+    def get_item_summary(self):
+        """
+        アイテム統計のサマリーを取得
+        
+        Returns:
+            dict: アイテム統計のサマリー辞書
+        """
+        return self.item_tracker.get_usage_stats()

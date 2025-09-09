@@ -275,6 +275,11 @@ class APPO(ReinforcementLearningAlgorithm):
         self.policy_avg_stats = dict()
         self.policy_lag = [dict() for _ in range(self.cfg.num_policies)]
 
+        # アイテム統計収集用の辞書を初期化
+        self.item_statistics = {}
+        for policy_id in range(self.cfg.num_policies):
+            self.item_statistics[policy_id] = {}
+
         self.last_timing = dict()
         self.env_steps = dict()
         self.samples_collected = [0 for _ in range(self.cfg.num_policies)]
@@ -526,6 +531,10 @@ class APPO(ReinforcementLearningAlgorithm):
 
                     self.policy_avg_stats[key][policy_id].append(value)
 
+                    # アイテム統計の詳細保存
+                    if key.startswith('item_'):
+                        self._store_item_statistic(policy_id, key, value)
+
                     for extra_stat_func in EXTRA_EPISODIC_STATS_PROCESSING:
                         extra_stat_func(policy_id, key, value, self.cfg)
 
@@ -716,8 +725,11 @@ class APPO(ReinforcementLearningAlgorithm):
                     stat_value = np.mean(stat[policy_id])
                     writer = self.writers[policy_id]
 
+                    # アイテム統計の特別な処理
+                    if key.startswith('item_'):
+                        avg_tag = f'items/{key}'
                     # custom summaries have their own sections in tensorboard
-                    if '/' in key:
+                    elif '/' in key:
                         avg_tag = key
                         min_tag = f'{key}_min'
                         max_tag = f'{key}_max'
@@ -832,6 +844,12 @@ class APPO(ReinforcementLearningAlgorithm):
         log.info('Collected %r, FPS: %.1f', self.env_steps, fps)
         log.info('Timing: %s', timing)
 
+        # セッション終了時にアイテム統計を保存
+        try:
+            self._save_item_statistics()
+        except Exception as e:
+            log.error(f"Failed to save item statistics: {e}")
+
         if self._should_end_training():
             with open(done_filename(self.cfg), 'w') as fobj:
                 fobj.write(f'{self.env_steps}')
@@ -840,3 +858,97 @@ class APPO(ReinforcementLearningAlgorithm):
         log.info('Done!')
 
         return status
+
+    def _store_item_statistic(self, policy_id, key, value):
+        """アイテム統計を詳細保存用に蓄積"""
+        if key not in self.item_statistics[policy_id]:
+            self.item_statistics[policy_id][key] = []
+        
+        self.item_statistics[policy_id][key].append({
+            'value': value,
+            'env_steps': self.env_steps.get(policy_id, 0),
+            'timestamp': time.time()
+        })
+
+    def _organize_item_statistics(self, raw_stats):
+        """統計データを整理"""
+        organized = {}
+        
+        for key, data_points in raw_stats.items():
+            if not data_points:
+                continue
+                
+            values = [dp['value'] for dp in data_points]
+            organized[key] = {
+                'count': len(values),
+                'mean': np.mean(values) if values else 0,
+                'std': np.std(values) if len(values) > 1 else 0,
+                'min': np.min(values) if values else 0,
+                'max': np.max(values) if values else 0,
+                'total': np.sum(values) if 'acquired' in key or 'used' in key else None
+            }
+        
+        return organized
+
+    def _save_item_stats_csv(self, stats, filename):
+        """統計をCSV形式で保存"""
+        with open(filename, 'w', newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow(['item_stat', 'count', 'mean', 'std', 'min', 'max', 'total'])
+            
+            for key, data in stats.items():
+                writer.writerow([
+                    key, data['count'], data['mean'], data['std'],
+                    data['min'], data['max'], data.get('total', '')
+                ])
+
+    def _save_item_statistics(self):
+        """
+        収集したアイテム統計を保存
+        """
+        log.info(f'Checking item statistics: hasattr={hasattr(self, "item_statistics")}, empty={not self.item_statistics if hasattr(self, "item_statistics") else True}')
+        
+        if not hasattr(self, 'item_statistics') or not self.item_statistics:
+            log.info('No item statistics collected')
+            return
+            
+        log.info('Saving item statistics...')
+        
+        # デバッグ情報を出力
+        total_stats = sum(len(stats) for stats in self.item_statistics.values())
+        log.info(f'Total item statistics entries: {total_stats}')
+        for policy_id, stats in self.item_statistics.items():
+            log.info(f'Policy {policy_id}: {len(stats)} stat keys - {list(stats.keys())[:5]}')
+        
+        # 保存ディレクトリ作成
+        save_dir = os.path.join(self.cfg.train_dir, self.cfg.experiment, 'item_stats')
+        os.makedirs(save_dir, exist_ok=True)
+        
+        # 統計の集計と保存
+        for policy_id, stats in self.item_statistics.items():
+            if not stats:
+                continue
+                
+            # Train/Evalの判別
+            mode = 'eval' if 'none' not in str(self.cfg.eval_target) else 'train'
+            timestamp = int(time.time())
+            
+            # 統計データの整理
+            organized_stats = self._organize_item_statistics(stats)
+            
+            # CSVファイルの保存
+            csv_file = os.path.join(save_dir, f'item_stats_{mode}_policy{policy_id}_{timestamp}.csv')
+            self._save_item_stats_csv(organized_stats, csv_file)
+            
+            # JSONファイルの保存（詳細データ）
+            json_file = os.path.join(save_dir, f'item_stats_{mode}_policy{policy_id}_{timestamp}.json')
+            with open(json_file, 'w') as f:
+                json.dump({
+                    'policy_id': policy_id,
+                    'mode': mode,
+                    'total_episodes': len(next(iter(stats.values()))) if stats else 0,
+                    'statistics': organized_stats,
+                    'raw_data': stats
+                }, f, indent=2)
+        
+        log.info(f'Item statistics saved to {save_dir}')
