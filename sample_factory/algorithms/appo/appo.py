@@ -276,9 +276,13 @@ class APPO(ReinforcementLearningAlgorithm):
         self.policy_lag = [dict() for _ in range(self.cfg.num_policies)]
 
         # アイテム統計収集用の辞書を初期化
-        self.item_statistics = {}
-        for policy_id in range(self.cfg.num_policies):
-            self.item_statistics[policy_id] = {}
+        # self.item_statistics = {}
+        # for policy_id in range(self.cfg.num_policies):
+        #     self.item_statistics[policy_id] = {}
+        # print(f"ItemStats: Initialized for {self.cfg.num_policies} policies")
+        # *** アイテム統計収集用の初期化を追加 ***
+        self.collected_item_statistics = []
+        #log.info('ItemStats: Initialized collection system')
 
         self.last_timing = dict()
         self.env_steps = dict()
@@ -500,6 +504,7 @@ class APPO(ReinforcementLearningAlgorithm):
         for w in self.actor_workers:
             w.update_env_steps(self.env_steps)
 
+
     def process_report(self, report):
         """Process stats from various types of workers."""
 
@@ -531,9 +536,14 @@ class APPO(ReinforcementLearningAlgorithm):
 
                     self.policy_avg_stats[key][policy_id].append(value)
 
-                    # アイテム統計の詳細保存
-                    if key.startswith('item_'):
-                        self._store_item_statistic(policy_id, key, value)
+                    # アイテム統計の詳細保存（ログを制限）
+                    # if key.startswith('item_'):
+                    #     self._store_item_statistic(policy_id, key, value)
+                        
+                        # 値が0でない場合のみ詳細ログ（初回のみ）
+                        # if value > 0 and not hasattr(self, f'_logged_{key}'):
+                        #     print(f"ItemStats: {key} = {value} (first occurrence)")
+                        #     setattr(self, f'_logged_{key}', True)
 
                     for extra_stat_func in EXTRA_EPISODIC_STATS_PROCESSING:
                         extra_stat_func(policy_id, key, value, self.cfg)
@@ -543,6 +553,13 @@ class APPO(ReinforcementLearningAlgorithm):
 
             if 'samples' in report:
                 self.samples_collected[policy_id] += report['samples']
+        
+        # アイテム統計の受信処理を追加
+        if 'item_statistics' in report and 'worker_closing' in report:
+            log.info(f'Received item statistics from worker {report["worker_idx"]}')
+            if not hasattr(self, 'collected_item_statistics'):
+                self.collected_item_statistics = []
+            self.collected_item_statistics.extend(report['item_statistics'])
 
         if 'timing' in report:
             for k, v in report['timing'].items():
@@ -631,6 +648,9 @@ class APPO(ReinforcementLearningAlgorithm):
                 stats = self.policy_avg_stats[key][policy_id]
                 if len(stats) > 0:
                     stats_str += f'{key}: {np.mean(stats):.3f}, '
+            
+            # アイテム統計の概要表示
+            #self._print_item_stats_summary(policy_id)
             
             if 'altar' in self.cfg.eval_target:
                 stats = self.policy_avg_stats['num_buc'][policy_id]
@@ -756,6 +776,14 @@ class APPO(ReinforcementLearningAlgorithm):
             for extra_summaries_func in EXTRA_PER_POLICY_SUMMARIES:
                 extra_summaries_func(policy_id, self.policy_avg_stats, env_steps, self.writers[policy_id], self.cfg)
 
+            # 詳細なアイテム統計の記録
+            #self._report_detailed_item_stats(policy_id, env_steps, self.writers[policy_id])
+        
+        # 定期的なアイテム統計の保存（メインポリシーでのみ実行）
+        # if time.time() - getattr(self, '_last_item_stats_save', 0) > 300:  # 5分ごと
+        #     self._save_item_statistics_periodic()
+        #     self._last_item_stats_save = time.time()
+
     def _should_end_training(self):
         end = len(self.env_steps) > 0 and all(s > self.cfg.train_for_env_steps for s in self.env_steps.values())
         end |= self.total_train_seconds > self.cfg.train_for_seconds
@@ -811,15 +839,38 @@ class APPO(ReinforcementLearningAlgorithm):
             except Exception:
                 log.exception('Exception in driver loop')
                 status = ExperimentStatus.FAILURE
+
+                # エラー時にもアイテム統計を保存
+                try:
+                    self._save_item_statistics_before_close()
+                    log.info('Item statistics saved before error cleanup')
+                except Exception as save_error:
+                    log.error(f"Failed to save item statistics during error: {save_error}")
+
             except KeyboardInterrupt:
                 log.warning('Keyboard interrupt detected in driver loop, exiting...')
                 status = ExperimentStatus.INTERRUPTED
+
+                # 中断時にもアイテム統計を保存
+                try:
+                    self._save_item_statistics_before_close()
+                    log.info('Item statistics saved before interruption cleanup')
+                except Exception as save_error:
+                    log.error(f"Failed to save item statistics during interruption: {save_error}")
 
         for learner in self.learner_workers.values():
             # timeout is needed here because some environments may crash on KeyboardInterrupt (e.g. VizDoom)
             # Therefore the learner train loop will never do another iteration and will never save the model.
             # This is not an issue with normal exit, e.g. due to desired number of frames reached.
             learner.save_model(timeout=5.0)
+        
+
+        # *** ワーカーをクローズする前に統計収集要求を送信 ***
+        log.info('Requesting item statistics from workers before shutdown...')
+        
+        # 初期化
+        if not hasattr(self, 'collected_item_statistics'):
+            self.collected_item_statistics = []
 
         all_workers = self.actor_workers
         for workers in self.policy_workers.values():
@@ -833,6 +884,43 @@ class APPO(ReinforcementLearningAlgorithm):
         for i, w in enumerate(all_workers):
             w.close()
             time.sleep(0.01)
+
+        ## 追記 ##
+        # ワーカーからの最終レポートを処理（統計を受信）
+        log.info('Processing final reports from closing workers...')
+        final_reports_timeout = time.time() + 10.0  # 10秒でタイムアウト
+        received_statistics = False
+        
+        while time.time() < final_reports_timeout:
+            try:
+                reports = self.report_queue.get_many(timeout=1.0)
+                for report in reports:
+                    if 'item_statistics' in report:
+                        self.process_report(report)
+                        received_statistics = True
+                        log.info(f'Received final item statistics from worker {report["worker_idx"]}')
+                if not reports:
+                    break
+            except Empty:
+                break
+        
+        if received_statistics:
+            log.info('Successfully received item statistics from workers')
+        else:
+            log.warning('No item statistics received from workers')
+        
+        # 収集した統計を保存
+        try:
+            if hasattr(self, 'collected_item_statistics') and self.collected_item_statistics:
+                self._save_collected_item_statistics()
+                log.info('Item statistics saved successfully')
+            else:
+                log.warning('No item statistics collected to save')
+        except Exception as e:
+            log.error(f"Failed to save collected item statistics: {e}")
+        ## 追記ここまで ##
+        
+
         for i, w in enumerate(all_workers):
             w.join()
         log.debug('Workers joined!')
@@ -845,10 +933,11 @@ class APPO(ReinforcementLearningAlgorithm):
         log.info('Timing: %s', timing)
 
         # セッション終了時にアイテム統計を保存
-        try:
-            self._save_item_statistics()
-        except Exception as e:
-            log.error(f"Failed to save item statistics: {e}")
+        # try:
+        #     self._save_item_statistics()
+        #     log.info('Item statistics saved successfully')
+        # except Exception as e:
+        #     log.error(f"Failed to save item statistics: {e}")
 
         if self._should_end_training():
             with open(done_filename(self.cfg), 'w') as fobj:
@@ -859,96 +948,244 @@ class APPO(ReinforcementLearningAlgorithm):
 
         return status
 
-    def _store_item_statistic(self, policy_id, key, value):
-        """アイテム統計を詳細保存用に蓄積"""
-        if key not in self.item_statistics[policy_id]:
-            self.item_statistics[policy_id][key] = []
-        
-        self.item_statistics[policy_id][key].append({
-            'value': value,
-            'env_steps': self.env_steps.get(policy_id, 0),
-            'timestamp': time.time()
-        })
 
-    def _organize_item_statistics(self, raw_stats):
-        """統計データを整理"""
-        organized = {}
-        
-        for key, data_points in raw_stats.items():
-            if not data_points:
-                continue
+    def _save_item_statistics_before_close(self):
+        """
+        ワーカー終了前にアイテム統計を保存（改良版）
+        """
+        log.info('Saving item statistics before worker cleanup...')
+        try:
+            base_dir = os.path.join(self.cfg.train_dir, self.cfg.experiment, 'item_stats')
+            os.makedirs(base_dir, exist_ok=True)
+            saved = 0
+
+            def find_modifier_wrapper(obj, max_depth=5):
+                """オブジェクト階層からModifierWrapperを再帰的に探索"""
+                if max_depth <= 0:
+                    return None
+                    
+                # 直接チェック
+                if hasattr(obj, 'save_item_statistics') and callable(getattr(obj, 'save_item_statistics')):
+                    return obj
                 
-            values = [dp['value'] for dp in data_points]
-            organized[key] = {
-                'count': len(values),
-                'mean': np.mean(values) if values else 0,
-                'std': np.std(values) if len(values) > 1 else 0,
-                'min': np.min(values) if values else 0,
-                'max': np.max(values) if values else 0,
-                'total': np.sum(values) if 'acquired' in key or 'used' in key else None
-            }
-        
-        return organized
+                # よくある属性を探索
+                for attr_name in ['env', 'envs', 'wrapper', 'wrapped_env']:
+                    if hasattr(obj, attr_name):
+                        attr_value = getattr(obj, attr_name)
+                        if attr_value is None:
+                            continue
+                            
+                        # リストの場合
+                        if isinstance(attr_value, (list, tuple)):
+                            for item in attr_value:
+                                result = find_modifier_wrapper(item, max_depth - 1)
+                                if result:
+                                    return result
+                        else:
+                            # 単一オブジェクトの場合
+                            result = find_modifier_wrapper(attr_value, max_depth - 1)
+                            if result:
+                                return result
+                
+                return None
 
-    def _save_item_stats_csv(self, stats, filename):
-        """統計をCSV形式で保存"""
-        with open(filename, 'w', newline='') as csvfile:
-            writer = csv.writer(csvfile)
-            writer.writerow(['item_stat', 'count', 'mean', 'std', 'min', 'max', 'total'])
-            
-            for key, data in stats.items():
-                writer.writerow([
-                    key, data['count'], data['mean'], data['std'],
-                    data['min'], data['max'], data.get('total', '')
-                ])
+            for worker_idx, worker in enumerate(self.actor_workers):
+                if worker is None:
+                    continue
+                    
+                try:
+                    log.debug(f'Processing worker {worker_idx}: {type(worker).__name__}')
+                    
+                    # ワーカーが生きているかチェック
+                    if hasattr(worker, 'process') and not worker.process.is_alive():
+                        log.warning(f'Worker {worker_idx} process is not alive, skipping')
+                        continue
+                    
+                    # 複数の方法でModifierWrapperを探索
+                    wrapper = None
+                    
+                    # 方法1: 直接envs属性から
+                    if hasattr(worker, 'envs') and worker.envs:
+                        for env_idx, env in enumerate(worker.envs):
+                            wrapper = find_modifier_wrapper(env)
+                            if wrapper:
+                                save_dir = os.path.join(base_dir, f'worker_{worker_idx}_env_{env_idx}')
+                                try:
+                                    wrapper.save_item_statistics(save_dir)
+                                    saved += 1
+                                    log.info(f'Saved statistics from worker {worker_idx}, env {env_idx}')
+                                except Exception as e:
+                                    log.warning(f'Failed to save from worker {worker_idx}, env {env_idx}: {e}')
+                    
+                    # 方法2: worker自体からの探索
+                    if not wrapper:
+                        wrapper = find_modifier_wrapper(worker)
+                        if wrapper:
+                            save_dir = os.path.join(base_dir, f'worker_{worker_idx}')
+                            try:
+                                wrapper.save_item_statistics(save_dir)
+                                saved += 1
+                                log.info(f'Saved statistics from worker {worker_idx} (direct)')
+                            except Exception as e:
+                                log.warning(f'Failed to save from worker {worker_idx} (direct): {e}')
+                
+                except Exception as e:
+                    log.warning(f'Failed to process worker {worker_idx}: {e}')
 
-    def _save_item_statistics(self):
-        """
-        収集したアイテム統計を保存
-        """
-        log.info(f'Checking item statistics: hasattr={hasattr(self, "item_statistics")}, empty={not self.item_statistics if hasattr(self, "item_statistics") else True}')
-        
-        if not hasattr(self, 'item_statistics') or not self.item_statistics:
-            log.info('No item statistics collected')
+            if saved == 0:
+                log.warning('No item statistics were saved (no ModifierWrapper found).')
+                # デバッグ情報
+                log.debug(f'Total workers: {len(self.actor_workers)}')
+                for i, w in enumerate(self.actor_workers[:3]):  # 最初の3つのワーカーのみ
+                    if w is not None:
+                        log.debug(f'Worker {i}: {type(w).__name__}, alive: {w.process.is_alive() if hasattr(w, "process") else "unknown"}')
+                        log.debug(f'  Has envs: {hasattr(w, "envs")}, envs: {getattr(w, "envs", "None")[:2] if hasattr(w, "envs") and w.envs else "None"}')
+            else:
+                log.info(f'Item statistics saved for {saved} environments.')
+                
+        except Exception as e:
+            log.error(f'Failed to save item statistics: {e}')
+
+    # def _save_item_statistics(self):
+    #     """後方互換性のため残す（実際の処理は_save_item_statistics_before_closeに移行）"""
+    #     return self._save_item_statistics_before_close()
+    
+    def _save_collected_item_statistics(self):
+        """収集したアイテム統計をファイルに保存"""
+        if not self.collected_item_statistics:
+            log.info('No item statistics collected from workers')
             return
+        
+        try:
+            import csv
+            import json
+            from datetime import datetime
             
-        log.info('Saving item statistics...')
-        
-        # デバッグ情報を出力
-        total_stats = sum(len(stats) for stats in self.item_statistics.values())
-        log.info(f'Total item statistics entries: {total_stats}')
-        for policy_id, stats in self.item_statistics.items():
-            log.info(f'Policy {policy_id}: {len(stats)} stat keys - {list(stats.keys())[:5]}')
-        
-        # 保存ディレクトリ作成
-        save_dir = os.path.join(self.cfg.train_dir, self.cfg.experiment, 'item_stats')
-        os.makedirs(save_dir, exist_ok=True)
-        
-        # 統計の集計と保存
-        for policy_id, stats in self.item_statistics.items():
-            if not stats:
-                continue
+            base_dir = os.path.join(self.cfg.train_dir, self.cfg.experiment, 'item_stats')
+            os.makedirs(base_dir, exist_ok=True)
+            
+            # 統計をワーカー・環境別に整理
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+            
+            for stats_data in self.collected_item_statistics:
+                worker_idx = stats_data['worker_idx']
+                runner_idx = stats_data.get('runner_idx', 0)
+                env_idx = stats_data['env_idx']
+                experiment = stats_data['experiment']
                 
-            # Train/Evalの判別
-            mode = 'eval' if 'none' not in str(self.cfg.eval_target) else 'train'
-            timestamp = int(time.time())
+                # JSON保存
+                json_filename = f'{experiment}_worker_{worker_idx}_runner_{runner_idx}_env_{env_idx}_{timestamp}.json'
+                json_path = os.path.join(base_dir, json_filename)
+                
+                with open(json_path, 'w', encoding='utf-8') as f:
+                    json.dump(stats_data, f, indent=2, ensure_ascii=False)
+                
+                # CSV保存（簡易版）
+                csv_filename = f'{experiment}_worker_{worker_idx}_runner_{runner_idx}_env_{env_idx}_{timestamp}.csv'
+                csv_path = os.path.join(base_dir, csv_filename)
+                
+                with open(csv_path, 'w', newline='', encoding='utf-8') as f:
+                    writer = csv.writer(f)
+                    writer.writerow(['type', 'name', 'acquired', 'used'])
+                    
+                    # カテゴリ統計
+                    categories = ['weapons', 'armor', 'potions', 'scrolls', 'comestibles', 'wands', 'tools', 'rings', 'amulets', 'gems', 'coins']
+                    for cat_name in categories:
+                        acq = stats_data['sess_acq_by_cat'].get(cat_name, 0)
+                        used = stats_data['sess_used_by_cat'].get(cat_name, 0)
+                        if acq > 0 or used > 0:
+                            writer.writerow(['category', cat_name, acq, used])
+                    
+                    # アイテム統計（上位50個のみ）
+                    all_items = set(stats_data['sess_acq_by_item'].keys()) | set(stats_data['sess_used_by_item'].keys())
+                    sorted_items = sorted(all_items, 
+                                        key=lambda x: stats_data['sess_acq_by_item'].get(x, 0) + stats_data['sess_used_by_item'].get(x, 0), 
+                                        reverse=True)[:50]
+                    
+                    for item_name in sorted_items:
+                        acq = stats_data['sess_acq_by_item'].get(item_name, 0)
+                        used = stats_data['sess_used_by_item'].get(item_name, 0)
+                        writer.writerow(['item', item_name, acq, used])
+                
+                log.info(f'Saved item statistics: {json_path}, {csv_path}')
             
-            # 統計データの整理
-            organized_stats = self._organize_item_statistics(stats)
+            # 集約統計の作成
+            self._create_aggregated_item_stats(base_dir, timestamp)
             
-            # CSVファイルの保存
-            csv_file = os.path.join(save_dir, f'item_stats_{mode}_policy{policy_id}_{timestamp}.csv')
-            self._save_item_stats_csv(organized_stats, csv_file)
+            log.info(f'Item statistics saved for {len(self.collected_item_statistics)} worker environments')
             
-            # JSONファイルの保存（詳細データ）
-            json_file = os.path.join(save_dir, f'item_stats_{mode}_policy{policy_id}_{timestamp}.json')
-            with open(json_file, 'w') as f:
-                json.dump({
-                    'policy_id': policy_id,
-                    'mode': mode,
-                    'total_episodes': len(next(iter(stats.values()))) if stats else 0,
-                    'statistics': organized_stats,
-                    'raw_data': stats
-                }, f, indent=2)
-        
-        log.info(f'Item statistics saved to {save_dir}')
+        except Exception as e:
+            log.error(f'Failed to save collected item statistics: {e}')
+
+    def _create_aggregated_item_stats(self, base_dir, timestamp):
+        """全ワーカーの統計を集約"""
+        try:
+            from collections import Counter
+            
+            # 全体の集約
+            total_acq_by_item = Counter()
+            total_used_by_item = Counter()
+            total_acq_by_cat = Counter()
+            total_used_by_cat = Counter()
+            total_episodes = 0
+            
+            for stats_data in self.collected_item_statistics:
+                for item, count in stats_data['sess_acq_by_item'].items():
+                    total_acq_by_item[item] += count
+                for item, count in stats_data['sess_used_by_item'].items():
+                    total_used_by_item[item] += count
+                for cat, count in stats_data['sess_acq_by_cat'].items():
+                    total_acq_by_cat[cat] += count
+                for cat, count in stats_data['sess_used_by_cat'].items():
+                    total_used_by_cat[cat] += count
+                total_episodes += len(stats_data.get('episodes_meta', []))
+            
+            # 集約結果の保存
+            aggregated_data = {
+                'experiment': self.cfg.experiment,
+                'timestamp': timestamp,
+                'total_workers': len({s['worker_idx'] for s in self.collected_item_statistics}),
+                'total_environments': len(self.collected_item_statistics),
+                'total_episodes': total_episodes,
+                'aggregated_stats': {
+                    'acquired_by_item': dict(total_acq_by_item.most_common(100)),
+                    'used_by_item': dict(total_used_by_item.most_common(100)),
+                    'acquired_by_category': dict(total_acq_by_cat),
+                    'used_by_category': dict(total_used_by_cat),
+                }
+            }
+            
+            # JSON保存
+            agg_json_path = os.path.join(base_dir, f'aggregated_stats_{timestamp}.json')
+            with open(agg_json_path, 'w', encoding='utf-8') as f:
+                json.dump(aggregated_data, f, indent=2, ensure_ascii=False)
+            
+            # CSV保存
+            agg_csv_path = os.path.join(base_dir, f'aggregated_stats_{timestamp}.csv')
+            with open(agg_csv_path, 'w', newline='', encoding='utf-8') as f:
+                writer = csv.writer(f)
+                writer.writerow(['type', 'name', 'acquired', 'used', 'usage_rate'])
+                
+                # カテゴリ統計
+                for cat_name in sorted(total_acq_by_cat.keys()):
+                    acq = total_acq_by_cat[cat_name]
+                    used = total_used_by_cat[cat_name]
+                    usage_rate = (used / acq * 100) if acq > 0 else 0
+                    writer.writerow(['category', cat_name, acq, used, f'{usage_rate:.1f}%'])
+                
+                # 上位アイテム統計
+                all_items = set(total_acq_by_item.keys()) | set(total_used_by_item.keys())
+                sorted_items = sorted(all_items, 
+                                    key=lambda x: total_acq_by_item[x] + total_used_by_item[x], 
+                                    reverse=True)[:50]
+                
+                for item_name in sorted_items:
+                    acq = total_acq_by_item[item_name]
+                    used = total_used_by_item[item_name]
+                    usage_rate = (used / acq * 100) if acq > 0 else 0
+                    writer.writerow(['item', item_name, acq, used, f'{usage_rate:.1f}%'])
+            
+            log.info(f'Aggregated statistics saved: {agg_json_path}, {agg_csv_path}')
+            
+        except Exception as e:
+            log.error(f'Failed to create aggregated statistics: {e}')

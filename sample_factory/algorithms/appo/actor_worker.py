@@ -949,6 +949,57 @@ class ActorWorker:
         self.task_queue.put((TaskType.ROLLOUT_STEP, data))
 
     def close(self):
+        """ワーカー終了時にアイテム統計をメインプロセスに送信"""
+        try:
+            # 各環境からアイテム統計を収集
+            item_stats_collected = []
+            
+            if hasattr(self, 'env_runners') and self.env_runners:
+                for runner_idx, env_runner in enumerate(self.env_runners):
+                    if hasattr(env_runner, 'envs') and env_runner.envs:
+                        for env_i, env in enumerate(env_runner.envs):
+                            current_env = env
+                            # ラッパーチェーンを辿ってModifierWrapperを探す
+                            while current_env is not None:
+                                if (hasattr(current_env, 'item_tracker') and 
+                                    hasattr(current_env.item_tracker, 'sess_acq_by_item')):
+                                    
+                                    # 統計データを辞書に変換
+                                    stats_data = {
+                                        'worker_idx': self.worker_idx,
+                                        'runner_idx': runner_idx,
+                                        'env_idx': env_i,
+                                        'experiment': getattr(current_env, 'experiment', 'unknown'),
+                                        'mode': getattr(current_env.item_tracker, 'mode', 'train'),
+                                        'sess_acq_by_item': dict(current_env.item_tracker.sess_acq_by_item),
+                                        'sess_used_by_item': dict(current_env.item_tracker.sess_used_by_item),
+                                        'sess_acq_by_cat': dict(current_env.item_tracker.sess_acq_by_cat),
+                                        'sess_used_by_cat': dict(current_env.item_tracker.sess_used_by_cat),
+                                        'episodes_meta': current_env.item_tracker.episodes_meta[-100:],  # 最新100エピソードのみ
+                                    }
+                                    item_stats_collected.append(stats_data)
+                                    break
+                                current_env = getattr(current_env, 'env', None)
+            
+            # 統計データをメインプロセスに送信
+            if item_stats_collected:
+                report = {
+                    'worker_closing': True,
+                    'worker_idx': self.worker_idx,
+                    'item_statistics': item_stats_collected
+                }
+                try:
+                    self.report_queue.put(report, timeout=2.0)  # タイムアウト付き
+                    log.info(f'Worker {self.worker_idx} sent item statistics for {len(item_stats_collected)} environments')
+                except Exception as queue_error:
+                    log.warning(f'Failed to send item statistics from worker {self.worker_idx}: {queue_error}')
+            else:
+                log.debug(f'Worker {self.worker_idx}: No item statistics to send')
+            
+        except Exception as e:
+            log.warning(f'Failed to collect item statistics from worker {self.worker_idx}: {e}')
+        
+        # TaskType.TERMINATE を送信して既存のクローズ処理を実行
         self.task_queue.put((TaskType.TERMINATE, None))
 
     def update_env_steps(self, env_steps):

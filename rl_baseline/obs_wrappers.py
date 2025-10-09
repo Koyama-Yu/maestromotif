@@ -101,10 +101,46 @@ class BlstatsWrapper(gym.Wrapper):
         self.skill_multiplier = [1.0] * self.env.num_skills
         self.bl_norm = np.concatenate((BlstatsWrapper.BLSTAT_NORMALIZATION_STATS, self.skill_multiplier))
 
+        ## 追記 ##
+
+        # monk_tasks_nle.pyでの追加要素を考慮して動的に長さを決定
+        # 基本blstats(24) + skill_feature(1) + potions(1) + comestibles(1) + skill_vector(num_skills)
+        base_blstats_size = 24  # NetHackの基本blstats
+        additional_monk_features = 3  # skill_feature + potions + comestibles
+        expected_blstats_size = base_blstats_size + additional_monk_features + self.env.num_skills
+        
+        # 正規化配列も動的に構築
+        monk_features_norm = [1.0, 1.0, 1.0]  # skill_feature, potions, comestibles用
+        self.bl_norm = np.concatenate((
+            BlstatsWrapper.BLSTAT_NORMALIZATION_STATS,  # 元の24要素
+            monk_features_norm,  # monk追加の3要素
+            self.skill_multiplier  # skill vector
+        ))
+
+        # 実際の環境から正確なサイズを取得
+        dummy_obs = env.reset()
+        actual_blstats_size = dummy_obs['blstats'].shape[0] if 'blstats' in dummy_obs else expected_blstats_size
+
+        ## 追記 ##
+
         self.num_items = min(
                 self.bl_norm.shape[0],
                 env.observation_space['blstats'].shape[0]
             )
+        
+        ## 追記 ##
+        # 正規化配列のサイズを実際のblstatsに合わせる
+        if self.bl_norm.shape[0] != actual_blstats_size:
+            # 足りない場合は1.0で埋める、多い場合は切り詰める
+            if self.bl_norm.shape[0] < actual_blstats_size:
+                padding = np.ones(actual_blstats_size - self.bl_norm.shape[0])
+                self.bl_norm = np.concatenate([self.bl_norm, padding])
+            else:
+                self.bl_norm = self.bl_norm[:actual_blstats_size]
+        
+        #log.info(f"BlstatsWrapper: actual_blstats_size={actual_blstats_size}, bl_norm_size={self.bl_norm.shape[0]}")
+        ## 追記 ##
+
         self.diff_h = diff_h
         self.diffstats_dict = {'dlvl': 12, 'gold': 13, 'hp': 10, 'xp': 18, 'hunger': 21}
         self.prev_stats = {}
@@ -143,7 +179,10 @@ class BlstatsWrapper(gym.Wrapper):
         obs['diffstats'] = np.array(obs['diffstats'], dtype=np.float32)
         obs['diffstats'][1:] *= 0 # Only keep some stats for BT model
 
-        norm_blstats = (obs["blstats"] * self.bl_norm[:self.num_items])
+        # 動的サイズ対応
+        blstats_size = min(obs["blstats"].shape[0], self.bl_norm.shape[0])
+        #norm_blstats = (obs["blstats"] * self.bl_norm[:self.num_items])
+        norm_blstats = (obs["blstats"][:blstats_size] * self.bl_norm[:blstats_size])
         norm_blstats = norm_blstats.astype(np.float32)
         obs["norm_blstats"] = norm_blstats
         return obs
@@ -449,10 +488,12 @@ class ModifierWrapper(gym.Wrapper):
         self.price_id = False
 
         # アイテム追跡機能の初期化
-        is_training = getattr(env, 'is_training', True)  # デフォルトは学習モード
+        #mode = 'eval' if not getattr(env, 'evaluation', True) else 'train'
+        mode = 'eval' if getattr(env, 'evaluation', True) else 'train'
+        #is_training = getattr(env, 'is_training', True)  # デフォルトは学習モード
         self.item_tracker = ItemTracker(
             experiment_name=experiment, 
-            is_training=is_training
+            mode=mode
         )
 
         # 評価フラグの初期化
@@ -529,21 +570,50 @@ class ModifierWrapper(gym.Wrapper):
                     cur_buc = 1
             self.altar_seen = True
 
-        # アイテム追跡機能の更新
-        self.item_tracker.update_inventory(obs)
-        
-        # if obs['inv_oclasses'] is None:
-        #     print("inv_oclasses is None")
-        # if obs['inv_letters'] is None:
-        #     print("inv_letters is None")
-        # if obs['inv_strs'] is None:
-        #     print("inv_strs is None")
-        # obsのkey, valueをprint
-        #print(obs)
-        if 'inv_oclasses' in obs:
-            print("inv_oclasses is not None")
-        print()
-        self.item_tracker.update_from_message(msg_str)
+        # アイテム追跡機能の更新（デバッグ出力を最小限に制限）
+        # try:
+        #     # 初回のみ観測キーを確認
+        #     if not hasattr(self, '_obs_keys_logged'):
+        #         print(f"ItemTracker: Available observation keys confirmed")
+        #         for key in ['inv_oclasses', 'inv_letters', 'inv_strs', 'inv_glyphs']:
+        #             if key in obs:
+        #                 print(f"  {key}: shape={obs[key].shape}, non-zero={np.count_nonzero(obs[key])}")
+        #             else:
+        #                 print(f"  {key}: NOT FOUND")
+        #         self._obs_keys_logged = True
+            
+        #     # ステップカウンタの管理
+        #     if not hasattr(self, 'step_count'):
+        #         self.step_count = 0
+        #     self.step_count += 1
+            
+        #     # アイテム追跡の実行
+        #     self.item_tracker.update_inventory(obs)
+        #     self.item_tracker.update_from_message(msg_str)
+
+        #     # 1000ステップごとに簡易チェック（大幅に削減）
+        #     if self.step_count % 1000 == 0:
+        #         current_stats = self.item_tracker.get_episode_stats()
+        #         non_zero_stats = {k: v for k, v in current_stats.items() if v > 0}
+        #         if non_zero_stats:
+        #             # 主要な統計のみ表示
+        #             key_stats = {k: v for k, v in non_zero_stats.items() 
+        #                        if any(category in k for category in ['weapons', 'potions', 'scrolls', 'comestibles'])}
+        #             if key_stats:
+        #                 print(f"ItemTracker Step {self.step_count}: {len(key_stats)} key stats updated")
+                    
+        # except Exception as e:
+        #     # エラーログも制限
+        #     if not hasattr(self, '_error_logged'):
+        #         print(f"ItemTracker error (will not repeat): {e}")
+        #         self._error_logged = True
+
+        # アイテム追跡の実行
+        try:
+            self.item_tracker.update_from_obs(obs)
+            self.item_tracker.update_usage_from_message(msg_str)
+        except Exception:
+            pass
 
         # 売却統計
         if b'sold' in msg_str:
@@ -646,17 +716,57 @@ class ModifierWrapper(gym.Wrapper):
         info['extrinsic_reward'] = extrinsic_reward
 
         # エピソード終了時の処理
-        if done:
-            episode_length = obs.get('blstats', [0]*30)[20] if 'blstats' in obs else 0  # timestep
-            self.item_tracker.end_episode(
-                episode_length=episode_length,
-                episode_reward=extrinsic_reward
-            )
+        try:
+            ep_stats = self.item_tracker.episode_summary()
+            for k, v in ep_stats.items():
+                info[f'item_{k}'] = v
+            timestep = int(obs.get('blstats', [0]*30)[20]) if 'blstats' in obs else 0
+            meta = {
+                'timestep': timestep,
+                'episode_length': timestep,
+                'reward': float(reward),
+            }
+            self.item_tracker.on_episode_end(meta=meta)
+        except Exception:
+            pass
+        # if done:
+        #     episode_length = obs.get('blstats', [0]*30)[20] if 'blstats' in obs else 0  # timestep
+        #     self.item_tracker.end_episode(
+        #         episode_length=episode_length,
+        #         episode_reward=extrinsic_reward
+        #     )
             
-            # アイテム統計をinfoに追加
-            item_stats = self.item_tracker.get_episode_stats()
-            for key, value in item_stats.items():
-                info[f'item_{key}'] = value
+        #     # アイテム統計をinfoに追加
+        #     try:
+        #         ep_stats = self.item_tracker.episode_summary()
+        #         for k, v in ep_stats.items():
+        #             info[f'item_{k}'] = v
+        #         meta = {
+        #             'timestep': int(obs.get('blstats', [0]*30)[20]) if 'blstats' in obs else 0,
+        #             'reward': float(reward),
+        #         }
+        #         self.item_tracker.on_episode_end(meta=meta)
+        #     except Exception:
+        #         pass
+            
+            # 定期的な統計保存とサマリー表示（100エピソードごと）
+            # if hasattr(self, 'episode_count'):
+            #     self.episode_count += 1
+            # else:
+            #     self.episode_count = 1
+                
+            # if self.episode_count % 100 == 0:
+            #     print(f"\n=== Episode {self.episode_count} Item Statistics ===")
+            #     self.item_tracker.print_summary(show_detailed=False, show_glyph=True)
+                
+            # 1000エピソードごとに詳細統計を保存
+            # if self.episode_count % 1000 == 0:
+            #     try:
+            #         save_dir = os.path.join("train_dir", self.experiment, "item_stats")
+            #         self.item_tracker.save_stats(save_dir)
+            #         print(f"Saved item statistics at episode {self.episode_count}")
+            #     except Exception as e:
+            #         print(f"Failed to save item statistics: {e}")
 
         # Return extrinsic_reward as reward, intrinsic_reward separately in info
         return obs, extrinsic_reward, done, info
@@ -669,7 +779,7 @@ class ModifierWrapper(gym.Wrapper):
         self.num_price_id = 0
 
         # アイテム追跡機能のリセット
-        self.item_tracker.reset_episode_stats()
+        self.item_tracker.reset_episode()
 
         # start with dummy values and the initiate all necessary attributes
         if self.meta_policy_class is not None:
@@ -699,24 +809,45 @@ class ModifierWrapper(gym.Wrapper):
         obs['buc'] = np.array([0]).astype(np.int64)  # 初期値を明示的に設定
 
         return obs
+    
+    ## 追記 ##
+    def close(self):
+        """ワーカー終了時の自動保存"""
+        try:
+            # 統計が収集されている場合のみ保存
+            if hasattr(self, 'item_tracker') and self.item_tracker:
+                stats = self.item_tracker.sess_acq_by_item
+                if stats or self.item_tracker.sess_acq_by_cat:
+                    experiment_name = getattr(self, 'experiment', 'default')
+                    save_dir = os.path.join("train_dir", "skill_policy", experiment_name, "item_stats", "auto_save")
+                    self.save_item_statistics(save_dir)
+                    log.info('Auto-saved item statistics on wrapper close')
+        except Exception as e:
+            log.warning(f'Failed to auto-save item statistics: {e}')
+        
+        # 親クラスのclose処理
+        if hasattr(super(), 'close'):
+            return super().close()
+        
+    ## 追記 ##
 
     def save_item_statistics(self, save_dir=None):
-        """
-        アイテム統計をファイルに保存
-        
-        Args:
-            save_dir: 保存ディレクトリ（Noneの場合はデフォルトディレクトリを使用）
-        """
+        """APPOから呼び出されるセッション統計保存"""
+        if not hasattr(self, 'item_tracker') or self.item_tracker is None:
+            return None, None
+
         if save_dir is None:
-            save_dir = os.path.join("item_stats", self.experiment)
-        
+            experiment_name = getattr(self, 'experiment', 'default')
+            save_dir = os.path.join("train_dir", "skill_policy", experiment_name, "item_stats")
+
         try:
-            csv_path, npy_path, json_path = self.item_tracker.save_stats(save_dir)
-            self.item_tracker.print_summary()
-            return csv_path, npy_path, json_path
+            os.makedirs(save_dir, exist_ok=True)
+            csv_path, json_path = self.item_tracker.save_session_stats(save_dir)
+            log.info(f'Item stats saved: {csv_path}, {json_path}')
+            return csv_path, json_path
         except Exception as e:
             log.error(f"Failed to save item statistics: {e}")
-            return None, None, None
+            return None, None
 
     def get_item_summary(self):
         """
@@ -726,3 +857,25 @@ class ModifierWrapper(gym.Wrapper):
             dict: アイテム統計のサマリー辞書
         """
         return self.item_tracker.get_usage_stats()
+    
+    def get_glyph_statistics(self):
+        """
+        グリフベースアイテム統計を取得
+        
+        Returns:
+            dict: グリフベースアイテム統計辞書
+        """
+        return self.item_tracker.get_usage_stats(glyph_based=True)
+    
+    def get_detailed_item_statistics(self):
+        """
+        詳細アイテム統計を取得
+        
+        Returns:
+            dict: 詳細アイテム統計辞書
+        """
+        return self.item_tracker.get_usage_stats(detailed=True)
+    
+    def print_current_item_stats(self):
+        """現在のアイテム統計をコンソールに表示"""
+        self.item_tracker.print_summary(show_detailed=True, show_glyph=True)

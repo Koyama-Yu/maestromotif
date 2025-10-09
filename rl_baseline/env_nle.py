@@ -43,6 +43,12 @@ class RootNLEWrapper(gym.Wrapper):
             "message": gym.spaces.Box(0, 255, shape=(256,), dtype=np.uint8),
             "glyphs": gym.spaces.Box(0, 5976, (21, 79), dtype=np.int16),
             "blstats": gym.spaces.Box(-2147483648, 2147483647, shape=(bl_shape,), dtype=np.int32),
+
+            # インベントリ観測を追加
+            "inv_strs": gym.spaces.Box(0, 255, shape=(55, 80), dtype=np.uint8),
+            "inv_letters": gym.spaces.Box(0, 255, shape=(55,), dtype=np.uint8),
+            "inv_oclasses": gym.spaces.Box(0, 255, shape=(55,), dtype=np.uint8),
+            "inv_glyphs": gym.spaces.Box(0, 5976, shape=(55,), dtype=np.int16), 
         }
 
         self.env_id = np.array([env_id]).astype(np.int16)
@@ -111,7 +117,8 @@ def make_custom_env_func(full_env_name, cfg=None, env_config=None):
                 "glyphs", 
                 "inv_strs", 
                 "inv_letters", 
-                "inv_oclasses"
+                "inv_oclasses",
+                "inv_glyphs"
                 ],
             actions=tuple(actions),
             max_episode_steps=cfg.max_episode_steps,
