@@ -536,15 +536,6 @@ class APPO(ReinforcementLearningAlgorithm):
 
                     self.policy_avg_stats[key][policy_id].append(value)
 
-                    # アイテム統計の詳細保存（ログを制限）
-                    # if key.startswith('item_'):
-                    #     self._store_item_statistic(policy_id, key, value)
-                        
-                        # 値が0でない場合のみ詳細ログ（初回のみ）
-                        # if value > 0 and not hasattr(self, f'_logged_{key}'):
-                        #     print(f"ItemStats: {key} = {value} (first occurrence)")
-                        #     setattr(self, f'_logged_{key}', True)
-
                     for extra_stat_func in EXTRA_EPISODIC_STATS_PROCESSING:
                         extra_stat_func(policy_id, key, value, self.cfg)
 
@@ -631,13 +622,8 @@ class APPO(ReinforcementLearningAlgorithm):
                 reward_stats = self.policy_avg_stats['reward'][policy_id]
                 if len(reward_stats) > 0:
                     policy_reward_stats.append((policy_id, f'{np.mean(reward_stats):.3f}', f'{np.median(reward_stats):.3f}'))
-                # 追記
-                #true_reward_stats = self.policy_avg_stats['true_reward'][policy_id]
-                #if len(true_reward_stats) > 0:
-                    #policy_true_reward_stats.append((policy_id, f'{np.mean(true_reward_stats):.3f}', f'{np.median(true_reward_stats):.3f}'))
+
             log.debug('Avg, Median episode reward: %r', policy_reward_stats)
-            #log.debug('Avg, Median true reward: %r', policy_true_reward_stats)
-            # 追記
             #log.debug('true_reward: %r', self.policy_avg_stats['true_reward'][policy_id])
 
             stats_str = ''
@@ -775,14 +761,6 @@ class APPO(ReinforcementLearningAlgorithm):
 
             for extra_summaries_func in EXTRA_PER_POLICY_SUMMARIES:
                 extra_summaries_func(policy_id, self.policy_avg_stats, env_steps, self.writers[policy_id], self.cfg)
-
-            # 詳細なアイテム統計の記録
-            #self._report_detailed_item_stats(policy_id, env_steps, self.writers[policy_id])
-        
-        # 定期的なアイテム統計の保存（メインポリシーでのみ実行）
-        # if time.time() - getattr(self, '_last_item_stats_save', 0) > 300:  # 5分ごと
-        #     self._save_item_statistics_periodic()
-        #     self._last_item_stats_save = time.time()
 
     def _should_end_training(self):
         end = len(self.env_steps) > 0 and all(s > self.cfg.train_for_env_steps for s in self.env_steps.values())
@@ -932,13 +910,6 @@ class APPO(ReinforcementLearningAlgorithm):
         log.info('Collected %r, FPS: %.1f', self.env_steps, fps)
         log.info('Timing: %s', timing)
 
-        # セッション終了時にアイテム統計を保存
-        # try:
-        #     self._save_item_statistics()
-        #     log.info('Item statistics saved successfully')
-        # except Exception as e:
-        #     log.error(f"Failed to save item statistics: {e}")
-
         if self._should_end_training():
             with open(done_filename(self.cfg), 'w') as fobj:
                 fobj.write(f'{self.env_steps}')
@@ -1046,9 +1017,6 @@ class APPO(ReinforcementLearningAlgorithm):
         except Exception as e:
             log.error(f'Failed to save item statistics: {e}')
 
-    # def _save_item_statistics(self):
-    #     """後方互換性のため残す（実際の処理は_save_item_statistics_before_closeに移行）"""
-    #     return self._save_item_statistics_before_close()
     
     def _save_collected_item_statistics(self):
         """収集したアイテム統計をファイルに保存"""

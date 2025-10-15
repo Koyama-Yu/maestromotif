@@ -570,44 +570,6 @@ class ModifierWrapper(gym.Wrapper):
                     cur_buc = 1
             self.altar_seen = True
 
-        # アイテム追跡機能の更新（デバッグ出力を最小限に制限）
-        # try:
-        #     # 初回のみ観測キーを確認
-        #     if not hasattr(self, '_obs_keys_logged'):
-        #         print(f"ItemTracker: Available observation keys confirmed")
-        #         for key in ['inv_oclasses', 'inv_letters', 'inv_strs', 'inv_glyphs']:
-        #             if key in obs:
-        #                 print(f"  {key}: shape={obs[key].shape}, non-zero={np.count_nonzero(obs[key])}")
-        #             else:
-        #                 print(f"  {key}: NOT FOUND")
-        #         self._obs_keys_logged = True
-            
-        #     # ステップカウンタの管理
-        #     if not hasattr(self, 'step_count'):
-        #         self.step_count = 0
-        #     self.step_count += 1
-            
-        #     # アイテム追跡の実行
-        #     self.item_tracker.update_inventory(obs)
-        #     self.item_tracker.update_from_message(msg_str)
-
-        #     # 1000ステップごとに簡易チェック（大幅に削減）
-        #     if self.step_count % 1000 == 0:
-        #         current_stats = self.item_tracker.get_episode_stats()
-        #         non_zero_stats = {k: v for k, v in current_stats.items() if v > 0}
-        #         if non_zero_stats:
-        #             # 主要な統計のみ表示
-        #             key_stats = {k: v for k, v in non_zero_stats.items() 
-        #                        if any(category in k for category in ['weapons', 'potions', 'scrolls', 'comestibles'])}
-        #             if key_stats:
-        #                 print(f"ItemTracker Step {self.step_count}: {len(key_stats)} key stats updated")
-                    
-        # except Exception as e:
-        #     # エラーログも制限
-        #     if not hasattr(self, '_error_logged'):
-        #         print(f"ItemTracker error (will not repeat): {e}")
-        #         self._error_logged = True
-
         # アイテム追跡の実行
         try:
             self.item_tracker.update_from_obs(obs)
@@ -735,38 +697,6 @@ class ModifierWrapper(gym.Wrapper):
         #         episode_length=episode_length,
         #         episode_reward=extrinsic_reward
         #     )
-            
-        #     # アイテム統計をinfoに追加
-        #     try:
-        #         ep_stats = self.item_tracker.episode_summary()
-        #         for k, v in ep_stats.items():
-        #             info[f'item_{k}'] = v
-        #         meta = {
-        #             'timestep': int(obs.get('blstats', [0]*30)[20]) if 'blstats' in obs else 0,
-        #             'reward': float(reward),
-        #         }
-        #         self.item_tracker.on_episode_end(meta=meta)
-        #     except Exception:
-        #         pass
-            
-            # 定期的な統計保存とサマリー表示（100エピソードごと）
-            # if hasattr(self, 'episode_count'):
-            #     self.episode_count += 1
-            # else:
-            #     self.episode_count = 1
-                
-            # if self.episode_count % 100 == 0:
-            #     print(f"\n=== Episode {self.episode_count} Item Statistics ===")
-            #     self.item_tracker.print_summary(show_detailed=False, show_glyph=True)
-                
-            # 1000エピソードごとに詳細統計を保存
-            # if self.episode_count % 1000 == 0:
-            #     try:
-            #         save_dir = os.path.join("train_dir", self.experiment, "item_stats")
-            #         self.item_tracker.save_stats(save_dir)
-            #         print(f"Saved item statistics at episode {self.episode_count}")
-            #     except Exception as e:
-            #         print(f"Failed to save item statistics: {e}")
 
         # Return extrinsic_reward as reward, intrinsic_reward separately in info
         return obs, extrinsic_reward, done, info

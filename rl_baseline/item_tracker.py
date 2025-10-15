@@ -1,5 +1,3 @@
-# ...existing code...
-# すべて置換して簡素版に刷新
 import os
 import csv
 import json
@@ -249,4 +247,3 @@ class ItemTracker:
                 w.writerow(['item', name, self.sess_acq_by_item.get(name, 0), self.sess_used_by_item.get(name, 0)])
 
         return csv_path, json_path
-# ...existing code...

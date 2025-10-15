@@ -1,0 +1,77 @@
+type,name,acquired,used
+category,amulets,0,0
+category,armor,0,0
+category,boulders,0,0
+category,coins,0,0
+category,comestibles,5,4
+category,gems,4,4
+category,potions,18,9
+category,rings,2,0
+category,scrolls,6,5
+category,spellbooks,2,1
+category,tools,0,0
+category,wands,2,1
+category,weapons,0,0
+item,5 uncursed oranges,9,9
+item,3 uncursed food rations,6,6
+item,4 uncursed food rations,6,6
+item,6 uncursed oranges,6,6
+item,3 uncursed potions of healing,6,5
+item,5 uncursed apples,5,5
+item,2 uncursed potions of healing,5,5
+item,blessed spellbook of protection,4,4
+item,blessed spellbook of healing,4,4
+item,an uncursed scroll of identify,4,4
+item,blessed potion of healing,4,4
+item,blessed spellbook of sleep,4,4
+item,6 uncursed apples,4,4
+item,lichen corpse,4,4
+item,an uncursed +1 robe (being worn),4,3
+item,an uncursed oil lamp,3,3
+item,3 uncursed fortune cookies,3,3
+item,newt corpse,3,3
+item,an uncursed scroll of light,3,3
+item,4 uncursed fortune cookies,3,2
+item,an uncursed +2 pair of leather gloves (being worn),3,2
+item,7 uncursed apples,3,2
+item,blessed +2 pair of leather gloves (being worn),2,2
+item,cursed +1 robe (being worn),2,2
+item,an uncursed potion of healing,2,2
+item,food ration,2,2
+item,an uncursed lichen corpse,2,2
+item,an uncursed food ration,2,2
+item,an uncursed scroll of confuse monster,2,2
+item,3 gold pieces,2,2
+item,2 lichen corpses,2,2
+item,7 uncursed oranges,2,1
+item,4 cursed food rations,2,1
+item,3 lichen corpses,2,1
+item,an uncursed scroll of remove curse,1,1
+item,magic marker (0:57),1,1
+item,5 uncursed fortune cookies,1,1
+item,cursed +2 pair of leather gloves (being worn),1,1
+item,an uncursed spellbook of healing,1,1
+item,5 cursed oranges,1,1
+item,blessed scroll of food detection,1,1
+item,5 cursed fortune cookies,1,1
+item,magic marker (0:43),1,1
+item,an uncursed scroll of teleportation,1,1
+item,blessed +1 robe (being worn),1,1
+item,2 gold pieces,1,1
+item,6 uncursed fortune cookies,1,1
+item,pancake,1,1
+item,an uncursed pancake,1,1
+item,an uncursed scroll of create monster,1,1
+item,puce potion,1,1
+item,3 uncursed lichen corpses,1,1
+item,an uncursed potion of object detection,1,1
+item,an uncursed scroll of magic mapping,1,1
+item,magic marker (0:63),1,1
+item,7 gold pieces,1,1
+item,blessed scroll of scare monster,1,0
+item,magic marker (0:44),1,0
+item,tripe ration,1,0
+item,2 bananas,1,0
+item,an uncursed spellbook of sleep,1,0
+item,2 food rations,1,0
+item,carrot,1,0
