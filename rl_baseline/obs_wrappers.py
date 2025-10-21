@@ -490,10 +490,14 @@ class ModifierWrapper(gym.Wrapper):
         # アイテム追跡機能の初期化
         #mode = 'eval' if not getattr(env, 'evaluation', True) else 'train'
         mode = 'eval' if getattr(env, 'evaluation', True) else 'train'
+        # ひとまず, enable_detailed_loggingはexport名に基づいて決定
+        enable_detailed = os.getenv('EXPORT_NAME', 'false').lower() == 'true'
+        
         #is_training = getattr(env, 'is_training', True)  # デフォルトは学習モード
         self.item_tracker = ItemTracker(
             experiment_name=experiment, 
-            mode=mode
+            mode=mode,
+            enable_detailed_logging=enable_detailed
         )
 
         # 評価フラグの初期化
@@ -570,12 +574,14 @@ class ModifierWrapper(gym.Wrapper):
                     cur_buc = 1
             self.altar_seen = True
 
+        msg_str = self.env.message[1]
         # アイテム追跡の実行
         try:
-            self.item_tracker.update_from_obs(obs)
-            self.item_tracker.update_usage_from_message(msg_str)
-        except Exception:
-            pass
+            # self.item_tracker.update_from_obs(obs)
+            # self.item_tracker.update_usage_from_message(msg_str)
+            self.item_tracker.update_from_obs(obs, action, msg_str)
+        except Exception as e:
+            log.warning(f"ItemTracker update failed: {e}")
 
         # 売却統計
         if b'sold' in msg_str:
@@ -689,8 +695,9 @@ class ModifierWrapper(gym.Wrapper):
                 'reward': float(reward),
             }
             self.item_tracker.on_episode_end(meta=meta)
-        except Exception:
-            pass
+        except Exception as e:
+            log.warning(f"ItemTracker episode end failed: {e}")
+
         # if done:
         #     episode_length = obs.get('blstats', [0]*30)[20] if 'blstats' in obs else 0  # timestep
         #     self.item_tracker.end_episode(
@@ -808,4 +815,5 @@ class ModifierWrapper(gym.Wrapper):
     
     def print_current_item_stats(self):
         """現在のアイテム統計をコンソールに表示"""
-        self.item_tracker.print_summary(show_detailed=True, show_glyph=True)
+        #self.item_tracker.print_summary(show_detailed=True, show_glyph=True)
+        self.item_tracker.print_action_summary(show_detailed=True, show_glyph=True)
