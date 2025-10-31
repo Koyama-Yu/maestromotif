@@ -366,10 +366,39 @@ class VectorEnvRunner:
             env_id = self.worker_idx * self.cfg.num_envs_per_worker + vector_idx
 
             env_config = AttrDict(
-                worker_index=self.worker_idx, vector_index=vector_idx, env_id=env_id,
+                worker_index=self.worker_idx,
+                vector_index=vector_idx,
+                env_id=env_id,
+                worker_idx=self.worker_idx,
+                env_idx=env_i,
             )
 
             env = make_env_func(self.cfg, env_config=env_config)
+
+            log.debug(f'Setting attributes for worker={self.worker_idx} env_i={env_i} env_id={env_id}')
+
+            # setattr(env, 'worker_index', self.worker_idx)
+            # setattr(env, 'env_index', env_i)
+            # # 追加：ItemTracker用の属性も設定
+            # setattr(env, 'worker_idx', self.worker_idx)  
+            # setattr(env, 'env_idx', env_i)
+
+            # 念の為
+            current_env = env
+            depth = 0
+            while current_env is not None and depth < 20:
+                # 複数の命名規則で設定
+                setattr(current_env, 'worker_idx', self.worker_idx)
+                setattr(current_env, 'env_idx', env_i)
+                setattr(current_env, 'worker_index', self.worker_idx)
+                setattr(current_env, 'env_index', env_i)
+                setattr(current_env, 'vector_index', vector_idx)
+                setattr(current_env, 'env_config', env_config)
+                
+                log.debug(f'Set attributes on {type(current_env).__name__}: worker={self.worker_idx}, env={env_i}')
+                
+                current_env = getattr(current_env, 'env', None)
+                depth += 1
 
             env.seed(env_id)
             self.envs.append(env)
@@ -653,8 +682,17 @@ class VectorEnvRunner:
         return policy_request, complete_rollouts, episodic_stats
 
     def close(self):
-        for e in self.envs:
-            e.close()
+        # for e in self.envs:
+        #     e.close()
+        """全環境をクローズ"""
+        log.info(f'VectorEnvRunner closing: worker={self.worker_idx}, split={self.split_idx}, num_envs={len(self.envs)}')
+        for env_i, e in enumerate(self.envs):
+            try:
+                log.debug(f'Closing env: worker={self.worker_idx}, split={self.split_idx}, env={env_i}')
+                e.close()
+            except Exception as ex:
+                log.warning(f'Failed to close env {env_i}: {ex}')
+        log.info(f'VectorEnvRunner closed: worker={self.worker_idx}, split={self.split_idx}')
 
 
 class ActorWorker:
@@ -882,7 +920,7 @@ class ActorWorker:
                 try:
                     try:
                         with timing.add_time('waiting'), timing.timeit('wait_actor'):
-                            tasks = self.task_queue.get_many(timeout=0.1)
+                            tasks = self.task_queue.get_many(timeout=0.01)
                     except Empty:
                         tasks = []
 
@@ -948,59 +986,137 @@ class ActorWorker:
         data = (split, actions)
         self.task_queue.put((TaskType.ROLLOUT_STEP, data))
 
-    def close(self):
-        """ワーカー終了時にアイテム統計をメインプロセスに送信"""
-        try:
-            # 各環境からアイテム統計を収集
-            item_stats_collected = []
+    # def close(self):
+    #     """ワーカー終了時にアイテム統計をメインプロセスに送信"""
+    #     log.info(f'ActorWorker {self.worker_idx} is closing, collecting item statistics...')
+    #     try:
+    #         # 各環境からアイテム統計を収集
+    #         item_stats_collected = []
             
+    #         if hasattr(self, 'env_runners') and self.env_runners:
+    #             for runner_idx, env_runner in enumerate(self.env_runners):
+    #                 if hasattr(env_runner, 'envs') and env_runner.envs:
+    #                     for env_i, env in enumerate(env_runner.envs):
+    #                         current_env = env
+    #                         # ラッパーチェーンを辿ってModifierWrapperを探す
+    #                         depth = 0
+    #                         while current_env is not None and depth < 20:
+    #                             if (hasattr(current_env, 'item_tracker') and 
+    #                                 hasattr(current_env.item_tracker, 'get_worker_statistics')):
+                                    
+    #                                 # 統計データを辞書に変換
+    #                                 # stats_data = {
+    #                                 #     'worker_idx': self.worker_idx,
+    #                                 #     'runner_idx': runner_idx,
+    #                                 #     'env_idx': env_i,
+    #                                 #     'experiment': getattr(current_env, 'experiment', 'unknown'),
+    #                                 #     'mode': getattr(current_env.item_tracker, 'mode', 'train'),
+    #                                 #     'sess_acq_by_item': dict(current_env.item_tracker.sess_acq_by_item),
+    #                                 #     'sess_used_by_item': dict(current_env.item_tracker.sess_used_by_item),
+    #                                 #     'sess_acq_by_cat': dict(current_env.item_tracker.sess_acq_by_cat),
+    #                                 #     'sess_used_by_cat': dict(current_env.item_tracker.sess_used_by_cat),
+    #                                 #     'episodes_meta': current_env.item_tracker.episodes_meta[-100:],  # 最新100エピソードのみ
+    #                                 # }
+
+    #                                 # 新しい統計データを取得
+    #                                 stats_data = current_env.item_tracker.get_worker_statistics()
+    #                                 stats_data['runner_idx'] = runner_idx
+                                    
+    #                                 # 後方互換性のため古い形式も追加
+    #                                 stats_data.update({
+    #                                     'sess_acq_by_item': dict(current_env.item_tracker.sess_acq_by_item),
+    #                                     'sess_used_by_item': dict(current_env.item_tracker.sess_used_by_item),
+    #                                     'sess_acq_by_cat': dict(current_env.item_tracker.sess_acq_by_cat),
+    #                                     'sess_used_by_cat': dict(current_env.item_tracker.sess_used_by_cat),
+    #                                 })
+
+    #                                 item_stats_collected.append(stats_data)
+    #                                 log.debug(f'Collected item stats from env {env_i}: {len(stats_data.get("item_actions", {}))} items')
+    #                                 break
+    #                             current_env = getattr(current_env, 'env', None)
+    #                             depth += 1
+            
+    #         # 統計データをメインプロセスに送信
+    #         if item_stats_collected:
+    #             report = {
+    #                 'worker_closing': True,
+    #                 'worker_idx': self.worker_idx,
+    #                 'item_statistics': item_stats_collected
+    #             }
+    #             try:
+    #                 # # 複数回試行して確実に送信
+    #                 # sent = False
+    #                 # for attempt in range(3):
+    #                 #     try:
+    #                 #         self.report_queue.put(report, timeout=5.0)
+    #                 #         sent = True
+    #                 #         log.info(f'Worker {self.worker_idx} sent item statistics for {len(item_stats_collected)} environments (attempt {attempt + 1})')
+    #                 #         break
+    #                 #     except Exception as retry_error:
+    #                 #         log.warning(f'Worker {self.worker_idx} send attempt {attempt + 1} failed: {retry_error}')
+    #                 #         time.sleep(0.5)
+                    
+    #                 # if not sent:
+    #                 #     log.error(f'Worker {self.worker_idx} failed to send item statistics after 3 attempts')
+    #                 #     self._emergency_save_item_stats(item_stats_collected)
+    #                 self.report_queue.put(report, block=False)
+    #                 log.info(f'Worker {self.worker_idx} sent item statistics for {len(item_stats_collected)} environments')
+
+    #             except Exception as queue_error:
+    #                 log.error(f'FAILED to send item statistics from worker {self.worker_idx}: {queue_error}')
+    #                 self._emergency_save_item_stats(item_stats_collected)
+    #         else:
+    #             log.warning(f'Worker {self.worker_idx}: No item statistics to send')
+            
+    #     except Exception as e:
+    #         log.error(f'Failed to collect item statistics from worker {self.worker_idx}: {e}', exc_info=True)
+        
+    #     # TaskType.TERMINATE を送信して既存のクローズ処理を実行
+    #     #time.sleep(0.5)  # 送信完了を待つ
+    #     self.task_queue.put((TaskType.TERMINATE, None))
+    #     log.info(f'Worker {self.worker_idx} sent TERMINATE signal')
+
+    def close(self):
+        """ワーカー終了（統計送信は削除、各環境が個別に保存）"""
+        log.info(f'ActorWorker {self.worker_idx} closing...')
+        
+        # 環境のクローズを確実に実行（ここでModifierWrapper.close()が呼ばれる）
+        try:
             if hasattr(self, 'env_runners') and self.env_runners:
                 for runner_idx, env_runner in enumerate(self.env_runners):
-                    if hasattr(env_runner, 'envs') and env_runner.envs:
-                        for env_i, env in enumerate(env_runner.envs):
-                            current_env = env
-                            # ラッパーチェーンを辿ってModifierWrapperを探す
-                            while current_env is not None:
-                                if (hasattr(current_env, 'item_tracker') and 
-                                    hasattr(current_env.item_tracker, 'sess_acq_by_item')):
-                                    
-                                    # 統計データを辞書に変換
-                                    stats_data = {
-                                        'worker_idx': self.worker_idx,
-                                        'runner_idx': runner_idx,
-                                        'env_idx': env_i,
-                                        'experiment': getattr(current_env, 'experiment', 'unknown'),
-                                        'mode': getattr(current_env.item_tracker, 'mode', 'train'),
-                                        'sess_acq_by_item': dict(current_env.item_tracker.sess_acq_by_item),
-                                        'sess_used_by_item': dict(current_env.item_tracker.sess_used_by_item),
-                                        'sess_acq_by_cat': dict(current_env.item_tracker.sess_acq_by_cat),
-                                        'sess_used_by_cat': dict(current_env.item_tracker.sess_used_by_cat),
-                                        'episodes_meta': current_env.item_tracker.episodes_meta[-100:],  # 最新100エピソードのみ
-                                    }
-                                    item_stats_collected.append(stats_data)
-                                    break
-                                current_env = getattr(current_env, 'env', None)
-            
-            # 統計データをメインプロセスに送信
-            if item_stats_collected:
-                report = {
-                    'worker_closing': True,
-                    'worker_idx': self.worker_idx,
-                    'item_statistics': item_stats_collected
-                }
-                try:
-                    self.report_queue.put(report, timeout=2.0)  # タイムアウト付き
-                    log.info(f'Worker {self.worker_idx} sent item statistics for {len(item_stats_collected)} environments')
-                except Exception as queue_error:
-                    log.warning(f'Failed to send item statistics from worker {self.worker_idx}: {queue_error}')
-            else:
-                log.debug(f'Worker {self.worker_idx}: No item statistics to send')
-            
+                    log.info(f'Closing runner {runner_idx} for worker {self.worker_idx}')
+                    env_runner.close()
         except Exception as e:
-            log.warning(f'Failed to collect item statistics from worker {self.worker_idx}: {e}')
+            log.error(f'Failed to close env_runners for worker {self.worker_idx}: {e}', exc_info=True)
         
-        # TaskType.TERMINATE を送信して既存のクローズ処理を実行
+        # TaskType.TERMINATE を送信
         self.task_queue.put((TaskType.TERMINATE, None))
+        log.info(f'Worker {self.worker_idx} sent TERMINATE signal')
+    
+    # def _emergency_save_item_stats(self, item_stats_collected):
+    #     """送信失敗時の緊急保存"""
+    #     try:
+    #         import os
+    #         import json
+    #         from datetime import datetime
+            
+    #         emergency_dir = os.path.join("train_dir", "emergency_item_stats")
+    #         os.makedirs(emergency_dir, exist_ok=True)
+            
+    #         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+    #         emergency_file = os.path.join(emergency_dir, f'emergency_worker_{self.worker_idx}_{timestamp}.json')
+            
+    #         with open(emergency_file, 'w', encoding='utf-8') as f:
+    #             json.dump({
+    #                 'worker_idx': self.worker_idx,
+    #                 'timestamp': timestamp,
+    #                 'item_statistics': item_stats_collected
+    #             }, f, indent=2, ensure_ascii=False)
+            
+    #         log.info(f'Emergency save completed: {emergency_file}')
+            
+    #     except Exception as e:
+    #         log.error(f'Emergency save failed: {e}')
 
     def update_env_steps(self, env_steps):
         try:

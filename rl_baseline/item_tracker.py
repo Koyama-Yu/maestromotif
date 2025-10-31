@@ -4,6 +4,7 @@ import json
 import re
 from collections import Counter, defaultdict
 from datetime import datetime
+from sample_factory.utils.utils import log
 from typing import Dict, List, Optional, Tuple
 
 import numpy as np
@@ -85,18 +86,83 @@ def _classes_to_categories(inv_oclasses: np.ndarray) -> list[str]:
         cats.append(cat)
     return cats
 
+def _normalize_item_name(item_name: str) -> str:
+    """アイテム名を正規化して重複を排除"""
+    if not item_name or not isinstance(item_name, str):
+        return ""
+    
+    # 基本的なクリーニング
+    normalized = item_name.strip().lower()
+    
+    # 装備状態の除去
+    # "(being worn)", "(weapon in hand)", "(alternate weapon)", etc.
+    equipment_patterns = [
+        r'\s*\(being worn\)\s*',
+        r'\s*\(wielded\)\s*',
+        r'\s*\(weapon in hand\)\s*',
+        r'\s*\(alternate weapon\)\s*',
+        r'\s*\(on left hand\)\s*',
+        r'\s*\(on right hand\)\s*',
+        r'\s*\(in quiver\)\s*',
+        r'\s*\(embedded in your skin\)\s*',
+        r'\s*\([^)]*worn[^)]*\)\s*',
+        r'\s*\([^)]*hand[^)]*\)\s*',
+    ]
+    for pattern in equipment_patterns:
+        normalized = re.sub(pattern, '', normalized)
+    
+    # 使用回数の正規化
+    # "magic marker (1:98)" -> "magic marker"
+    # "wand of striking (0:5)" -> "wand of striking"
+    normalized = re.sub(r'\s*\(\d+:\d+\)\s*', '', normalized)
+    
+    # 数量の正規化
+    # "3 uncursed food rations" -> "food rations"
+    normalized = re.sub(r'^\d+\s+', '', normalized)
+    
+    # 冠詞の除去
+    # "an uncursed +1 robe" -> "uncursed +1 robe"
+    normalized = re.sub(r'^(an?\s+)', '', normalized)
+    
+    # 祝福状態の正規化（統合する場合）
+    # "blessed", "uncursed", "cursed" を除去
+    normalized = re.sub(r'\b(blessed|uncursed|cursed)\s+', '', normalized)
+    
+    # エンチャント値の正規化（オプション - 保持する場合と統合する場合）
+    # "+1 robe" -> "robe" (統合する場合)
+    normalized = re.sub(r'[+-]\d+\s+', '', normalized)
+    
+    # 複数スペースを単一スペースに
+    normalized = re.sub(r'\s+', ' ', normalized)
+    
+    return normalized.strip()
+
+def _get_base_item_name(item_name: str) -> str:
+    """より積極的な正規化でベースアイテム名を取得"""
+    base_name = _normalize_item_name(item_name)
+    
+    # さらなる正規化（ベース統計用）
+    # 色や材質も除去
+    base_name = re.sub(r'\b(red|blue|green|yellow|black|white|clear|dark|light)\s+', '', base_name)
+    base_name = re.sub(r'\b(wooden|iron|steel|silver|gold|bronze|copper)\s+', '', base_name)
+    
+    return base_name.strip()
 
 class ItemTracker:
     """最小構成のアイテム統計トラッカー。"""
 
-    def __init__(self, experiment_name: str, mode: str = 'train', enable_detailed_logging: bool = False):
+    def __init__(self, experiment_name: str, mode: str = 'train', worker_idx: int = 0, env_idx: int = 0, enable_detailed_logging: bool = False):
         self.experiment_name = experiment_name
         self.mode = mode  # 'train' or 'eval'
         self.enable_detailed_logging = enable_detailed_logging
 
+        self.worker_idx = worker_idx  # 追加
+        self.env_idx = env_idx  # 追加
+
         # 前回スナップショット（現在インベントリ）
         self.prev_items: Counter[str] = Counter()
         self.prev_cats: Counter[str] = Counter()
+        self.prev_normalized_items: Counter[str] = Counter()
 
         # アイテム別行動記録（新機能）
         # 構造: {item_name: {'acquired': int, 'actions': Counter({'drink': 2, 'drop': 4, ...})}}
@@ -106,7 +172,10 @@ class ItemTracker:
         self.category_actions: Dict[str, Dict] = defaultdict(lambda: {'acquired': 0, 'actions': Counter()})
 
         # 詳細ログ用（オプション）
-        self.detailed_logs: List[Dict] = [] if enable_detailed_logging else None
+        #self.detailed_logs: List[Dict] = [] if enable_detailed_logging else None
+
+        # ベースアイテム統計（より積極的に正規化）- 新規追加
+        self.base_item_actions: Dict[str, Dict] = defaultdict(lambda: {'acquired': 0, 'actions': Counter()})
 
         # エピソード集計
         self.ep_acq_by_item: Counter[str] = Counter()
@@ -120,13 +189,14 @@ class ItemTracker:
         self.sess_acq_by_cat: Counter[str] = Counter()
         self.sess_used_by_cat: Counter[str] = Counter()
 
-        self.episodes_meta: list[dict] = []
+        #self.episodes_meta: list[dict] = []
 
         # 行動マッピング（NetHackのアクション番号から行動名へ）
         self.action_mapping = self._init_action_mapping()
         
         # 現在のステップ情報（詳細ログ用）
         self.current_step = 0
+        self.total_episodes = 0 # 追加
         self.last_action = None
         self.last_message = ""
 
@@ -165,15 +235,18 @@ class ItemTracker:
         self.sess_used_by_item.clear()
         self.sess_acq_by_cat.clear()
         self.sess_used_by_cat.clear()
-        self.episodes_meta.clear()
+        #self.episodes_meta.clear()
         self.prev_items.clear()
         self.prev_cats.clear()
+        self.prev_normalized_items.clear()
 
         # 新機能のリセット
         self.item_actions.clear()
         self.category_actions.clear()
-        if self.detailed_logs is not None:
-            self.detailed_logs.clear()
+        self.base_item_actions.clear()
+        self.total_episodes = 0 # 追加
+        # if self.detailed_logs is not None:
+        #     self.detailed_logs.clear()
 
     ## ここから大きく変更
     def update_from_obs(self, obs: dict, action: Optional[int] = None, msg: str = ""):
@@ -190,33 +263,48 @@ class ItemTracker:
         # 現在スナップショットを作成
         cur_items = Counter()
         cur_cats = Counter()
+        cur_normalized_items = Counter()  # 追加
         for name, cat in zip(names, cats):
             if not name and cat == 'unknown':
                 continue
             if name:
                 cur_items[name] += 1
+                normalized_name = _normalize_item_name(name)
+                if normalized_name:
+                    cur_normalized_items[normalized_name] += 1
             if cat in CATEGORIES:
                 cur_cats[cat] += 1
 
         # アイテム取得の検出
-        acquired_items = cur_items - self.prev_items
+        # acquired_items = cur_items - self.prev_items
+        acquired_items = cur_normalized_items - self.prev_normalized_items
         for item_name, count in acquired_items.items():
             if count > 0:
                 self.item_actions[item_name]['acquired'] += count
+
+                base_name = _get_base_item_name(item_name)  # 追加
+                if base_name:
+                    self.base_item_actions[base_name]['acquired'] += count
+
                 # 後方互換性
                 self.ep_acq_by_item[item_name] += count
                 self.sess_acq_by_item[item_name] += count
 
         # アイテム消失の検出と行動の推定
-        lost_items = self.prev_items - cur_items
+        # lost_items = self.prev_items - cur_items
+        lost_items = self.prev_normalized_items - cur_normalized_items
         for item_name, count in lost_items.items():
             if count > 0:
                 action_name = self._determine_action_for_item(item_name, action, msg)
                 self.item_actions[item_name]['actions'][action_name] += count
                 
+                base_name = _get_base_item_name(item_name)  # 追加
+                if base_name:
+                    #self.base_item_actions[base_name]['used'] += count
+                    self.base_item_actions[base_name]['actions'][action_name] += count
                 # 詳細ログの記録
-                if self.enable_detailed_logging:
-                    self._log_detailed_action(item_name, action_name, count, obs)
+                # if self.enable_detailed_logging:
+                #     self._log_detailed_action(item_name, action_name, count, obs)
                 
                 # 後方互換性
                 self.ep_used_by_item[item_name] += count
@@ -239,7 +327,9 @@ class ItemTracker:
                 self.sess_used_by_cat[cat_name] += count
 
         # スナップショット更新
-        self.prev_items = cur_items
+        # self.prev_items = cur_items
+        self.prev_items = cur_normalized_items
+        self.prev_normalized_items = cur_normalized_items
         self.prev_cats = cur_cats
 
     def _determine_action_for_item(self, item_name: str, action: Optional[int], msg: str) -> str:
@@ -393,7 +483,14 @@ class ItemTracker:
                            for k, v in self.item_actions.items()},
             'category_actions': {k: {'acquired': v['acquired'], 'actions': dict(v['actions'])} 
                                for k, v in self.category_actions.items()},
-            'episodes': self.episodes_meta,
+            #'episodes': self.episodes_meta,
+            # 後方互換性のためセッション統計も含める（episodes除外）
+            'session_legacy': {
+                'acquired_by_cat': dict(self.sess_acq_by_cat),
+                'used_by_cat': dict(self.sess_used_by_cat),
+                'acquired_by_item': dict(self.sess_acq_by_item),
+                'used_by_item': dict(self.sess_used_by_item),
+            }
         }
         
         if self.detailed_logs:
@@ -404,13 +501,62 @@ class ItemTracker:
 
         # 詳細ログの保存（オプション）
         detailed_log_path = None
-        if self.enable_detailed_logging and self.detailed_logs:
-            detailed_log_path = os.path.join(save_dir, f'{base}_detailed_logs.json')
-            with open(detailed_log_path, 'w', encoding='utf-8') as f:
-                json.dump(self.detailed_logs, f, indent=2, ensure_ascii=False)
+        # if self.enable_detailed_logging and self.detailed_logs:
+        #     detailed_log_path = os.path.join(save_dir, f'{base}_detailed_logs.json')
+        #     with open(detailed_log_path, 'w', encoding='utf-8') as f:
+        #         json.dump(self.detailed_logs, f, indent=2, ensure_ascii=False)
 
         # return csv_path, json_path, detailed_log_path
         return json_path, json_path, detailed_log_path
+    
+    def get_worker_statistics(self) -> Dict:
+        """ワーカー統計を取得"""
+        return {
+            'worker_idx': self.worker_idx,
+            'env_idx': self.env_idx,
+            'experiment': self.experiment_name,
+            'mode': self.mode,
+            'total_episodes': self.total_episodes,
+            'item_actions': {k: {'acquired': v['acquired'], 'actions': dict(v['actions'])} 
+                           for k, v in self.item_actions.items()},
+            'base_item_actions': {k: {'acquired': v['acquired'], 'actions': dict(v['actions'])} 
+                                for k, v in self.base_item_actions.items()},
+            'category_actions': {k: {'acquired': v['acquired'], 'actions': dict(v['actions'])} 
+                               for k, v in self.category_actions.items()},
+        }
+
+    def save_worker_stats(self, save_dir: str) -> str:
+        """ワーカー統計をJSONで保存"""
+        import os
+        import tempfile
+        import shutil
+        
+        os.makedirs(save_dir, exist_ok=True)
+        
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        # プロセスIDを追加して衝突を回避
+        pid = os.getpid()
+        filename = f'{self.experiment_name}_worker_{self.worker_idx}_env_{self.env_idx}_pid_{pid}_{timestamp}.json'
+        json_path = os.path.join(save_dir, filename)
+        
+        log.info(f'Saving worker stats: worker={self.worker_idx}, env={self.env_idx}, pid={pid}, file={filename}')
+        
+        # 一時ファイルに書き込み
+        temp_fd, temp_path = tempfile.mkstemp(dir=save_dir, suffix='.json')
+        try:
+            with os.fdopen(temp_fd, 'w', encoding='utf-8') as f:
+                json.dump(self._prepare_statistics_dict(), f, indent=2, ensure_ascii=False)
+            
+            # アトミックにリネーム
+            shutil.move(temp_path, json_path)
+            log.info(f'Successfully saved: {json_path}')
+            
+        except Exception as e:
+            if os.path.exists(temp_path):
+                os.unlink(temp_path)
+            raise e
+        
+        return json_path
 
     # 使わないが残す
     def update_usage_from_message(self, msg: str | bytes):
@@ -435,6 +581,109 @@ class ItemTracker:
         #     self.sess_used_by_cat['wands'] += 1
         pass
 
+    # def _normalize_item_name(self, item_name: str) -> str:
+    #     """アイテム名を正規化して重複を統合"""
+    #     if not item_name or not isinstance(item_name, str):
+    #         return item_name
+        
+    #     # 基本的な正規化
+    #     normalized = item_name.strip().lower()
+        
+    #     # 装備状態の除去 (being worn) など
+    #     equipment_patterns = [
+    #         r'\s*\(being worn\)\s*',
+    #         r'\s*\(wielded\)\s*',
+    #         r'\s*\(on left hand\)\s*',
+    #         r'\s*\(on right hand\)\s*',
+    #         r'\s*\(in quiver\)\s*',
+    #         r'\s*\(embedded in your skin\)\s*',
+    #     ]
+    #     for pattern in equipment_patterns:
+    #         normalized = re.sub(pattern, '', normalized)
+        
+    #     # 使用回数の正規化（magic markerなど）
+    #     # "magic marker (1:50)" -> "magic marker"
+    #     normalized = re.sub(r'\s*\(\d+:\d+\)\s*', '', normalized)
+        
+    #     # 数量の正規化
+    #     # "3 uncursed potions of healing" -> "potion of healing"
+    #     # "an uncursed +1 robe" -> "robe"
+        
+    #     # 数量を削除
+    #     normalized = re.sub(r'^\d+\s+', '', normalized)
+
+    #     # 冠詞を削除
+    #     normalized = re.sub(r'^(an?\s+)', '', normalized)
+        
+    #     # 祝福状態を削除（オプション - 統合したい場合）
+    #     normalized = re.sub(r'\b(blessed|uncursed|cursed)\s+', '', normalized)
+        
+    #     # エンチャント値を削除（オプション）
+    #     normalized = re.sub(r'\+\d+\s+', '', normalized)
+        
+    #     # 複数の空白を単一に
+    #     normalized = re.sub(r'\s+', ' ', normalized).strip()
+        
+    #     return normalized
+    
+    def get_normalized_item_stats(self) -> Dict[str, Dict]:
+        """正規化されたアイテム統計を取得"""
+        # normalized_stats = defaultdict(lambda: {'acquired': 0, 'actions': Counter()})
+        
+        # for item_name, stats in self.item_actions.items():
+        #     normalized_name = self._normalize_item_name(item_name)
+        #     normalized_stats[normalized_name]['acquired'] += stats['acquired']
+        #     normalized_stats[normalized_name]['actions'].update(stats['actions'])
+        
+        # return dict(normalized_stats)
+        return dict(self.item_actions)
+
+    def get_normalized_category_stats(self) -> Dict[str, Dict]:
+        """正規化されたカテゴリ統計を取得（重複はないがインターフェース統一のため）"""
+        return dict(self.category_actions)
+    
+    def get_base_item_stats(self) -> Dict[str, Dict]:
+        """ベースアイテム統計を取得"""
+        return dict(self.base_item_actions)
+
+    def _prepare_statistics_dict(self) -> Dict:
+        """統計データを辞書形式で準備（保存用）"""
+        return {
+            'worker_idx': self.worker_idx,
+            'env_idx': self.env_idx,
+            'experiment': self.experiment_name,
+            'mode': self.mode,
+            'total_episodes': self.total_episodes,
+            'item_actions': {
+                k: {
+                    'acquired': v['acquired'], 
+                    'actions': dict(v['actions'])
+                } 
+                for k, v in self.item_actions.items()
+            },
+            'base_item_actions': {
+                k: {
+                    'acquired': v['acquired'], 
+                    'actions': dict(v['actions'])
+                } 
+                for k, v in self.base_item_actions.items()
+            },
+            'category_actions': {
+                k: {
+                    'acquired': v['acquired'], 
+                    'actions': dict(v['actions'])
+                } 
+                for k, v in self.category_actions.items()
+            },
+            # 後方互換性のため旧形式も含める
+            'session_legacy': {
+                'acquired_by_cat': dict(self.sess_acq_by_cat),
+                'used_by_cat': dict(self.sess_used_by_cat),
+                'acquired_by_item': dict(self.sess_acq_by_item),
+                'used_by_item': dict(self.sess_used_by_item),
+            }
+        }
+
     def episode_summary(self) -> dict:
         """エピソード集計をフラットな辞書で返す（infoに載せる用）。"""
         out = {}
@@ -444,12 +693,7 @@ class ItemTracker:
             used = self.ep_used_by_cat.get(cat, 0)
             out[f'cat_{cat}_acquired'] = int(acq)
             out[f'cat_{cat}_used'] = int(used)
-        # # アイテム（上位のみ）
-        # top_items = (self.ep_acq_by_item + self.ep_used_by_item).most_common(10)
-        # for i, (name, _) in enumerate(top_items):
-        #     sk = _safe_key(name, 30)
-        #     out[f'item_{i}_{sk}_acquired'] = int(self.ep_acq_by_item.get(name, 0))
-        #     out[f'item_{i}_{sk}_used'] = int(self.ep_used_by_item.get(name, 0))
+        
         # 新機能：行動統計の追加
         for cat_name, stats in self.category_actions.items():
             out[f'cat_{cat_name}_total_actions'] = sum(stats['actions'].values())
@@ -457,8 +701,9 @@ class ItemTracker:
         return out
 
     def on_episode_end(self, meta: dict | None = None):
-        if meta:
-            self.episodes_meta.append(meta)
+        # if meta:
+        #     self.episodes_meta.append(meta)
+        self.total_episodes += 1
         self.reset_episode()
 
     def save_session_stats(self, save_dir: str) -> tuple[str, str]:
@@ -483,18 +728,7 @@ class ItemTracker:
         # with open(json_path, 'w', encoding='utf-8') as f:
         #     json.dump(payload, f, indent=2, ensure_ascii=False)
 
-        # # CSV（カテゴリとアイテム2本）
-        # csv_path = os.path.join(save_dir, f'{base}.csv')
-        # with open(csv_path, 'w', newline='', encoding='utf-8') as f:
-        #     w = csv.writer(f)
-        #     w.writerow(['type', 'name', 'acquired', 'used'])
-        #     for cat in sorted(CATEGORIES):
-        #         w.writerow(['category', cat, self.sess_acq_by_cat.get(cat, 0), self.sess_used_by_cat.get(cat, 0)])
-        #     # 上位アイテムのみ（多すぎ防止）
-        #     merged = (self.sess_acq_by_item + self.sess_used_by_item).most_common(200)
-        #     for name, _ in merged:
-        #         w.writerow(['item', name, self.sess_acq_by_item.get(name, 0), self.sess_used_by_item.get(name, 0)])
-        # csv_path, json_path, _ = self.save_action_stats(save_dir)
-        json_path, _, detailed_log_path = self.save_action_stats(save_dir)
+        # json_path, _, detailed_log_path = self.save_action_stats(save_dir)
 
+        json_path = self.save_worker_stats(save_dir)
         return json_path, json_path

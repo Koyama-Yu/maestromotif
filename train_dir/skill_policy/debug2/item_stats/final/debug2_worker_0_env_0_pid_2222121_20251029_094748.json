@@ -1,0 +1,612 @@
+{
+  "worker_idx": 0,
+  "env_idx": 0,
+  "experiment": "debug2",
+  "mode": "train",
+  "total_episodes": 26,
+  "item_actions": {
+    "pair of leather gloves": {
+      "acquired": 2,
+      "actions": {
+        "equip": 1
+      }
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of sleep": {
+      "acquired": 5,
+      "actions": {
+        "unknown": 3,
+        "read": 1
+      }
+    },
+    "scroll of identify": {
+      "acquired": 5,
+      "actions": {
+        "read": 4
+      }
+    },
+    "potions of healing": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "food rations": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "gold pieces": {
+      "acquired": 5,
+      "actions": {
+        "unknown": 4,
+        "read": 1
+      }
+    },
+    "newt corpse": {
+      "acquired": 8,
+      "actions": {
+        "eat": 7,
+        "drop": 1
+      }
+    },
+    "spellbook of protection": {
+      "acquired": 7,
+      "actions": {
+        "unknown": 5,
+        "read": 2
+      }
+    },
+    "scroll of taming": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "potion of healing": {
+      "acquired": 9,
+      "actions": {
+        "drink": 8,
+        "read": 1
+      }
+    },
+    "spellbook of healing": {
+      "acquired": 6,
+      "actions": {
+        "unknown": 5,
+        "drop": 1
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 4,
+      "actions": {
+        "read": 3,
+        "drop": 1
+      }
+    },
+    "oil lamp": {
+      "acquired": 5,
+      "actions": {
+        "unknown": 4,
+        "drop": 1
+      }
+    },
+    "scroll of confuse monster": {
+      "acquired": 4,
+      "actions": {
+        "read": 4
+      }
+    },
+    "scroll of create monster": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "scroll of destroy armor": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "scroll of light": {
+      "acquired": 5,
+      "actions": {
+        "read": 5
+      }
+    },
+    "partly eaten food ration": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "lichen corpse": {
+      "acquired": 7,
+      "actions": {
+        "eat": 5,
+        "drop": 1
+      }
+    },
+    "food ration": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "magic marker": {
+      "acquired": 2,
+      "actions": {
+        "unknown": 2
+      }
+    },
+    "burnt pair of leather gloves": {
+      "acquired": 1,
+      "actions": {
+        "equip": 1
+      }
+    },
+    "scroll labeled andova begarin": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of magic mapping": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "lichen corpses": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "scroll labeled velox neb": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of gold detection": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of punishment": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "swirly potion": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "pink potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "brilliant blue potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of full healing": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of sickness": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "slime molds": {
+      "acquired": 1,
+      "actions": {}
+    }
+  },
+  "base_item_actions": {
+    "pair of leather gloves": {
+      "acquired": 2,
+      "actions": {
+        "equip": 1
+      }
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of sleep": {
+      "acquired": 5,
+      "actions": {
+        "unknown": 3,
+        "read": 1
+      }
+    },
+    "scroll of identify": {
+      "acquired": 5,
+      "actions": {
+        "read": 4
+      }
+    },
+    "potions of healing": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "food rations": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "pieces": {
+      "acquired": 5,
+      "actions": {
+        "unknown": 4,
+        "read": 1
+      }
+    },
+    "newt corpse": {
+      "acquired": 8,
+      "actions": {
+        "eat": 7,
+        "drop": 1
+      }
+    },
+    "spellbook of protection": {
+      "acquired": 7,
+      "actions": {
+        "unknown": 5,
+        "read": 2
+      }
+    },
+    "scroll of taming": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "potion of healing": {
+      "acquired": 9,
+      "actions": {
+        "drink": 8,
+        "read": 1
+      }
+    },
+    "spellbook of healing": {
+      "acquired": 6,
+      "actions": {
+        "unknown": 5,
+        "drop": 1
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 4,
+      "actions": {
+        "read": 3,
+        "drop": 1
+      }
+    },
+    "oil lamp": {
+      "acquired": 5,
+      "actions": {
+        "unknown": 4,
+        "drop": 1
+      }
+    },
+    "scroll of confuse monster": {
+      "acquired": 4,
+      "actions": {
+        "read": 4
+      }
+    },
+    "scroll of create monster": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "scroll of destroy armor": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "scroll of light": {
+      "acquired": 5,
+      "actions": {
+        "read": 5
+      }
+    },
+    "partly eaten food ration": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "lichen corpse": {
+      "acquired": 7,
+      "actions": {
+        "eat": 5,
+        "drop": 1
+      }
+    },
+    "food ration": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "magic marker": {
+      "acquired": 2,
+      "actions": {
+        "unknown": 2
+      }
+    },
+    "burnt pair of leather gloves": {
+      "acquired": 1,
+      "actions": {
+        "equip": 1
+      }
+    },
+    "scroll labeled andova begarin": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of magic mapping": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "lichen corpses": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "scroll labeled velox neb": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of detection": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of punishment": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "swirly potion": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "pink potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "brilliant potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of full healing": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of sickness": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "slime molds": {
+      "acquired": 1,
+      "actions": {}
+    }
+  },
+  "category_actions": {
+    "rings": {
+      "acquired": 2,
+      "actions": {}
+    },
+    "wands": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbooks": {
+      "acquired": 3,
+      "actions": {
+        "move_ne": 1,
+        "move_se": 1
+      }
+    },
+    "scrolls": {
+      "acquired": 13,
+      "actions": {
+        "move_ne": 1,
+        "read": 1,
+        "offer": 1,
+        "move_e": 2,
+        "drop": 1,
+        "move_s": 1,
+        "pray": 4,
+        "move_nw": 1
+      }
+    },
+    "potions": {
+      "acquired": 22,
+      "actions": {
+        "move_sw": 1,
+        "read": 1,
+        "kick": 2,
+        "offer": 1,
+        "pray": 5,
+        "move_e": 1,
+        "move_se": 2,
+        "drop": 2,
+        "move_w": 1
+      }
+    },
+    "gems": {
+      "acquired": 5,
+      "actions": {
+        "move_sw": 1,
+        "move_wait": 1,
+        "read": 1,
+        "move_se": 1,
+        "pray": 1
+      }
+    },
+    "comestibles": {
+      "acquired": 5,
+      "actions": {
+        "move_e": 1,
+        "move_wait": 1,
+        "offer": 1,
+        "drop": 1,
+        "move_nw": 1
+      }
+    }
+  },
+  "session_legacy": {
+    "acquired_by_cat": {
+      "rings": 2,
+      "wands": 1,
+      "spellbooks": 3,
+      "scrolls": 13,
+      "potions": 22,
+      "gems": 5,
+      "comestibles": 5
+    },
+    "used_by_cat": {
+      "gems": 5,
+      "potions": 16,
+      "scrolls": 12,
+      "comestibles": 5,
+      "spellbooks": 2
+    },
+    "acquired_by_item": {
+      "pair of leather gloves": 2,
+      "robe": 1,
+      "spellbook of sleep": 5,
+      "scroll of identify": 5,
+      "potions of healing": 1,
+      "food rations": 1,
+      "apples": 1,
+      "oranges": 1,
+      "fortune cookies": 1,
+      "gold pieces": 5,
+      "newt corpse": 8,
+      "spellbook of protection": 7,
+      "scroll of taming": 1,
+      "potion of healing": 9,
+      "spellbook of healing": 6,
+      "scroll of remove curse": 4,
+      "oil lamp": 5,
+      "scroll of confuse monster": 4,
+      "scroll of create monster": 2,
+      "scroll of destroy armor": 2,
+      "scroll of light": 5,
+      "partly eaten food ration": 1,
+      "lichen corpse": 7,
+      "food ration": 1,
+      "magic marker": 2,
+      "burnt pair of leather gloves": 1,
+      "scroll labeled andova begarin": 1,
+      "scroll of magic mapping": 2,
+      "lichen corpses": 1,
+      "scroll labeled velox neb": 1,
+      "scroll of gold detection": 1,
+      "scroll of punishment": 1,
+      "swirly potion": 1,
+      "pink potion": 1,
+      "brilliant blue potion": 1,
+      "potion of full healing": 1,
+      "potion of sickness": 1,
+      "slime molds": 1
+    },
+    "used_by_item": {
+      "gold pieces": 5,
+      "spellbook of sleep": 4,
+      "scroll of identify": 4,
+      "newt corpse": 8,
+      "spellbook of protection": 7,
+      "scroll of taming": 1,
+      "potion of healing": 9,
+      "spellbook of healing": 6,
+      "scroll of remove curse": 4,
+      "oil lamp": 5,
+      "scroll of confuse monster": 4,
+      "scroll of create monster": 2,
+      "scroll of destroy armor": 2,
+      "scroll of light": 5,
+      "partly eaten food ration": 1,
+      "lichen corpse": 6,
+      "food ration": 1,
+      "magic marker": 2,
+      "pair of leather gloves": 1,
+      "burnt pair of leather gloves": 1,
+      "scroll labeled andova begarin": 1,
+      "scroll of magic mapping": 2,
+      "lichen corpses": 1,
+      "scroll labeled velox neb": 1,
+      "scroll of gold detection": 1,
+      "swirly potion": 1,
+      "scroll of punishment": 1,
+      "pink potion": 1,
+      "brilliant blue potion": 1,
+      "potion of full healing": 1,
+      "potion of sickness": 1
+    }
+  }
+}

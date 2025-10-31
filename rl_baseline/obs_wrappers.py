@@ -492,11 +492,76 @@ class ModifierWrapper(gym.Wrapper):
         mode = 'eval' if getattr(env, 'evaluation', True) else 'train'
         # ひとまず, enable_detailed_loggingはexport名に基づいて決定
         enable_detailed = os.getenv('EXPORT_NAME', 'false').lower() == 'true'
+        # worker_idx = getattr(env, 'worker_index', 0)
+        # env_idx = getattr(env, 'env_index', 0)
+        worker_idx = None
+        env_idx = None
+
+        # 方法1: env_config から取得（最優先）
+        if hasattr(env, 'env_config'):
+            env_config = env.env_config
+            worker_idx = getattr(env_config, 'worker_idx', None) or getattr(env_config, 'worker_index', None)
+            env_idx = getattr(env_config, 'env_idx', None) or getattr(env_config, 'vector_index', None)
+            log.debug(f'ModifierWrapper: Got from env_config: worker={worker_idx}, env={env_idx}')
         
+        # 方法2: 直接属性を確認（フォールバック）
+        if worker_idx is None:
+            if hasattr(env, 'worker_idx'):
+                worker_idx = env.worker_idx
+            elif hasattr(env, 'worker_index'):
+                worker_idx = env.worker_index
+        
+        if env_idx is None:
+            if hasattr(env, 'env_idx'):
+                env_idx = env.env_idx
+            elif hasattr(env, 'env_index'):
+                env_idx = env.env_index
+            elif hasattr(env, 'vector_index'):
+                env_idx = env.vector_index
+        # if worker_idx is None and hasattr(env, 'env_config'):
+        #     worker_idx = getattr(env.env_config, 'worker_index', None)
+        # if env_idx is None and hasattr(env, 'env_config'):
+        #     env_idx = getattr(env.env_config, 'vector_index', None)
+        
+        # 方法3: ラッパーチェーンを辿って取得（最終フォールバック）
+        if worker_idx is None or env_idx is None:
+            current = env
+            depth = 0
+            while current is not None and depth < 20:
+                if worker_idx is None:
+                    if hasattr(current, 'env_config'):
+                        env_config = current.env_config
+                        worker_idx = getattr(env_config, 'worker_idx', None) or getattr(env_config, 'worker_index', None)
+                    if worker_idx is None:
+                        worker_idx = getattr(current, 'worker_idx', None) or getattr(current, 'worker_index', None)
+                
+                if env_idx is None:
+                    if hasattr(current, 'env_config'):
+                        env_config = current.env_config
+                        env_idx = getattr(env_config, 'env_idx', None) or getattr(env_config, 'vector_index', None)
+                    if env_idx is None:
+                        env_idx = getattr(current, 'env_idx', None) or getattr(current, 'env_index', None) or getattr(current, 'vector_index', None)
+                
+                if worker_idx is not None and env_idx is not None:
+                    break
+                
+                current = getattr(current, 'env', None)
+                depth += 1
+        
+        # デフォルト値
+        final_worker_idx = worker_idx if worker_idx is not None else 0
+        final_env_idx = env_idx if env_idx is not None else 0
+        
+        log.info(f'ModifierWrapper init: worker={final_worker_idx}, env={final_env_idx}, experiment={experiment}')
+
         #is_training = getattr(env, 'is_training', True)  # デフォルトは学習モード
         self.item_tracker = ItemTracker(
             experiment_name=experiment, 
             mode=mode,
+            #worker_idx=worker_idx,
+            worker_idx=final_worker_idx,
+            #env_idx=env_idx
+            env_idx=final_env_idx,
             enable_detailed_logging=enable_detailed
         )
 
@@ -684,19 +749,21 @@ class ModifierWrapper(gym.Wrapper):
         info['extrinsic_reward'] = extrinsic_reward
 
         # エピソード終了時の処理
-        try:
-            ep_stats = self.item_tracker.episode_summary()
-            for k, v in ep_stats.items():
-                info[f'item_{k}'] = v
-            timestep = int(obs.get('blstats', [0]*30)[20]) if 'blstats' in obs else 0
-            meta = {
-                'timestep': timestep,
-                'episode_length': timestep,
-                'reward': float(reward),
-            }
-            self.item_tracker.on_episode_end(meta=meta)
-        except Exception as e:
-            log.warning(f"ItemTracker episode end failed: {e}")
+        if done:
+            try:
+                ep_stats = self.item_tracker.episode_summary()
+                for k, v in ep_stats.items():
+                    info[f'item_{k}'] = v
+                timestep = int(obs.get('blstats', [0]*30)[20]) if 'blstats' in obs else 0
+                meta = {
+                    'timestep': timestep,
+                    'episode_length': timestep,
+                    'reward': float(reward),
+                }
+                #self.item_tracker.on_episode_end(meta=meta)
+                self.item_tracker.on_episode_end()
+            except Exception as e:
+                log.warning(f"ItemTracker episode end failed: {e}")
 
         # if done:
         #     episode_length = obs.get('blstats', [0]*30)[20] if 'blstats' in obs else 0  # timestep
@@ -753,18 +820,31 @@ class ModifierWrapper(gym.Wrapper):
         try:
             # 統計が収集されている場合のみ保存
             if hasattr(self, 'item_tracker') and self.item_tracker:
-                stats = self.item_tracker.sess_acq_by_item
-                if stats or self.item_tracker.sess_acq_by_cat:
+                worker_idx = getattr(self.item_tracker, 'worker_idx', -1)
+                env_idx = getattr(self.item_tracker, 'env_idx', -1)
+                total_episodes = self.item_tracker.total_episodes
+                
+                log.info(f'ModifierWrapper close called: worker={worker_idx}, env={env_idx}, episodes={total_episodes}')
+                
+                # エピソードが1つでも完了していれば保存
+                if total_episodes > 0:
                     experiment_name = getattr(self, 'experiment', 'default')
-                    save_dir = os.path.join("train_dir", "skill_policy", experiment_name, "item_stats", "auto_save")
-                    self.save_item_statistics(save_dir)
-                    log.info('Auto-saved item statistics on wrapper close')
+                    save_dir = os.path.join("train_dir", "skill_policy", experiment_name, "item_stats", "final")
+                    json_path = self.save_item_statistics(save_dir)
+                    log.info(f'✓ Saved item statistics: worker={worker_idx}, env={env_idx}, file={json_path}')
+                else:
+                    log.debug(f'No episodes completed for worker={worker_idx}, env={env_idx}')
+            else:
+                log.debug('No item_tracker found in ModifierWrapper')
         except Exception as e:
-            log.warning(f'Failed to auto-save item statistics: {e}')
+            log.error(f'Failed to save item statistics: {e}', exc_info=True)
         
         # 親クラスのclose処理
-        if hasattr(super(), 'close'):
-            return super().close()
+        try:
+            if hasattr(super(), 'close'):
+                super().close()
+        except Exception as e:
+            log.warning(f'Parent close() failed: {e}')
         
     ## 追記 ##
 
@@ -779,9 +859,9 @@ class ModifierWrapper(gym.Wrapper):
 
         try:
             os.makedirs(save_dir, exist_ok=True)
-            csv_path, json_path = self.item_tracker.save_session_stats(save_dir)
-            log.info(f'Item stats saved: {csv_path}, {json_path}')
-            return csv_path, json_path
+            json_path = self.item_tracker.save_worker_stats(save_dir)  # メソッド名変更
+            log.info(f'Item stats saved: {json_path}')
+            return json_path, json_path  # 両方ともjson_pathを返す
         except Exception as e:
             log.error(f"Failed to save item statistics: {e}")
             return None, None
@@ -793,7 +873,18 @@ class ModifierWrapper(gym.Wrapper):
         Returns:
             dict: アイテム統計のサマリー辞書
         """
-        return self.item_tracker.get_usage_stats()
+        #return self.item_tracker.get_usage_stats()
+        if hasattr(self, 'item_tracker'):
+            return self.item_tracker.get_worker_statistics()
+        return {}
+    
+    def get_normalized_item_summary(self):
+        """正規化されたアイテム統計のサマリーを取得"""
+        if hasattr(self, 'item_tracker'):
+            # return self.item_tracker.get_normalized_item_stats()  # 削除
+            stats = self.item_tracker.get_worker_statistics()
+            return stats.get('base_item_actions', {})  # 修正！
+        return {}
     
     def get_glyph_statistics(self):
         """
@@ -815,5 +906,6 @@ class ModifierWrapper(gym.Wrapper):
     
     def print_current_item_stats(self):
         """現在のアイテム統計をコンソールに表示"""
-        #self.item_tracker.print_summary(show_detailed=True, show_glyph=True)
-        self.item_tracker.print_action_summary(show_detailed=True, show_glyph=True)
+        if hasattr(self, 'item_tracker'):
+            # self.item_tracker.print_summary(show_detailed=True, show_glyph=True)  # 削除
+            self.item_tracker.print_action_summary()  # 修正！パラメータも削除
