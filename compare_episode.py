@@ -139,7 +139,7 @@ def print_comparison_report(json_dir, xlogfile_dir):
         print(f"  ❌ ERROR: JSONに {abs(difference)} エピソード不足しています")
         missing_workers = []
         # 不足しているworkerを特定
-        expected_workers = len(file_lines)  # xlogfileの数 = worker数の想定
+        expected_workers = len(file_lines) - 1 # xlogfileの数 = worker数の想定
         actual_workers = len(worker_episodes)
         if actual_workers < expected_workers:
             print(f"     期待されるworker数: {expected_workers}, 実際: {actual_workers}")

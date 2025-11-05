@@ -1,0 +1,648 @@
+{
+  "worker_idx": 14,
+  "env_idx": 3,
+  "experiment": "debug2",
+  "mode": "train",
+  "total_episodes": 22,
+  "item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of healing": {
+      "acquired": 7,
+      "actions": {
+        "unknown": 7
+      }
+    },
+    "scroll of earth": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "potions of healing": {
+      "acquired": 2,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "food rations": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "magic marker": {
+      "acquired": 5,
+      "actions": {
+        "unknown": 4,
+        "read": 1
+      }
+    },
+    "spellbook of protection": {
+      "acquired": 6,
+      "actions": {
+        "unknown": 4,
+        "quaff": 1
+      }
+    },
+    "scroll of gold detection": {
+      "acquired": 2,
+      "actions": {
+        "wield": 1,
+        "read": 1
+      }
+    },
+    "potion of healing": {
+      "acquired": 4,
+      "actions": {
+        "read": 2,
+        "drink": 1
+      }
+    },
+    "gold pieces": {
+      "acquired": 3,
+      "actions": {
+        "wield": 1,
+        "quaff": 1
+      }
+    },
+    "egg": {
+      "acquired": 2,
+      "actions": {
+        "wield": 1,
+        "read": 1
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 4,
+      "actions": {
+        "read": 3
+      }
+    },
+    "scroll of confuse monster": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of create monster": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "oil lamp": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "spellbook of sleep": {
+      "acquired": 3,
+      "actions": {
+        "unknown": 3
+      }
+    },
+    "scroll of teleportation": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "scroll of stinking cloud": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "tripe ration": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "newt corpse": {
+      "acquired": 3,
+      "actions": {
+        "eat": 3
+      }
+    },
+    "scroll of identify": {
+      "acquired": 6,
+      "actions": {
+        "quaff": 1,
+        "read": 5
+      }
+    },
+    "food ration": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "scroll of food detection": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll labeled gnik sisi vle": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "read": 1
+      }
+    },
+    "lichen corpse": {
+      "acquired": 3,
+      "actions": {
+        "eat": 3
+      }
+    },
+    "scroll of enchant armor": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "scroll of punishment": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "newt corpses": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "scroll labeled abra ka dabra": {
+      "acquired": 3,
+      "actions": {
+        "drop": 2,
+        "read": 1
+      }
+    },
+    "scroll labeled ghoti": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of scare monster": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "tripe rations": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "brass wand": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "zap": 1
+      }
+    },
+    "wand of digging": {
+      "acquired": 1,
+      "actions": {
+        "zap": 1
+      }
+    },
+    "runed wand": {
+      "acquired": 1,
+      "actions": {
+        "zap": 1
+      }
+    },
+    "wand of opening": {
+      "acquired": 1,
+      "actions": {
+        "zap": 1
+      }
+    }
+  },
+  "base_item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of healing": {
+      "acquired": 7,
+      "actions": {
+        "unknown": 7
+      }
+    },
+    "scroll of earth": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "potions of healing": {
+      "acquired": 2,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "food rations": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "magic marker": {
+      "acquired": 5,
+      "actions": {
+        "unknown": 4,
+        "read": 1
+      }
+    },
+    "spellbook of protection": {
+      "acquired": 6,
+      "actions": {
+        "unknown": 4,
+        "quaff": 1
+      }
+    },
+    "scroll of detection": {
+      "acquired": 2,
+      "actions": {
+        "wield": 1,
+        "read": 1
+      }
+    },
+    "potion of healing": {
+      "acquired": 4,
+      "actions": {
+        "read": 2,
+        "drink": 1
+      }
+    },
+    "pieces": {
+      "acquired": 3,
+      "actions": {
+        "wield": 1,
+        "quaff": 1
+      }
+    },
+    "egg": {
+      "acquired": 2,
+      "actions": {
+        "wield": 1,
+        "read": 1
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 4,
+      "actions": {
+        "read": 3
+      }
+    },
+    "scroll of confuse monster": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of create monster": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "oil lamp": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "spellbook of sleep": {
+      "acquired": 3,
+      "actions": {
+        "unknown": 3
+      }
+    },
+    "scroll of teleportation": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "scroll of stinking cloud": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "tripe ration": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "newt corpse": {
+      "acquired": 3,
+      "actions": {
+        "eat": 3
+      }
+    },
+    "scroll of identify": {
+      "acquired": 6,
+      "actions": {
+        "quaff": 1,
+        "read": 5
+      }
+    },
+    "food ration": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "scroll of food detection": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll labeled gnik sisi vle": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "read": 1
+      }
+    },
+    "lichen corpse": {
+      "acquired": 3,
+      "actions": {
+        "eat": 3
+      }
+    },
+    "scroll of enchant armor": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "scroll of punishment": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "newt corpses": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "scroll labeled abra ka dabra": {
+      "acquired": 3,
+      "actions": {
+        "drop": 2,
+        "read": 1
+      }
+    },
+    "scroll labeled ghoti": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of scare monster": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "tripe rations": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "brass wand": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "zap": 1
+      }
+    },
+    "wand of digging": {
+      "acquired": 1,
+      "actions": {
+        "zap": 1
+      }
+    },
+    "runed wand": {
+      "acquired": 1,
+      "actions": {
+        "zap": 1
+      }
+    },
+    "wand of opening": {
+      "acquired": 1,
+      "actions": {
+        "zap": 1
+      }
+    }
+  },
+  "category_actions": {
+    "rings": {
+      "acquired": 2,
+      "actions": {}
+    },
+    "wands": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbooks": {
+      "acquired": 7,
+      "actions": {
+        "drop": 3,
+        "takeoff": 1,
+        "move_e": 2
+      }
+    },
+    "scrolls": {
+      "acquired": 4,
+      "actions": {
+        "read": 1,
+        "move_e": 1
+      }
+    },
+    "potions": {
+      "acquired": 16,
+      "actions": {
+        "wield": 1,
+        "read": 1,
+        "move_se": 2,
+        "move_sw": 1,
+        "takeoff": 2,
+        "move_ne": 1,
+        "move_e": 3,
+        "pray": 1
+      }
+    },
+    "comestibles": {
+      "acquired": 5,
+      "actions": {
+        "offer": 1,
+        "read": 1,
+        "kick": 1,
+        "pray": 1,
+        "move_e": 1
+      }
+    },
+    "gems": {
+      "acquired": 3,
+      "actions": {
+        "wield": 1,
+        "quaff": 1
+      }
+    },
+    "coins": {
+      "acquired": 3,
+      "actions": {
+        "drop": 1,
+        "move_e": 1,
+        "move_s": 1
+      }
+    }
+  },
+  "session_legacy": {
+    "acquired_by_cat": {
+      "rings": 2,
+      "wands": 1,
+      "spellbooks": 7,
+      "scrolls": 4,
+      "potions": 16,
+      "comestibles": 5,
+      "gems": 3,
+      "coins": 3
+    },
+    "used_by_cat": {
+      "comestibles": 5,
+      "gems": 2,
+      "potions": 12,
+      "scrolls": 2,
+      "spellbooks": 6,
+      "coins": 3
+    },
+    "acquired_by_item": {
+      "pair of leather gloves": 1,
+      "robe": 1,
+      "spellbook of healing": 7,
+      "scroll of earth": 1,
+      "potions of healing": 2,
+      "food rations": 1,
+      "apples": 1,
+      "oranges": 1,
+      "fortune cookies": 1,
+      "magic marker": 5,
+      "spellbook of protection": 6,
+      "scroll of gold detection": 2,
+      "potion of healing": 4,
+      "gold pieces": 3,
+      "egg": 2,
+      "scroll of remove curse": 4,
+      "scroll of confuse monster": 1,
+      "scroll of create monster": 2,
+      "oil lamp": 1,
+      "spellbook of sleep": 3,
+      "scroll of teleportation": 2,
+      "scroll of stinking cloud": 2,
+      "tripe ration": 1,
+      "newt corpse": 3,
+      "scroll of identify": 6,
+      "food ration": 2,
+      "scroll of food detection": 1,
+      "scroll labeled gnik sisi vle": 2,
+      "lichen corpse": 3,
+      "scroll of enchant armor": 2,
+      "scroll of punishment": 1,
+      "newt corpses": 2,
+      "scroll labeled abra ka dabra": 3,
+      "scroll labeled ghoti": 1,
+      "scroll of scare monster": 2,
+      "tripe rations": 1,
+      "brass wand": 2,
+      "wand of digging": 1,
+      "runed wand": 1,
+      "wand of opening": 1
+    },
+    "used_by_item": {
+      "spellbook of healing": 7,
+      "scroll of earth": 1,
+      "magic marker": 5,
+      "gold pieces": 2,
+      "scroll of gold detection": 2,
+      "egg": 2,
+      "potions of healing": 1,
+      "scroll of remove curse": 3,
+      "potion of healing": 3,
+      "spellbook of protection": 5,
+      "scroll of confuse monster": 1,
+      "scroll of create monster": 2,
+      "oil lamp": 1,
+      "scroll of teleportation": 2,
+      "scroll of stinking cloud": 2,
+      "tripe ration": 1,
+      "spellbook of sleep": 3,
+      "newt corpse": 3,
+      "scroll of identify": 6,
+      "food ration": 2,
+      "scroll labeled gnik sisi vle": 2,
+      "scroll of food detection": 1,
+      "scroll of enchant armor": 2,
+      "lichen corpse": 3,
+      "scroll of punishment": 1,
+      "newt corpses": 2,
+      "scroll labeled abra ka dabra": 3,
+      "scroll labeled ghoti": 1,
+      "scroll of scare monster": 2,
+      "brass wand": 2,
+      "tripe rations": 1,
+      "wand of digging": 1,
+      "runed wand": 1,
+      "wand of opening": 1
+    }
+  }
+}

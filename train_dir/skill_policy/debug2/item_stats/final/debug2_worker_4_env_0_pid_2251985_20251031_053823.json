@@ -1,0 +1,549 @@
+{
+  "worker_idx": 4,
+  "env_idx": 0,
+  "experiment": "debug2",
+  "mode": "train",
+  "total_episodes": 10,
+  "item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of protection": {
+      "acquired": 4,
+      "actions": {
+        "unknown": 3
+      }
+    },
+    "scroll of identify": {
+      "acquired": 5,
+      "actions": {
+        "read": 4,
+        "quaff": 1
+      }
+    },
+    "potions of healing": {
+      "acquired": 3,
+      "actions": {
+        "drink": 2
+      }
+    },
+    "potion of healing": {
+      "acquired": 4,
+      "actions": {
+        "drink": 4
+      }
+    },
+    "food rations": {
+      "acquired": 2,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "magic marker": {
+      "acquired": 2,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "swirly potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "partly eaten food ration": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "spellbook of sleep": {
+      "acquired": 3,
+      "actions": {
+        "unknown": 3
+      }
+    },
+    "food ration": {
+      "acquired": 3,
+      "actions": {
+        "eat": 3
+      }
+    },
+    "lichen corpse": {
+      "acquired": 5,
+      "actions": {
+        "eat": 4,
+        "quaff": 1
+      }
+    },
+    "scroll of light": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "spellbook of healing": {
+      "acquired": 2,
+      "actions": {
+        "quaff": 1,
+        "unknown": 1
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 1,
+      "actions": {
+        "quaff": 1
+      }
+    },
+    "gold pieces": {
+      "acquired": 1,
+      "actions": {
+        "quaff": 1
+      }
+    },
+    "scroll labeled fnord": {
+      "acquired": 4,
+      "actions": {
+        "drop": 3,
+        "read": 1
+      }
+    },
+    "scroll of stinking cloud": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of scare monster": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "newt corpse": {
+      "acquired": 4,
+      "actions": {
+        "eat": 4
+      }
+    },
+    "pine wand": {
+      "acquired": 1,
+      "actions": {
+        "zap": 1
+      }
+    },
+    "lichen corpses": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "wand of make invisible": {
+      "acquired": 1,
+      "actions": {
+        "zap": 1
+      }
+    },
+    "bubbly potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of gain ability": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "scroll labeled abra ka dabra": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "brown potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "scroll of teleportation": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "potion of invisibility": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "scroll of destroy armor": {
+      "acquired": 1,
+      "actions": {}
+    }
+  },
+  "base_item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of protection": {
+      "acquired": 4,
+      "actions": {
+        "unknown": 3
+      }
+    },
+    "scroll of identify": {
+      "acquired": 5,
+      "actions": {
+        "read": 4,
+        "quaff": 1
+      }
+    },
+    "potions of healing": {
+      "acquired": 3,
+      "actions": {
+        "drink": 2
+      }
+    },
+    "potion of healing": {
+      "acquired": 4,
+      "actions": {
+        "drink": 4
+      }
+    },
+    "food rations": {
+      "acquired": 2,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "magic marker": {
+      "acquired": 2,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "swirly potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "partly eaten food ration": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "spellbook of sleep": {
+      "acquired": 3,
+      "actions": {
+        "unknown": 3
+      }
+    },
+    "food ration": {
+      "acquired": 3,
+      "actions": {
+        "eat": 3
+      }
+    },
+    "lichen corpse": {
+      "acquired": 5,
+      "actions": {
+        "eat": 4,
+        "quaff": 1
+      }
+    },
+    "scroll of light": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "spellbook of healing": {
+      "acquired": 2,
+      "actions": {
+        "quaff": 1,
+        "unknown": 1
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 1,
+      "actions": {
+        "quaff": 1
+      }
+    },
+    "pieces": {
+      "acquired": 1,
+      "actions": {
+        "quaff": 1
+      }
+    },
+    "scroll labeled fnord": {
+      "acquired": 4,
+      "actions": {
+        "drop": 3,
+        "read": 1
+      }
+    },
+    "scroll of stinking cloud": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of scare monster": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "newt corpse": {
+      "acquired": 4,
+      "actions": {
+        "eat": 4
+      }
+    },
+    "pine wand": {
+      "acquired": 1,
+      "actions": {
+        "zap": 1
+      }
+    },
+    "lichen corpses": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "wand of make invisible": {
+      "acquired": 1,
+      "actions": {
+        "zap": 1
+      }
+    },
+    "bubbly potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of gain ability": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "scroll labeled abra ka dabra": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "brown potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "scroll of teleportation": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "potion of invisibility": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "scroll of destroy armor": {
+      "acquired": 1,
+      "actions": {}
+    }
+  },
+  "category_actions": {
+    "rings": {
+      "acquired": 2,
+      "actions": {}
+    },
+    "wands": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbooks": {
+      "acquired": 7,
+      "actions": {
+        "drop": 3,
+        "quaff": 1,
+        "move_nw": 1,
+        "move_e": 1
+      }
+    },
+    "scrolls": {
+      "acquired": 7,
+      "actions": {
+        "pray": 1,
+        "move_ne": 1,
+        "move_e": 2,
+        "invoke": 1,
+        "move_s": 1
+      }
+    },
+    "potions": {
+      "acquired": 17,
+      "actions": {
+        "move_ne": 1,
+        "move_sw": 2,
+        "move_e": 3,
+        "quaff": 1,
+        "invoke": 1,
+        "pray": 3,
+        "move_nw": 1,
+        "pickup": 1
+      }
+    },
+    "comestibles": {
+      "acquired": 2,
+      "actions": {
+        "move_ne": 1
+      }
+    },
+    "gems": {
+      "acquired": 1,
+      "actions": {
+        "quaff": 1
+      }
+    },
+    "coins": {
+      "acquired": 1,
+      "actions": {
+        "move_nw": 1
+      }
+    }
+  },
+  "session_legacy": {
+    "acquired_by_cat": {
+      "rings": 2,
+      "wands": 1,
+      "spellbooks": 7,
+      "scrolls": 7,
+      "potions": 17,
+      "comestibles": 2,
+      "gems": 1,
+      "coins": 1
+    },
+    "used_by_cat": {
+      "scrolls": 6,
+      "potions": 13,
+      "comestibles": 1,
+      "spellbooks": 6,
+      "gems": 1,
+      "coins": 1
+    },
+    "acquired_by_item": {
+      "pair of leather gloves": 1,
+      "robe": 1,
+      "spellbook of protection": 4,
+      "scroll of identify": 5,
+      "potions of healing": 3,
+      "potion of healing": 4,
+      "food rations": 2,
+      "apples": 1,
+      "oranges": 1,
+      "fortune cookies": 1,
+      "magic marker": 2,
+      "swirly potion": 1,
+      "partly eaten food ration": 2,
+      "spellbook of sleep": 3,
+      "food ration": 3,
+      "lichen corpse": 5,
+      "scroll of light": 2,
+      "spellbook of healing": 2,
+      "scroll of remove curse": 1,
+      "gold pieces": 1,
+      "scroll labeled fnord": 4,
+      "scroll of stinking cloud": 1,
+      "scroll of scare monster": 2,
+      "newt corpse": 4,
+      "pine wand": 1,
+      "lichen corpses": 1,
+      "wand of make invisible": 1,
+      "bubbly potion": 1,
+      "potion of gain ability": 1,
+      "scroll labeled abra ka dabra": 1,
+      "brown potion": 1,
+      "scroll of teleportation": 1,
+      "potion of invisibility": 1,
+      "scroll of destroy armor": 1
+    },
+    "used_by_item": {
+      "swirly potion": 1,
+      "potions of healing": 2,
+      "spellbook of protection": 3,
+      "potion of healing": 4,
+      "magic marker": 1,
+      "partly eaten food ration": 2,
+      "scroll of identify": 5,
+      "food ration": 3,
+      "lichen corpse": 5,
+      "food rations": 1,
+      "spellbook of sleep": 3,
+      "scroll of light": 2,
+      "scroll labeled fnord": 4,
+      "gold pieces": 1,
+      "spellbook of healing": 2,
+      "scroll of remove curse": 1,
+      "scroll of stinking cloud": 1,
+      "scroll of scare monster": 2,
+      "newt corpse": 4,
+      "pine wand": 1,
+      "lichen corpses": 1,
+      "wand of make invisible": 1,
+      "bubbly potion": 1,
+      "potion of gain ability": 1,
+      "scroll labeled abra ka dabra": 1,
+      "brown potion": 1,
+      "scroll of teleportation": 1,
+      "potion of invisibility": 1
+    }
+  }
+}

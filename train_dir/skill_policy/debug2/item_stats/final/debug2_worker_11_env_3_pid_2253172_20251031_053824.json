@@ -1,0 +1,670 @@
+{
+  "worker_idx": 11,
+  "env_idx": 3,
+  "experiment": "debug2",
+  "mode": "train",
+  "total_episodes": 21,
+  "item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of protection": {
+      "acquired": 6,
+      "actions": {
+        "unknown": 5,
+        "quaff": 1
+      }
+    },
+    "scroll of confuse monster": {
+      "acquired": 3,
+      "actions": {
+        "read": 2
+      }
+    },
+    "potions of healing": {
+      "acquired": 2,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of healing": {
+      "acquired": 10,
+      "actions": {
+        "drink": 7,
+        "drop": 1,
+        "apply": 1
+      }
+    },
+    "food rations": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oil lamp": {
+      "acquired": 3,
+      "actions": {
+        "unknown": 3
+      }
+    },
+    "food ration": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "spellbook of sleep": {
+      "acquired": 6,
+      "actions": {
+        "unknown": 6
+      }
+    },
+    "scroll of light": {
+      "acquired": 3,
+      "actions": {
+        "read": 3
+      }
+    },
+    "magic marker": {
+      "acquired": 4,
+      "actions": {
+        "unknown": 4
+      }
+    },
+    "gold pieces": {
+      "acquired": 6,
+      "actions": {
+        "quaff": 1,
+        "unknown": 3,
+        "drop": 1
+      }
+    },
+    "scroll of magic mapping": {
+      "acquired": 4,
+      "actions": {
+        "quaff": 1,
+        "read": 3
+      }
+    },
+    "puce potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of full healing": {
+      "acquired": 1,
+      "actions": {
+        "quaff": 1
+      }
+    },
+    "fortune cookie": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "scroll labeled zlorfik": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of identify": {
+      "acquired": 5,
+      "actions": {
+        "read": 5
+      }
+    },
+    "magenta potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of enlightenment": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "scroll of create monster": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "read": 1
+      }
+    },
+    "scroll of stinking cloud": {
+      "acquired": 1,
+      "actions": {
+        "apply": 1
+      }
+    },
+    "scroll of teleportation": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "lichen corpse": {
+      "acquired": 5,
+      "actions": {
+        "eat": 4
+      }
+    },
+    "scroll labeled daiyen fooels": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "read": 1
+      }
+    },
+    "pine wand": {
+      "acquired": 2,
+      "actions": {
+        "drop": 2
+      }
+    },
+    "newt corpse": {
+      "acquired": 3,
+      "actions": {
+        "eat": 3
+      }
+    },
+    "spellbook of healing": {
+      "acquired": 3,
+      "actions": {
+        "unknown": 2
+      }
+    },
+    "scroll of genocide": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "eucalyptus leaf": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "scroll of gold detection": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll labeled mapiro mahama diromat": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "read": 1
+      }
+    },
+    "scroll of destroy armor": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "smoky potion": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "drink": 1
+      }
+    },
+    "potion of gain energy": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "purple-red potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of speed": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    }
+  },
+  "base_item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of protection": {
+      "acquired": 6,
+      "actions": {
+        "unknown": 5,
+        "quaff": 1
+      }
+    },
+    "scroll of confuse monster": {
+      "acquired": 3,
+      "actions": {
+        "read": 2
+      }
+    },
+    "potions of healing": {
+      "acquired": 2,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of healing": {
+      "acquired": 10,
+      "actions": {
+        "drink": 7,
+        "drop": 1,
+        "apply": 1
+      }
+    },
+    "food rations": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oil lamp": {
+      "acquired": 3,
+      "actions": {
+        "unknown": 3
+      }
+    },
+    "food ration": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "spellbook of sleep": {
+      "acquired": 6,
+      "actions": {
+        "unknown": 6
+      }
+    },
+    "scroll of light": {
+      "acquired": 3,
+      "actions": {
+        "read": 3
+      }
+    },
+    "magic marker": {
+      "acquired": 4,
+      "actions": {
+        "unknown": 4
+      }
+    },
+    "pieces": {
+      "acquired": 6,
+      "actions": {
+        "quaff": 1,
+        "unknown": 3,
+        "drop": 1
+      }
+    },
+    "scroll of magic mapping": {
+      "acquired": 4,
+      "actions": {
+        "quaff": 1,
+        "read": 3
+      }
+    },
+    "puce potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of full healing": {
+      "acquired": 1,
+      "actions": {
+        "quaff": 1
+      }
+    },
+    "fortune cookie": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "scroll labeled zlorfik": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of identify": {
+      "acquired": 5,
+      "actions": {
+        "read": 5
+      }
+    },
+    "magenta potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of enlightenment": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "scroll of create monster": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "read": 1
+      }
+    },
+    "scroll of stinking cloud": {
+      "acquired": 1,
+      "actions": {
+        "apply": 1
+      }
+    },
+    "scroll of teleportation": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "lichen corpse": {
+      "acquired": 5,
+      "actions": {
+        "eat": 4
+      }
+    },
+    "scroll labeled daiyen fooels": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "read": 1
+      }
+    },
+    "pine wand": {
+      "acquired": 2,
+      "actions": {
+        "drop": 2
+      }
+    },
+    "newt corpse": {
+      "acquired": 3,
+      "actions": {
+        "eat": 3
+      }
+    },
+    "spellbook of healing": {
+      "acquired": 3,
+      "actions": {
+        "unknown": 2
+      }
+    },
+    "scroll of genocide": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "eucalyptus leaf": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "scroll of detection": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll labeled mapiro mahama diromat": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "read": 1
+      }
+    },
+    "scroll of destroy armor": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "smoky potion": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "drink": 1
+      }
+    },
+    "potion of gain energy": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "purple-potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of speed": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    }
+  },
+  "category_actions": {
+    "rings": {
+      "acquired": 2,
+      "actions": {}
+    },
+    "wands": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbooks": {
+      "acquired": 7,
+      "actions": {
+        "pickup": 1,
+        "drop": 2,
+        "move_wait": 1,
+        "move_s": 1,
+        "move_e": 1
+      }
+    },
+    "scrolls": {
+      "acquired": 14,
+      "actions": {
+        "kick": 2,
+        "quaff": 1,
+        "move_se": 2,
+        "move_up": 1,
+        "drop": 2,
+        "apply": 1,
+        "move_e": 1,
+        "move_s": 1,
+        "move_n": 1
+      }
+    },
+    "potions": {
+      "acquired": 16,
+      "actions": {
+        "kick": 1,
+        "move_se": 1,
+        "move_up": 1,
+        "pray": 2,
+        "move_sw": 2,
+        "move_s": 2,
+        "move_e": 2
+      }
+    },
+    "comestibles": {
+      "acquired": 5,
+      "actions": {
+        "move_wait": 1,
+        "kick": 1,
+        "move_n": 1,
+        "move_e": 2
+      }
+    },
+    "gems": {
+      "acquired": 6,
+      "actions": {
+        "quaff": 1,
+        "search": 1,
+        "drop": 1,
+        "move_s": 1,
+        "move_e": 1
+      }
+    },
+    "coins": {
+      "acquired": 2,
+      "actions": {
+        "drop": 2
+      }
+    }
+  },
+  "session_legacy": {
+    "acquired_by_cat": {
+      "rings": 2,
+      "wands": 1,
+      "spellbooks": 7,
+      "scrolls": 14,
+      "potions": 16,
+      "comestibles": 5,
+      "gems": 6,
+      "coins": 2
+    },
+    "used_by_cat": {
+      "scrolls": 12,
+      "potions": 11,
+      "comestibles": 5,
+      "gems": 5,
+      "spellbooks": 6,
+      "coins": 2
+    },
+    "acquired_by_item": {
+      "pair of leather gloves": 1,
+      "robe": 1,
+      "spellbook of protection": 6,
+      "scroll of confuse monster": 3,
+      "potions of healing": 2,
+      "potion of healing": 10,
+      "food rations": 1,
+      "apples": 1,
+      "oranges": 1,
+      "fortune cookies": 1,
+      "oil lamp": 3,
+      "food ration": 2,
+      "spellbook of sleep": 6,
+      "scroll of light": 3,
+      "magic marker": 4,
+      "gold pieces": 6,
+      "scroll of magic mapping": 4,
+      "puce potion": 1,
+      "potion of full healing": 1,
+      "fortune cookie": 1,
+      "scroll labeled zlorfik": 1,
+      "scroll of identify": 5,
+      "magenta potion": 1,
+      "potion of enlightenment": 1,
+      "scroll of create monster": 2,
+      "scroll of stinking cloud": 1,
+      "scroll of teleportation": 2,
+      "lichen corpse": 5,
+      "scroll labeled daiyen fooels": 2,
+      "pine wand": 2,
+      "newt corpse": 3,
+      "spellbook of healing": 3,
+      "scroll of genocide": 1,
+      "eucalyptus leaf": 1,
+      "scroll of gold detection": 1,
+      "scroll labeled mapiro mahama diromat": 2,
+      "scroll of destroy armor": 2,
+      "smoky potion": 2,
+      "potion of gain energy": 1,
+      "purple-red potion": 1,
+      "potion of speed": 1
+    },
+    "used_by_item": {
+      "spellbook of protection": 6,
+      "scroll of confuse monster": 2,
+      "potion of healing": 9,
+      "oil lamp": 3,
+      "food ration": 2,
+      "spellbook of sleep": 6,
+      "scroll of light": 3,
+      "magic marker": 4,
+      "puce potion": 1,
+      "gold pieces": 5,
+      "scroll of magic mapping": 4,
+      "potion of full healing": 1,
+      "fortune cookie": 1,
+      "scroll labeled zlorfik": 1,
+      "scroll of identify": 5,
+      "potions of healing": 1,
+      "magenta potion": 1,
+      "potion of enlightenment": 1,
+      "scroll of create monster": 2,
+      "scroll of stinking cloud": 1,
+      "scroll of teleportation": 2,
+      "lichen corpse": 4,
+      "scroll labeled daiyen fooels": 2,
+      "pine wand": 2,
+      "newt corpse": 3,
+      "spellbook of healing": 2,
+      "scroll of genocide": 1,
+      "eucalyptus leaf": 1,
+      "scroll labeled mapiro mahama diromat": 2,
+      "scroll of gold detection": 1,
+      "scroll of destroy armor": 2,
+      "smoky potion": 2,
+      "potion of gain energy": 1,
+      "purple-red potion": 1,
+      "potion of speed": 1
+    }
+  }
+}

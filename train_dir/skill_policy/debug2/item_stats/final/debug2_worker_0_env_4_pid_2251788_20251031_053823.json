@@ -1,0 +1,564 @@
+{
+  "worker_idx": 0,
+  "env_idx": 4,
+  "experiment": "debug2",
+  "mode": "train",
+  "total_episodes": 18,
+  "item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of sleep": {
+      "acquired": 5,
+      "actions": {
+        "unknown": 5
+      }
+    },
+    "scroll of enchant armor": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "potions of healing": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "food rations": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "gold pieces": {
+      "acquired": 7,
+      "actions": {
+        "unknown": 3,
+        "drop": 1,
+        "quaff": 1,
+        "throw": 1
+      }
+    },
+    "brown potion": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "spellbook of protection": {
+      "acquired": 5,
+      "actions": {
+        "throw": 1,
+        "unknown": 3,
+        "quaff": 1
+      }
+    },
+    "scroll of identify": {
+      "acquired": 6,
+      "actions": {
+        "throw": 1,
+        "read": 5
+      }
+    },
+    "scroll of food detection": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll labeled abra ka dabra": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of destroy armor": {
+      "acquired": 3,
+      "actions": {
+        "read": 2,
+        "quaff": 1
+      }
+    },
+    "magic marker": {
+      "acquired": 4,
+      "actions": {
+        "unknown": 4
+      }
+    },
+    "spellbook of healing": {
+      "acquired": 3,
+      "actions": {
+        "throw": 2
+      }
+    },
+    "lichen corpse": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "scroll of magic mapping": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "partly eaten food ration": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "scroll labeled foobie bletch": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "read": 1
+      }
+    },
+    "egg": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "newt corpse": {
+      "acquired": 5,
+      "actions": {
+        "eat": 5
+      }
+    },
+    "food ration": {
+      "acquired": 4,
+      "actions": {
+        "drop": 1,
+        "eat": 2,
+        "throw": 1
+      }
+    },
+    "sprigs of wolfsbane": {
+      "acquired": 1,
+      "actions": {
+        "quaff": 1
+      }
+    },
+    "scroll of light": {
+      "acquired": 2,
+      "actions": {
+        "throw": 1,
+        "read": 1
+      }
+    },
+    "potion of healing": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "smoky potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of paralysis": {
+      "acquired": 1,
+      "actions": {
+        "throw": 1
+      }
+    },
+    "scroll of charging": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "oil lamp": {
+      "acquired": 2,
+      "actions": {
+        "unknown": 2
+      }
+    },
+    "scroll of confuse monster": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of taming": {
+      "acquired": 1,
+      "actions": {}
+    }
+  },
+  "base_item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of sleep": {
+      "acquired": 5,
+      "actions": {
+        "unknown": 5
+      }
+    },
+    "scroll of enchant armor": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "potions of healing": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "food rations": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "pieces": {
+      "acquired": 7,
+      "actions": {
+        "unknown": 3,
+        "drop": 1,
+        "quaff": 1,
+        "throw": 1
+      }
+    },
+    "brown potion": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "spellbook of protection": {
+      "acquired": 5,
+      "actions": {
+        "throw": 1,
+        "unknown": 3,
+        "quaff": 1
+      }
+    },
+    "scroll of identify": {
+      "acquired": 6,
+      "actions": {
+        "throw": 1,
+        "read": 5
+      }
+    },
+    "scroll of food detection": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll labeled abra ka dabra": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of destroy armor": {
+      "acquired": 3,
+      "actions": {
+        "read": 2,
+        "quaff": 1
+      }
+    },
+    "magic marker": {
+      "acquired": 4,
+      "actions": {
+        "unknown": 4
+      }
+    },
+    "spellbook of healing": {
+      "acquired": 3,
+      "actions": {
+        "throw": 2
+      }
+    },
+    "lichen corpse": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "scroll of magic mapping": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "partly eaten food ration": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "scroll labeled foobie bletch": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "read": 1
+      }
+    },
+    "egg": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "newt corpse": {
+      "acquired": 5,
+      "actions": {
+        "eat": 5
+      }
+    },
+    "food ration": {
+      "acquired": 4,
+      "actions": {
+        "drop": 1,
+        "eat": 2,
+        "throw": 1
+      }
+    },
+    "sprigs of wolfsbane": {
+      "acquired": 1,
+      "actions": {
+        "quaff": 1
+      }
+    },
+    "scroll of light": {
+      "acquired": 2,
+      "actions": {
+        "throw": 1,
+        "read": 1
+      }
+    },
+    "potion of healing": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "smoky potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of paralysis": {
+      "acquired": 1,
+      "actions": {
+        "throw": 1
+      }
+    },
+    "scroll of charging": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "oil lamp": {
+      "acquired": 2,
+      "actions": {
+        "unknown": 2
+      }
+    },
+    "scroll of confuse monster": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of taming": {
+      "acquired": 1,
+      "actions": {}
+    }
+  },
+  "category_actions": {
+    "rings": {
+      "acquired": 2,
+      "actions": {}
+    },
+    "wands": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbooks": {
+      "acquired": 5,
+      "actions": {
+        "offer": 1,
+        "drop": 1,
+        "pray": 1,
+        "move_ne": 1
+      }
+    },
+    "scrolls": {
+      "acquired": 4,
+      "actions": {
+        "drop": 1,
+        "throw": 1,
+        "move_e": 1
+      }
+    },
+    "potions": {
+      "acquired": 18,
+      "actions": {
+        "move_s": 2,
+        "pray": 6,
+        "drop": 1,
+        "pickup": 1,
+        "quaff": 1,
+        "throw": 1,
+        "move_e": 2
+      }
+    },
+    "gems": {
+      "acquired": 7,
+      "actions": {
+        "move_s": 1,
+        "offer": 1,
+        "drop": 1,
+        "quaff": 1,
+        "throw": 1,
+        "move_ne": 1
+      }
+    },
+    "comestibles": {
+      "acquired": 5,
+      "actions": {
+        "move_ne": 1,
+        "pickup": 1,
+        "move_e": 2,
+        "move_s": 1
+      }
+    }
+  },
+  "session_legacy": {
+    "acquired_by_cat": {
+      "rings": 2,
+      "wands": 1,
+      "spellbooks": 5,
+      "scrolls": 4,
+      "potions": 18,
+      "gems": 7,
+      "comestibles": 5
+    },
+    "used_by_cat": {
+      "scrolls": 3,
+      "gems": 6,
+      "spellbooks": 4,
+      "comestibles": 5,
+      "potions": 14
+    },
+    "acquired_by_item": {
+      "pair of leather gloves": 1,
+      "robe": 1,
+      "spellbook of sleep": 5,
+      "scroll of enchant armor": 2,
+      "potions of healing": 1,
+      "food rations": 1,
+      "apples": 1,
+      "oranges": 1,
+      "fortune cookies": 1,
+      "gold pieces": 7,
+      "brown potion": 1,
+      "spellbook of protection": 5,
+      "scroll of identify": 6,
+      "scroll of food detection": 1,
+      "scroll labeled abra ka dabra": 1,
+      "scroll of destroy armor": 3,
+      "magic marker": 4,
+      "spellbook of healing": 3,
+      "lichen corpse": 2,
+      "scroll of magic mapping": 1,
+      "partly eaten food ration": 1,
+      "scroll labeled foobie bletch": 2,
+      "egg": 1,
+      "scroll of remove curse": 1,
+      "newt corpse": 5,
+      "food ration": 4,
+      "sprigs of wolfsbane": 1,
+      "scroll of light": 2,
+      "potion of healing": 1,
+      "smoky potion": 1,
+      "potion of paralysis": 1,
+      "scroll of charging": 1,
+      "oil lamp": 2,
+      "scroll of confuse monster": 1,
+      "scroll of taming": 1
+    },
+    "used_by_item": {
+      "brown potion": 1,
+      "gold pieces": 6,
+      "spellbook of sleep": 5,
+      "scroll of enchant armor": 2,
+      "spellbook of protection": 5,
+      "scroll of identify": 6,
+      "scroll labeled abra ka dabra": 1,
+      "scroll of food detection": 1,
+      "scroll of destroy armor": 3,
+      "magic marker": 4,
+      "spellbook of healing": 2,
+      "lichen corpse": 2,
+      "scroll labeled foobie bletch": 2,
+      "scroll of magic mapping": 1,
+      "partly eaten food ration": 1,
+      "egg": 1,
+      "newt corpse": 5,
+      "scroll of remove curse": 1,
+      "food ration": 4,
+      "sprigs of wolfsbane": 1,
+      "smoky potion": 1,
+      "scroll of light": 2,
+      "potion of paralysis": 1,
+      "scroll of charging": 1,
+      "oil lamp": 2,
+      "scroll of confuse monster": 1,
+      "potion of healing": 1
+    }
+  }
+}

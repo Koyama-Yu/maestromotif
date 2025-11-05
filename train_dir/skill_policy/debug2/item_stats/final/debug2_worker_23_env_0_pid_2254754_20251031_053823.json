@@ -1,0 +1,565 @@
+{
+  "worker_idx": 23,
+  "env_idx": 0,
+  "experiment": "debug2",
+  "mode": "train",
+  "total_episodes": 10,
+  "item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of protection": {
+      "acquired": 2,
+      "actions": {
+        "unknown": 2
+      }
+    },
+    "scroll of identify": {
+      "acquired": 3,
+      "actions": {
+        "read": 3
+      }
+    },
+    "potions of healing": {
+      "acquired": 2,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of healing": {
+      "acquired": 4,
+      "actions": {
+        "drink": 3
+      }
+    },
+    "food rations": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of sleep": {
+      "acquired": 3,
+      "actions": {
+        "unknown": 3
+      }
+    },
+    "scroll of genocide": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "magic marker": {
+      "acquired": 2,
+      "actions": {
+        "unknown": 2
+      }
+    },
+    "spellbook of healing": {
+      "acquired": 3,
+      "actions": {
+        "unknown": 2
+      }
+    },
+    "scroll of light": {
+      "acquired": 5,
+      "actions": {
+        "drop": 3,
+        "read": 2
+      }
+    },
+    "tripe ration": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "clear potion": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "drink": 1
+      }
+    },
+    "newt corpse": {
+      "acquired": 7,
+      "actions": {
+        "eat": 7
+      }
+    },
+    "tripe rations": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "scroll labeled kirje": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "wand of magic missile": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "scroll of fire": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "gold pieces": {
+      "acquired": 2,
+      "actions": {
+        "unknown": 2
+      }
+    },
+    "lichen corpse": {
+      "acquired": 4,
+      "actions": {
+        "eat": 3
+      }
+    },
+    "lichen corpses": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "potion of water": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "scroll of teleportation": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "swirly potion": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "drink": 1
+      }
+    },
+    "potion of speed": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "food ration": {
+      "acquired": 2,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "spiked wand": {
+      "acquired": 1,
+      "actions": {
+        "zap": 1
+      }
+    },
+    "wand of light": {
+      "acquired": 1,
+      "actions": {
+        "zap": 1
+      }
+    },
+    "scroll of enchant armor": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "unlabeled scroll": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "scroll labeled ghoti": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    }
+  },
+  "base_item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of protection": {
+      "acquired": 2,
+      "actions": {
+        "unknown": 2
+      }
+    },
+    "scroll of identify": {
+      "acquired": 3,
+      "actions": {
+        "read": 3
+      }
+    },
+    "potions of healing": {
+      "acquired": 2,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of healing": {
+      "acquired": 4,
+      "actions": {
+        "drink": 3
+      }
+    },
+    "food rations": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of sleep": {
+      "acquired": 3,
+      "actions": {
+        "unknown": 3
+      }
+    },
+    "scroll of genocide": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "magic marker": {
+      "acquired": 2,
+      "actions": {
+        "unknown": 2
+      }
+    },
+    "spellbook of healing": {
+      "acquired": 3,
+      "actions": {
+        "unknown": 2
+      }
+    },
+    "scroll of light": {
+      "acquired": 5,
+      "actions": {
+        "drop": 3,
+        "read": 2
+      }
+    },
+    "tripe ration": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "potion": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "drink": 1
+      }
+    },
+    "newt corpse": {
+      "acquired": 7,
+      "actions": {
+        "eat": 7
+      }
+    },
+    "tripe rations": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "scroll labeled kirje": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "wand of magic missile": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "scroll of fire": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "pieces": {
+      "acquired": 2,
+      "actions": {
+        "unknown": 2
+      }
+    },
+    "lichen corpse": {
+      "acquired": 4,
+      "actions": {
+        "eat": 3
+      }
+    },
+    "lichen corpses": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "potion of water": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "scroll of teleportation": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "swirly potion": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "drink": 1
+      }
+    },
+    "potion of speed": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "food ration": {
+      "acquired": 2,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "spiked wand": {
+      "acquired": 1,
+      "actions": {
+        "zap": 1
+      }
+    },
+    "wand of light": {
+      "acquired": 1,
+      "actions": {
+        "zap": 1
+      }
+    },
+    "scroll of enchant armor": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "unlabeled scroll": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "scroll labeled ghoti": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    }
+  },
+  "category_actions": {
+    "rings": {
+      "acquired": 2,
+      "actions": {}
+    },
+    "wands": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbooks": {
+      "acquired": 8,
+      "actions": {
+        "drop": 4,
+        "offer": 1,
+        "pray": 1
+      }
+    },
+    "scrolls": {
+      "acquired": 8,
+      "actions": {
+        "puton": 1,
+        "drop": 2,
+        "move_ne": 1,
+        "move_nw": 1,
+        "move_sw": 1
+      }
+    },
+    "potions": {
+      "acquired": 18,
+      "actions": {
+        "pray": 6,
+        "offer": 1,
+        "move_ne": 1,
+        "move_nw": 1,
+        "move_e": 2,
+        "move_sw": 1
+      }
+    },
+    "comestibles": {
+      "acquired": 2,
+      "actions": {
+        "move_se": 1,
+        "move_sw": 1
+      }
+    },
+    "coins": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "move_sw": 1
+      }
+    },
+    "gems": {
+      "acquired": 2,
+      "actions": {
+        "move_ne": 1,
+        "move_e": 1
+      }
+    }
+  },
+  "session_legacy": {
+    "acquired_by_cat": {
+      "rings": 2,
+      "wands": 1,
+      "spellbooks": 8,
+      "scrolls": 8,
+      "potions": 18,
+      "comestibles": 2,
+      "coins": 2,
+      "gems": 2
+    },
+    "used_by_cat": {
+      "comestibles": 2,
+      "scrolls": 6,
+      "spellbooks": 6,
+      "potions": 12,
+      "coins": 2,
+      "gems": 2
+    },
+    "acquired_by_item": {
+      "pair of leather gloves": 1,
+      "robe": 1,
+      "spellbook of protection": 2,
+      "scroll of identify": 3,
+      "potions of healing": 2,
+      "potion of healing": 4,
+      "food rations": 1,
+      "apples": 1,
+      "oranges": 1,
+      "fortune cookies": 1,
+      "spellbook of sleep": 3,
+      "scroll of genocide": 1,
+      "magic marker": 2,
+      "spellbook of healing": 3,
+      "scroll of light": 5,
+      "tripe ration": 1,
+      "clear potion": 2,
+      "newt corpse": 7,
+      "tripe rations": 1,
+      "scroll labeled kirje": 1,
+      "wand of magic missile": 1,
+      "scroll of fire": 1,
+      "gold pieces": 2,
+      "lichen corpse": 4,
+      "lichen corpses": 1,
+      "scroll of remove curse": 2,
+      "potion of water": 1,
+      "scroll of teleportation": 1,
+      "swirly potion": 2,
+      "potion of speed": 1,
+      "food ration": 2,
+      "spiked wand": 1,
+      "wand of light": 1,
+      "scroll of enchant armor": 1,
+      "unlabeled scroll": 1,
+      "scroll labeled ghoti": 1
+    },
+    "used_by_item": {
+      "spellbook of protection": 2,
+      "scroll of identify": 3,
+      "scroll of genocide": 1,
+      "magic marker": 2,
+      "spellbook of sleep": 3,
+      "potion of healing": 3,
+      "clear potion": 2,
+      "scroll of light": 5,
+      "tripe ration": 1,
+      "newt corpse": 7,
+      "wand of magic missile": 1,
+      "scroll labeled kirje": 1,
+      "spellbook of healing": 2,
+      "tripe rations": 1,
+      "scroll of fire": 1,
+      "lichen corpse": 3,
+      "gold pieces": 2,
+      "lichen corpses": 1,
+      "scroll of remove curse": 2,
+      "potion of water": 1,
+      "swirly potion": 2,
+      "scroll of teleportation": 1,
+      "potions of healing": 1,
+      "potion of speed": 1,
+      "food ration": 1,
+      "spiked wand": 1,
+      "wand of light": 1,
+      "scroll labeled ghoti": 1
+    }
+  }
+}

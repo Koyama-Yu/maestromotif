@@ -1,0 +1,666 @@
+{
+  "worker_idx": 17,
+  "env_idx": 6,
+  "experiment": "debug2",
+  "mode": "train",
+  "total_episodes": 23,
+  "item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of protection": {
+      "acquired": 9,
+      "actions": {
+        "unknown": 5,
+        "wear": 1,
+        "apply": 1,
+        "quaff": 1
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "potions of healing": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "food rations": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 2,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "spellbook of sleep": {
+      "acquired": 6,
+      "actions": {
+        "wield": 1,
+        "unknown": 5
+      }
+    },
+    "scroll of create monster": {
+      "acquired": 3,
+      "actions": {
+        "apply": 1,
+        "quaff": 1,
+        "read": 1
+      }
+    },
+    "magic marker": {
+      "acquired": 4,
+      "actions": {
+        "apply": 1,
+        "unknown": 2,
+        "quaff": 1
+      }
+    },
+    "scroll of stinking cloud": {
+      "acquired": 1,
+      "actions": {
+        "wield": 1
+      }
+    },
+    "gold pieces": {
+      "acquired": 7,
+      "actions": {
+        "wield": 1,
+        "wear": 1,
+        "unknown": 3,
+        "quaff": 1
+      }
+    },
+    "scroll of magic mapping": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "potion of healing": {
+      "acquired": 8,
+      "actions": {
+        "drink": 6,
+        "apply": 1,
+        "quaff": 1
+      }
+    },
+    "spellbook of healing": {
+      "acquired": 5,
+      "actions": {
+        "unknown": 5
+      }
+    },
+    "scroll of destroy armor": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "scroll of light": {
+      "acquired": 3,
+      "actions": {
+        "read": 3
+      }
+    },
+    "scroll of confuse monster": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "long wand": {
+      "acquired": 5,
+      "actions": {
+        "drop": 4,
+        "zap": 1
+      }
+    },
+    "newt corpse": {
+      "acquired": 5,
+      "actions": {
+        "eat": 5
+      }
+    },
+    "dark potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "wand of teleportation": {
+      "acquired": 1,
+      "actions": {
+        "zap": 1
+      }
+    },
+    "potion of levitation": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "scroll of identify": {
+      "acquired": 3,
+      "actions": {
+        "wear": 1,
+        "read": 2
+      }
+    },
+    "oil lamp": {
+      "acquired": 3,
+      "actions": {
+        "unknown": 3
+      }
+    },
+    "eggs": {
+      "acquired": 1,
+      "actions": {
+        "wear": 1
+      }
+    },
+    "sky blue potion": {
+      "acquired": 3,
+      "actions": {
+        "drop": 3
+      }
+    },
+    "scroll of enchant armor": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "lichen corpse": {
+      "acquired": 5,
+      "actions": {
+        "eat": 5
+      }
+    },
+    "scroll labeled eiris sazun idisi": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "scroll of teleportation": {
+      "acquired": 2,
+      "actions": {
+        "apply": 1,
+        "read": 1
+      }
+    },
+    "bubbly potion": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "food ration": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "carrot": {
+      "acquired": 1,
+      "actions": {
+        "quaff": 1
+      }
+    },
+    "egg": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "slime mold": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "lichen corpses": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "scroll of taming": {
+      "acquired": 1,
+      "actions": {}
+    }
+  },
+  "base_item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of protection": {
+      "acquired": 9,
+      "actions": {
+        "unknown": 5,
+        "wear": 1,
+        "apply": 1,
+        "quaff": 1
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "potions of healing": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "food rations": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 2,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "spellbook of sleep": {
+      "acquired": 6,
+      "actions": {
+        "wield": 1,
+        "unknown": 5
+      }
+    },
+    "scroll of create monster": {
+      "acquired": 3,
+      "actions": {
+        "apply": 1,
+        "quaff": 1,
+        "read": 1
+      }
+    },
+    "magic marker": {
+      "acquired": 4,
+      "actions": {
+        "apply": 1,
+        "unknown": 2,
+        "quaff": 1
+      }
+    },
+    "scroll of stinking cloud": {
+      "acquired": 1,
+      "actions": {
+        "wield": 1
+      }
+    },
+    "pieces": {
+      "acquired": 7,
+      "actions": {
+        "wield": 1,
+        "wear": 1,
+        "unknown": 3,
+        "quaff": 1
+      }
+    },
+    "scroll of magic mapping": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "potion of healing": {
+      "acquired": 8,
+      "actions": {
+        "drink": 6,
+        "apply": 1,
+        "quaff": 1
+      }
+    },
+    "spellbook of healing": {
+      "acquired": 5,
+      "actions": {
+        "unknown": 5
+      }
+    },
+    "scroll of destroy armor": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "scroll of light": {
+      "acquired": 3,
+      "actions": {
+        "read": 3
+      }
+    },
+    "scroll of confuse monster": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "long wand": {
+      "acquired": 5,
+      "actions": {
+        "drop": 4,
+        "zap": 1
+      }
+    },
+    "newt corpse": {
+      "acquired": 5,
+      "actions": {
+        "eat": 5
+      }
+    },
+    "potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "wand of teleportation": {
+      "acquired": 1,
+      "actions": {
+        "zap": 1
+      }
+    },
+    "potion of levitation": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "scroll of identify": {
+      "acquired": 3,
+      "actions": {
+        "wear": 1,
+        "read": 2
+      }
+    },
+    "oil lamp": {
+      "acquired": 3,
+      "actions": {
+        "unknown": 3
+      }
+    },
+    "eggs": {
+      "acquired": 1,
+      "actions": {
+        "wear": 1
+      }
+    },
+    "sky potion": {
+      "acquired": 3,
+      "actions": {
+        "drop": 3
+      }
+    },
+    "scroll of enchant armor": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "lichen corpse": {
+      "acquired": 5,
+      "actions": {
+        "eat": 5
+      }
+    },
+    "scroll labeled eiris sazun idisi": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "scroll of teleportation": {
+      "acquired": 2,
+      "actions": {
+        "apply": 1,
+        "read": 1
+      }
+    },
+    "bubbly potion": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "food ration": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "carrot": {
+      "acquired": 1,
+      "actions": {
+        "quaff": 1
+      }
+    },
+    "egg": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "slime mold": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "lichen corpses": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "scroll of taming": {
+      "acquired": 1,
+      "actions": {}
+    }
+  },
+  "category_actions": {
+    "rings": {
+      "acquired": 2,
+      "actions": {}
+    },
+    "wands": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbooks": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "scrolls": {
+      "acquired": 14,
+      "actions": {
+        "move_w": 1,
+        "pray": 1,
+        "drop": 4,
+        "remove": 2,
+        "apply": 1,
+        "quaff": 1,
+        "move_up": 1,
+        "move_se": 1,
+        "move_s": 1
+      }
+    },
+    "potions": {
+      "acquired": 21,
+      "actions": {
+        "pray": 3,
+        "wear": 1,
+        "remove": 2,
+        "move_se": 1,
+        "move_w": 1,
+        "quaff": 1,
+        "kick": 3,
+        "offer": 1,
+        "move_e": 3,
+        "move_s": 1
+      }
+    },
+    "comestibles": {
+      "acquired": 6,
+      "actions": {
+        "eat": 1,
+        "pickup": 1,
+        "remove": 1,
+        "move_w": 1,
+        "quaff": 1,
+        "move_e": 1
+      }
+    },
+    "gems": {
+      "acquired": 7,
+      "actions": {
+        "wield": 1,
+        "wear": 1,
+        "offer": 1,
+        "quaff": 1,
+        "move_se": 1,
+        "move_s": 1
+      }
+    },
+    "coins": {
+      "acquired": 5,
+      "actions": {
+        "drop": 4,
+        "pray": 1
+      }
+    }
+  },
+  "session_legacy": {
+    "acquired_by_cat": {
+      "rings": 2,
+      "wands": 1,
+      "spellbooks": 2,
+      "scrolls": 14,
+      "potions": 21,
+      "comestibles": 6,
+      "gems": 7,
+      "coins": 5
+    },
+    "used_by_cat": {
+      "comestibles": 6,
+      "gems": 6,
+      "scrolls": 13,
+      "coins": 5,
+      "potions": 17,
+      "spellbooks": 1
+    },
+    "acquired_by_item": {
+      "pair of leather gloves": 1,
+      "robe": 1,
+      "spellbook of protection": 9,
+      "scroll of remove curse": 2,
+      "potions of healing": 1,
+      "food rations": 1,
+      "apples": 1,
+      "oranges": 1,
+      "fortune cookies": 2,
+      "spellbook of sleep": 6,
+      "scroll of create monster": 3,
+      "magic marker": 4,
+      "scroll of stinking cloud": 1,
+      "gold pieces": 7,
+      "scroll of magic mapping": 1,
+      "potion of healing": 8,
+      "spellbook of healing": 5,
+      "scroll of destroy armor": 2,
+      "scroll of light": 3,
+      "scroll of confuse monster": 1,
+      "long wand": 5,
+      "newt corpse": 5,
+      "dark potion": 1,
+      "wand of teleportation": 1,
+      "potion of levitation": 1,
+      "scroll of identify": 3,
+      "oil lamp": 3,
+      "eggs": 1,
+      "sky blue potion": 3,
+      "scroll of enchant armor": 1,
+      "lichen corpse": 5,
+      "scroll labeled eiris sazun idisi": 1,
+      "scroll of teleportation": 2,
+      "bubbly potion": 1,
+      "food ration": 2,
+      "carrot": 1,
+      "egg": 1,
+      "slime mold": 1,
+      "lichen corpses": 1,
+      "scroll of taming": 1
+    },
+    "used_by_item": {
+      "spellbook of protection": 8,
+      "scroll of remove curse": 2,
+      "scroll of create monster": 3,
+      "magic marker": 4,
+      "gold pieces": 6,
+      "spellbook of sleep": 6,
+      "scroll of stinking cloud": 1,
+      "scroll of magic mapping": 1,
+      "potion of healing": 8,
+      "spellbook of healing": 5,
+      "scroll of destroy armor": 2,
+      "scroll of light": 3,
+      "long wand": 5,
+      "newt corpse": 5,
+      "dark potion": 1,
+      "scroll of confuse monster": 1,
+      "wand of teleportation": 1,
+      "potion of levitation": 1,
+      "sky blue potion": 3,
+      "scroll of identify": 3,
+      "eggs": 1,
+      "oil lamp": 3,
+      "lichen corpse": 5,
+      "scroll labeled eiris sazun idisi": 1,
+      "scroll of enchant armor": 1,
+      "scroll of teleportation": 2,
+      "bubbly potion": 1,
+      "food ration": 2,
+      "carrot": 1,
+      "egg": 1,
+      "fortune cookies": 1,
+      "slime mold": 1,
+      "lichen corpses": 1
+    }
+  }
+}

@@ -1,0 +1,423 @@
+{
+  "worker_idx": 20,
+  "env_idx": 0,
+  "experiment": "debug2",
+  "mode": "train",
+  "total_episodes": 19,
+  "item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of healing": {
+      "acquired": 5,
+      "actions": {
+        "unknown": 5
+      }
+    },
+    "scroll of gold detection": {
+      "acquired": 3,
+      "actions": {
+        "read": 2
+      }
+    },
+    "potions of healing": {
+      "acquired": 2,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "food rations": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "gold pieces": {
+      "acquired": 7,
+      "actions": {
+        "unknown": 6
+      }
+    },
+    "newt corpse": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "spellbook of protection": {
+      "acquired": 4,
+      "actions": {
+        "apply": 1,
+        "unknown": 3
+      }
+    },
+    "scroll of light": {
+      "acquired": 2,
+      "actions": {
+        "apply": 1,
+        "read": 1
+      }
+    },
+    "spellbook of sleep": {
+      "acquired": 5,
+      "actions": {
+        "unknown": 4
+      }
+    },
+    "scroll of destroy armor": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "scroll of identify": {
+      "acquired": 3,
+      "actions": {
+        "read": 3
+      }
+    },
+    "scroll of enchant armor": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "potion of healing": {
+      "acquired": 5,
+      "actions": {
+        "drink": 4
+      }
+    },
+    "lichen corpse": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "scroll of magic mapping": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "oil lamp": {
+      "acquired": 3,
+      "actions": {
+        "unknown": 3
+      }
+    },
+    "scroll of earth": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "magic marker": {
+      "acquired": 3,
+      "actions": {
+        "unknown": 1,
+        "read": 1
+      }
+    },
+    "scroll of food detection": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of confuse monster": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    }
+  },
+  "base_item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of healing": {
+      "acquired": 5,
+      "actions": {
+        "unknown": 5
+      }
+    },
+    "scroll of detection": {
+      "acquired": 3,
+      "actions": {
+        "read": 2
+      }
+    },
+    "potions of healing": {
+      "acquired": 2,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "food rations": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "pieces": {
+      "acquired": 7,
+      "actions": {
+        "unknown": 6
+      }
+    },
+    "newt corpse": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "spellbook of protection": {
+      "acquired": 4,
+      "actions": {
+        "apply": 1,
+        "unknown": 3
+      }
+    },
+    "scroll of light": {
+      "acquired": 2,
+      "actions": {
+        "apply": 1,
+        "read": 1
+      }
+    },
+    "spellbook of sleep": {
+      "acquired": 5,
+      "actions": {
+        "unknown": 4
+      }
+    },
+    "scroll of destroy armor": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "scroll of identify": {
+      "acquired": 3,
+      "actions": {
+        "read": 3
+      }
+    },
+    "scroll of enchant armor": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "potion of healing": {
+      "acquired": 5,
+      "actions": {
+        "drink": 4
+      }
+    },
+    "lichen corpse": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "scroll of magic mapping": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "oil lamp": {
+      "acquired": 3,
+      "actions": {
+        "unknown": 3
+      }
+    },
+    "scroll of earth": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "magic marker": {
+      "acquired": 3,
+      "actions": {
+        "unknown": 1,
+        "read": 1
+      }
+    },
+    "scroll of food detection": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of confuse monster": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    }
+  },
+  "category_actions": {
+    "rings": {
+      "acquired": 2,
+      "actions": {}
+    },
+    "wands": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbooks": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "scrolls": {
+      "acquired": 7,
+      "actions": {
+        "move_se": 1,
+        "move_e": 1,
+        "move_wait": 1,
+        "invoke": 1,
+        "search": 1
+      }
+    },
+    "potions": {
+      "acquired": 7,
+      "actions": {
+        "move_n": 1,
+        "pray": 2
+      }
+    },
+    "gems": {
+      "acquired": 7,
+      "actions": {
+        "move_n": 1,
+        "takeoff": 1,
+        "pray": 1,
+        "move_wait": 1,
+        "invoke": 1,
+        "move_e": 1
+      }
+    },
+    "comestibles": {
+      "acquired": 5,
+      "actions": {
+        "offer": 1,
+        "pray": 1,
+        "kick": 1,
+        "read": 1
+      }
+    }
+  },
+  "session_legacy": {
+    "acquired_by_cat": {
+      "rings": 2,
+      "wands": 1,
+      "spellbooks": 1,
+      "scrolls": 7,
+      "potions": 7,
+      "gems": 7,
+      "comestibles": 5
+    },
+    "used_by_cat": {
+      "gems": 6,
+      "potions": 3,
+      "scrolls": 5,
+      "comestibles": 4
+    },
+    "acquired_by_item": {
+      "pair of leather gloves": 1,
+      "robe": 1,
+      "spellbook of healing": 5,
+      "scroll of gold detection": 3,
+      "potions of healing": 2,
+      "food rations": 1,
+      "apples": 1,
+      "oranges": 1,
+      "fortune cookies": 1,
+      "gold pieces": 7,
+      "newt corpse": 2,
+      "spellbook of protection": 4,
+      "scroll of light": 2,
+      "spellbook of sleep": 5,
+      "scroll of destroy armor": 2,
+      "scroll of identify": 3,
+      "scroll of enchant armor": 2,
+      "potion of healing": 5,
+      "lichen corpse": 1,
+      "scroll of remove curse": 2,
+      "scroll of magic mapping": 1,
+      "oil lamp": 3,
+      "scroll of earth": 1,
+      "magic marker": 3,
+      "scroll of food detection": 1,
+      "scroll of confuse monster": 1
+    },
+    "used_by_item": {
+      "gold pieces": 6,
+      "spellbook of healing": 5,
+      "scroll of gold detection": 2,
+      "newt corpse": 2,
+      "spellbook of protection": 4,
+      "scroll of light": 2,
+      "spellbook of sleep": 4,
+      "scroll of destroy armor": 2,
+      "scroll of identify": 3,
+      "potion of healing": 4,
+      "scroll of enchant armor": 2,
+      "lichen corpse": 1,
+      "scroll of remove curse": 2,
+      "scroll of magic mapping": 1,
+      "oil lamp": 3,
+      "scroll of earth": 1,
+      "magic marker": 2,
+      "potions of healing": 1,
+      "scroll of food detection": 1,
+      "scroll of confuse monster": 1
+    }
+  }
+}

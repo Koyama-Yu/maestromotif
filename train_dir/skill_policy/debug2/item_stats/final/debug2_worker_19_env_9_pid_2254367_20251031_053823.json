@@ -1,0 +1,633 @@
+{
+  "worker_idx": 19,
+  "env_idx": 9,
+  "experiment": "debug2",
+  "mode": "train",
+  "total_episodes": 15,
+  "item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of protection": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "wield": 1
+      }
+    },
+    "scroll of genocide": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "potions of healing": {
+      "acquired": 2,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "food rations": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "apples": {
+      "acquired": 2,
+      "actions": {
+        "wear": 1
+      }
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "magic marker": {
+      "acquired": 4,
+      "actions": {
+        "drop": 1,
+        "unknown": 3
+      }
+    },
+    "gold pieces": {
+      "acquired": 6,
+      "actions": {
+        "drop": 1,
+        "unknown": 5
+      }
+    },
+    "spellbook of sleep": {
+      "acquired": 5,
+      "actions": {
+        "unknown": 3,
+        "read": 1,
+        "apply": 1
+      }
+    },
+    "scroll of magic mapping": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "spellbook of healing": {
+      "acquired": 5,
+      "actions": {
+        "wear": 2,
+        "unknown": 2
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 1,
+      "actions": {
+        "wear": 1
+      }
+    },
+    "potion of healing": {
+      "acquired": 5,
+      "actions": {
+        "drink": 4,
+        "read": 1
+      }
+    },
+    "scroll of destroy armor": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "newt corpse": {
+      "acquired": 9,
+      "actions": {
+        "eat": 9
+      }
+    },
+    "orange potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "newt corpses": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "scroll of light": {
+      "acquired": 2,
+      "actions": {
+        "wear": 1,
+        "wield": 1
+      }
+    },
+    "scroll of scare monster": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "short wand": {
+      "acquired": 5,
+      "actions": {
+        "drop": 5
+      }
+    },
+    "lichen corpse": {
+      "acquired": 3,
+      "actions": {
+        "eat": 3
+      }
+    },
+    "silver wand": {
+      "acquired": 1,
+      "actions": {
+        "zap": 1
+      }
+    },
+    "wand of create monster": {
+      "acquired": 1,
+      "actions": {
+        "zap": 1
+      }
+    },
+    "scroll of teleportation": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of confuse monster": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of identify": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "bubbly potion": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "drink": 1
+      }
+    },
+    "slime mold": {
+      "acquired": 1,
+      "actions": {
+        "wield": 1
+      }
+    },
+    "potion of monster detection": {
+      "acquired": 1,
+      "actions": {
+        "wield": 1
+      }
+    },
+    "scroll of stinking cloud": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "fortune cookie": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "food ration": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "lichen corpses": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "scroll of earth": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of enchant armor": {
+      "acquired": 1,
+      "actions": {
+        "apply": 1
+      }
+    },
+    "scroll of charging": {
+      "acquired": 1,
+      "actions": {}
+    }
+  },
+  "base_item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of protection": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "wield": 1
+      }
+    },
+    "scroll of genocide": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "potions of healing": {
+      "acquired": 2,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "food rations": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "apples": {
+      "acquired": 2,
+      "actions": {
+        "wear": 1
+      }
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "magic marker": {
+      "acquired": 4,
+      "actions": {
+        "drop": 1,
+        "unknown": 3
+      }
+    },
+    "pieces": {
+      "acquired": 6,
+      "actions": {
+        "drop": 1,
+        "unknown": 5
+      }
+    },
+    "spellbook of sleep": {
+      "acquired": 5,
+      "actions": {
+        "unknown": 3,
+        "read": 1,
+        "apply": 1
+      }
+    },
+    "scroll of magic mapping": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "spellbook of healing": {
+      "acquired": 5,
+      "actions": {
+        "wear": 2,
+        "unknown": 2
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 1,
+      "actions": {
+        "wear": 1
+      }
+    },
+    "potion of healing": {
+      "acquired": 5,
+      "actions": {
+        "drink": 4,
+        "read": 1
+      }
+    },
+    "scroll of destroy armor": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "newt corpse": {
+      "acquired": 9,
+      "actions": {
+        "eat": 9
+      }
+    },
+    "orange potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "newt corpses": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "scroll of light": {
+      "acquired": 2,
+      "actions": {
+        "wear": 1,
+        "wield": 1
+      }
+    },
+    "scroll of scare monster": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "short wand": {
+      "acquired": 5,
+      "actions": {
+        "drop": 5
+      }
+    },
+    "lichen corpse": {
+      "acquired": 3,
+      "actions": {
+        "eat": 3
+      }
+    },
+    "wand": {
+      "acquired": 1,
+      "actions": {
+        "zap": 1
+      }
+    },
+    "wand of create monster": {
+      "acquired": 1,
+      "actions": {
+        "zap": 1
+      }
+    },
+    "scroll of teleportation": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of confuse monster": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of identify": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "bubbly potion": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "drink": 1
+      }
+    },
+    "slime mold": {
+      "acquired": 1,
+      "actions": {
+        "wield": 1
+      }
+    },
+    "potion of monster detection": {
+      "acquired": 1,
+      "actions": {
+        "wield": 1
+      }
+    },
+    "scroll of stinking cloud": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "fortune cookie": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "food ration": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "lichen corpses": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "scroll of earth": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of enchant armor": {
+      "acquired": 1,
+      "actions": {
+        "apply": 1
+      }
+    },
+    "scroll of charging": {
+      "acquired": 1,
+      "actions": {}
+    }
+  },
+  "category_actions": {
+    "rings": {
+      "acquired": 2,
+      "actions": {}
+    },
+    "wands": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbooks": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "scrolls": {
+      "acquired": 7,
+      "actions": {
+        "remove": 1,
+        "kick": 1,
+        "move_sw": 1,
+        "pray": 1,
+        "drop": 1,
+        "read": 1
+      }
+    },
+    "potions": {
+      "acquired": 20,
+      "actions": {
+        "kick": 1,
+        "wear": 1,
+        "pray": 6,
+        "move_sw": 1,
+        "search": 2,
+        "wield": 1,
+        "move_se": 3,
+        "move_e": 1
+      }
+    },
+    "comestibles": {
+      "acquired": 4,
+      "actions": {
+        "drop": 1,
+        "pray": 1,
+        "move_e": 1,
+        "move_s": 1
+      }
+    },
+    "gems": {
+      "acquired": 6,
+      "actions": {
+        "drop": 1,
+        "remove": 1,
+        "move_sw": 1,
+        "search": 1,
+        "pray": 1,
+        "move_e": 1
+      }
+    },
+    "coins": {
+      "acquired": 6,
+      "actions": {
+        "drop": 5,
+        "move_sw": 1
+      }
+    }
+  },
+  "session_legacy": {
+    "acquired_by_cat": {
+      "rings": 2,
+      "wands": 1,
+      "spellbooks": 1,
+      "scrolls": 7,
+      "potions": 20,
+      "comestibles": 4,
+      "gems": 6,
+      "coins": 6
+    },
+    "used_by_cat": {
+      "gems": 6,
+      "comestibles": 4,
+      "scrolls": 6,
+      "potions": 16,
+      "coins": 6
+    },
+    "acquired_by_item": {
+      "pair of leather gloves": 1,
+      "robe": 1,
+      "spellbook of protection": 2,
+      "scroll of genocide": 1,
+      "potions of healing": 2,
+      "food rations": 1,
+      "apples": 2,
+      "oranges": 1,
+      "fortune cookies": 1,
+      "magic marker": 4,
+      "gold pieces": 6,
+      "spellbook of sleep": 5,
+      "scroll of magic mapping": 2,
+      "spellbook of healing": 5,
+      "scroll of remove curse": 1,
+      "potion of healing": 5,
+      "scroll of destroy armor": 1,
+      "newt corpse": 9,
+      "orange potion": 1,
+      "newt corpses": 2,
+      "scroll of light": 2,
+      "scroll of scare monster": 1,
+      "short wand": 5,
+      "lichen corpse": 3,
+      "silver wand": 1,
+      "wand of create monster": 1,
+      "scroll of teleportation": 1,
+      "scroll of confuse monster": 1,
+      "scroll of identify": 2,
+      "bubbly potion": 2,
+      "slime mold": 1,
+      "potion of monster detection": 1,
+      "scroll of stinking cloud": 1,
+      "fortune cookie": 1,
+      "food ration": 1,
+      "lichen corpses": 1,
+      "scroll of earth": 1,
+      "scroll of enchant armor": 1,
+      "scroll of charging": 1
+    },
+    "used_by_item": {
+      "gold pieces": 6,
+      "spellbook of protection": 2,
+      "scroll of genocide": 1,
+      "magic marker": 4,
+      "spellbook of sleep": 5,
+      "scroll of magic mapping": 2,
+      "spellbook of healing": 4,
+      "scroll of remove curse": 1,
+      "potions of healing": 1,
+      "newt corpse": 9,
+      "orange potion": 1,
+      "scroll of destroy armor": 1,
+      "potion of healing": 5,
+      "newt corpses": 2,
+      "scroll of light": 2,
+      "apples": 1,
+      "short wand": 5,
+      "silver wand": 1,
+      "scroll of scare monster": 1,
+      "lichen corpse": 3,
+      "wand of create monster": 1,
+      "scroll of teleportation": 1,
+      "scroll of confuse monster": 1,
+      "scroll of identify": 2,
+      "bubbly potion": 2,
+      "potion of monster detection": 1,
+      "slime mold": 1,
+      "scroll of stinking cloud": 1,
+      "fortune cookie": 1,
+      "lichen corpses": 1,
+      "food ration": 1,
+      "scroll of earth": 1,
+      "scroll of enchant armor": 1
+    }
+  }
+}

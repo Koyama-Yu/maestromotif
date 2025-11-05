@@ -1,0 +1,686 @@
+{
+  "worker_idx": 6,
+  "env_idx": 4,
+  "experiment": "debug2",
+  "mode": "train",
+  "total_episodes": 15,
+  "item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of protection": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "scroll of identify": {
+      "acquired": 4,
+      "actions": {
+        "read": 1,
+        "eat": 1,
+        "wield": 1,
+        "wear": 1
+      }
+    },
+    "potions of healing": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "potion of healing": {
+      "acquired": 5,
+      "actions": {
+        "drink": 2,
+        "drop": 1,
+        "wear": 1
+      }
+    },
+    "food rations": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "food ration": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "scroll of scare monster": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "newt corpse": {
+      "acquired": 7,
+      "actions": {
+        "eat": 5,
+        "wear": 1,
+        "wield": 1
+      }
+    },
+    "scroll labeled tharr": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "read": 1
+      }
+    },
+    "spellbook of healing": {
+      "acquired": 4,
+      "actions": {
+        "drop": 1,
+        "unknown": 1,
+        "wear": 1
+      }
+    },
+    "scroll of teleportation": {
+      "acquired": 3,
+      "actions": {
+        "drop": 1,
+        "read": 2
+      }
+    },
+    "scroll labeled eiris sazun idisi": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 1,
+      "actions": {
+        "throw": 1
+      }
+    },
+    "spellbook of sleep": {
+      "acquired": 3,
+      "actions": {
+        "wield": 1,
+        "drop": 1,
+        "unknown": 1
+      }
+    },
+    "lichen corpse": {
+      "acquired": 2,
+      "actions": {
+        "wield": 1
+      }
+    },
+    "scroll labeled etaoin shrdlu": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "read": 1
+      }
+    },
+    "gold pieces": {
+      "acquired": 5,
+      "actions": {
+        "wield": 2,
+        "unknown": 2,
+        "wear": 1
+      }
+    },
+    "tripe rations": {
+      "acquired": 1,
+      "actions": {
+        "wield": 1
+      }
+    },
+    "scroll of create monster": {
+      "acquired": 2,
+      "actions": {
+        "wear": 2
+      }
+    },
+    "slime mold": {
+      "acquired": 2,
+      "actions": {
+        "wear": 1,
+        "wield": 1
+      }
+    },
+    "scroll of enchant armor": {
+      "acquired": 4,
+      "actions": {
+        "wear": 1,
+        "drop": 2
+      }
+    },
+    "magic marker": {
+      "acquired": 3,
+      "actions": {
+        "wear": 1,
+        "drop": 1,
+        "wield": 1
+      }
+    },
+    "scroll labeled elam ebow": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of magic mapping": {
+      "acquired": 2,
+      "actions": {
+        "wield": 1,
+        "drop": 1
+      }
+    },
+    "swirly potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of paralysis": {
+      "acquired": 1,
+      "actions": {
+        "wield": 1
+      }
+    },
+    "scroll of punishment": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "balsa wand": {
+      "acquired": 3,
+      "actions": {
+        "drop": 2,
+        "zap": 1
+      }
+    },
+    "dark potion": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "drink": 1
+      }
+    },
+    "egg": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "scroll labeled ko bate": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "wand of make invisible": {
+      "acquired": 1,
+      "actions": {
+        "zap": 1
+      }
+    },
+    "potion of sleeping": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "scroll of confuse monster": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of earth": {
+      "acquired": 1,
+      "actions": {
+        "wield": 1
+      }
+    },
+    "scroll of food detection": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    }
+  },
+  "base_item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of protection": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "scroll of identify": {
+      "acquired": 4,
+      "actions": {
+        "read": 1,
+        "eat": 1,
+        "wield": 1,
+        "wear": 1
+      }
+    },
+    "potions of healing": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "potion of healing": {
+      "acquired": 5,
+      "actions": {
+        "drink": 2,
+        "drop": 1,
+        "wear": 1
+      }
+    },
+    "food rations": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "food ration": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "scroll of scare monster": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "newt corpse": {
+      "acquired": 7,
+      "actions": {
+        "eat": 5,
+        "wear": 1,
+        "wield": 1
+      }
+    },
+    "scroll labeled tharr": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "read": 1
+      }
+    },
+    "spellbook of healing": {
+      "acquired": 4,
+      "actions": {
+        "drop": 1,
+        "unknown": 1,
+        "wear": 1
+      }
+    },
+    "scroll of teleportation": {
+      "acquired": 3,
+      "actions": {
+        "drop": 1,
+        "read": 2
+      }
+    },
+    "scroll labeled eiris sazun idisi": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 1,
+      "actions": {
+        "throw": 1
+      }
+    },
+    "spellbook of sleep": {
+      "acquired": 3,
+      "actions": {
+        "wield": 1,
+        "drop": 1,
+        "unknown": 1
+      }
+    },
+    "lichen corpse": {
+      "acquired": 2,
+      "actions": {
+        "wield": 1
+      }
+    },
+    "scroll labeled etaoin shrdlu": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "read": 1
+      }
+    },
+    "pieces": {
+      "acquired": 5,
+      "actions": {
+        "wield": 2,
+        "unknown": 2,
+        "wear": 1
+      }
+    },
+    "tripe rations": {
+      "acquired": 1,
+      "actions": {
+        "wield": 1
+      }
+    },
+    "scroll of create monster": {
+      "acquired": 2,
+      "actions": {
+        "wear": 2
+      }
+    },
+    "slime mold": {
+      "acquired": 2,
+      "actions": {
+        "wear": 1,
+        "wield": 1
+      }
+    },
+    "scroll of enchant armor": {
+      "acquired": 4,
+      "actions": {
+        "wear": 1,
+        "drop": 2
+      }
+    },
+    "magic marker": {
+      "acquired": 3,
+      "actions": {
+        "wear": 1,
+        "drop": 1,
+        "wield": 1
+      }
+    },
+    "scroll labeled elam ebow": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of magic mapping": {
+      "acquired": 2,
+      "actions": {
+        "wield": 1,
+        "drop": 1
+      }
+    },
+    "swirly potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of paralysis": {
+      "acquired": 1,
+      "actions": {
+        "wield": 1
+      }
+    },
+    "scroll of punishment": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "balsa wand": {
+      "acquired": 3,
+      "actions": {
+        "drop": 2,
+        "zap": 1
+      }
+    },
+    "potion": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "drink": 1
+      }
+    },
+    "egg": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "scroll labeled ko bate": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "wand of make invisible": {
+      "acquired": 1,
+      "actions": {
+        "zap": 1
+      }
+    },
+    "potion of sleeping": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "scroll of confuse monster": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of earth": {
+      "acquired": 1,
+      "actions": {
+        "wield": 1
+      }
+    },
+    "scroll of food detection": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    }
+  },
+  "category_actions": {
+    "rings": {
+      "acquired": 2,
+      "actions": {}
+    },
+    "wands": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbooks": {
+      "acquired": 11,
+      "actions": {
+        "drop": 6,
+        "eat": 1,
+        "remove": 1,
+        "wear": 1,
+        "move_n": 1
+      }
+    },
+    "scrolls": {
+      "acquired": 8,
+      "actions": {
+        "move_w": 1,
+        "drop": 2,
+        "move_sw": 1,
+        "move_n": 1,
+        "wear": 1
+      }
+    },
+    "potions": {
+      "acquired": 19,
+      "actions": {
+        "move_w": 1,
+        "eat": 1,
+        "wield": 4,
+        "wear": 2,
+        "move_sw": 1,
+        "pray": 3,
+        "move_n": 2
+      }
+    },
+    "gems": {
+      "acquired": 5,
+      "actions": {
+        "wield": 2,
+        "move_sw": 1,
+        "wear": 1,
+        "move_n": 1
+      }
+    },
+    "comestibles": {
+      "acquired": 3,
+      "actions": {
+        "wear": 1,
+        "drop": 1,
+        "wield": 1
+      }
+    },
+    "coins": {
+      "acquired": 3,
+      "actions": {
+        "drop": 2,
+        "move_n": 1
+      }
+    }
+  },
+  "session_legacy": {
+    "acquired_by_cat": {
+      "rings": 2,
+      "wands": 1,
+      "spellbooks": 11,
+      "scrolls": 8,
+      "potions": 19,
+      "gems": 5,
+      "comestibles": 3,
+      "coins": 3
+    },
+    "used_by_cat": {
+      "scrolls": 6,
+      "potions": 14,
+      "spellbooks": 10,
+      "gems": 5,
+      "comestibles": 3,
+      "coins": 3
+    },
+    "acquired_by_item": {
+      "pair of leather gloves": 1,
+      "robe": 1,
+      "spellbook of protection": 1,
+      "scroll of identify": 4,
+      "potions of healing": 1,
+      "potion of healing": 5,
+      "food rations": 1,
+      "apples": 1,
+      "oranges": 1,
+      "fortune cookies": 1,
+      "food ration": 2,
+      "scroll of scare monster": 1,
+      "newt corpse": 7,
+      "scroll labeled tharr": 2,
+      "spellbook of healing": 4,
+      "scroll of teleportation": 3,
+      "scroll labeled eiris sazun idisi": 1,
+      "scroll of remove curse": 1,
+      "spellbook of sleep": 3,
+      "lichen corpse": 2,
+      "scroll labeled etaoin shrdlu": 2,
+      "gold pieces": 5,
+      "tripe rations": 1,
+      "scroll of create monster": 2,
+      "slime mold": 2,
+      "scroll of enchant armor": 4,
+      "magic marker": 3,
+      "scroll labeled elam ebow": 1,
+      "scroll of magic mapping": 2,
+      "swirly potion": 1,
+      "potion of paralysis": 1,
+      "scroll of punishment": 1,
+      "balsa wand": 3,
+      "dark potion": 2,
+      "egg": 1,
+      "scroll labeled ko bate": 1,
+      "wand of make invisible": 1,
+      "potion of sleeping": 1,
+      "scroll of confuse monster": 1,
+      "scroll of earth": 1,
+      "scroll of food detection": 1
+    },
+    "used_by_item": {
+      "scroll of identify": 4,
+      "potion of healing": 4,
+      "food ration": 2,
+      "scroll labeled tharr": 2,
+      "spellbook of protection": 1,
+      "scroll of scare monster": 1,
+      "newt corpse": 7,
+      "scroll labeled eiris sazun idisi": 1,
+      "spellbook of healing": 3,
+      "scroll of teleportation": 3,
+      "scroll of remove curse": 1,
+      "scroll labeled etaoin shrdlu": 2,
+      "gold pieces": 5,
+      "lichen corpse": 1,
+      "tripe rations": 1,
+      "scroll of create monster": 2,
+      "slime mold": 2,
+      "scroll labeled elam ebow": 1,
+      "scroll of enchant armor": 3,
+      "magic marker": 3,
+      "swirly potion": 1,
+      "spellbook of sleep": 3,
+      "scroll of magic mapping": 2,
+      "potion of paralysis": 1,
+      "balsa wand": 3,
+      "dark potion": 2,
+      "scroll labeled ko bate": 1,
+      "scroll of punishment": 1,
+      "wand of make invisible": 1,
+      "potion of sleeping": 1,
+      "egg": 1,
+      "scroll of confuse monster": 1,
+      "scroll of earth": 1,
+      "scroll of food detection": 1
+    }
+  }
+}

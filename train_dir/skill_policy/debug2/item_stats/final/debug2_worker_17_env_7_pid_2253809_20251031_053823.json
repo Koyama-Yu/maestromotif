@@ -1,0 +1,460 @@
+{
+  "worker_idx": 17,
+  "env_idx": 7,
+  "experiment": "debug2",
+  "mode": "train",
+  "total_episodes": 17,
+  "item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of sleep": {
+      "acquired": 6,
+      "actions": {
+        "unknown": 4,
+        "quaff": 1
+      }
+    },
+    "scroll of light": {
+      "acquired": 3,
+      "actions": {
+        "read": 2,
+        "wield": 1
+      }
+    },
+    "potions of healing": {
+      "acquired": 2,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of healing": {
+      "acquired": 6,
+      "actions": {
+        "drink": 6
+      }
+    },
+    "food rations": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of protection": {
+      "acquired": 4,
+      "actions": {
+        "apply": 1,
+        "unknown": 3
+      }
+    },
+    "scroll of enchant armor": {
+      "acquired": 1,
+      "actions": {
+        "apply": 1
+      }
+    },
+    "fizzy potion": {
+      "acquired": 4,
+      "actions": {
+        "drop": 4
+      }
+    },
+    "gold pieces": {
+      "acquired": 6,
+      "actions": {
+        "wield": 1,
+        "unknown": 3,
+        "quaff": 1,
+        "read": 1
+      }
+    },
+    "scroll of identify": {
+      "acquired": 4,
+      "actions": {
+        "read": 3,
+        "quaff": 1
+      }
+    },
+    "newt corpse": {
+      "acquired": 4,
+      "actions": {
+        "eat": 3
+      }
+    },
+    "lichen corpse": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "tripe rations": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "magic marker": {
+      "acquired": 4,
+      "actions": {
+        "unknown": 4
+      }
+    },
+    "ruby potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of extra healing": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "scroll of taming": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "spellbook of healing": {
+      "acquired": 2,
+      "actions": {
+        "unknown": 2
+      }
+    },
+    "scroll of teleportation": {
+      "acquired": 2,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of stinking cloud": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "oil lamp": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "clear potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    }
+  },
+  "base_item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of sleep": {
+      "acquired": 6,
+      "actions": {
+        "unknown": 4,
+        "quaff": 1
+      }
+    },
+    "scroll of light": {
+      "acquired": 3,
+      "actions": {
+        "read": 2,
+        "wield": 1
+      }
+    },
+    "potions of healing": {
+      "acquired": 2,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of healing": {
+      "acquired": 6,
+      "actions": {
+        "drink": 6
+      }
+    },
+    "food rations": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of protection": {
+      "acquired": 4,
+      "actions": {
+        "apply": 1,
+        "unknown": 3
+      }
+    },
+    "scroll of enchant armor": {
+      "acquired": 1,
+      "actions": {
+        "apply": 1
+      }
+    },
+    "fizzy potion": {
+      "acquired": 4,
+      "actions": {
+        "drop": 4
+      }
+    },
+    "pieces": {
+      "acquired": 6,
+      "actions": {
+        "wield": 1,
+        "unknown": 3,
+        "quaff": 1,
+        "read": 1
+      }
+    },
+    "scroll of identify": {
+      "acquired": 4,
+      "actions": {
+        "read": 3,
+        "quaff": 1
+      }
+    },
+    "newt corpse": {
+      "acquired": 4,
+      "actions": {
+        "eat": 3
+      }
+    },
+    "lichen corpse": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "tripe rations": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "magic marker": {
+      "acquired": 4,
+      "actions": {
+        "unknown": 4
+      }
+    },
+    "ruby potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of extra healing": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "scroll of taming": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "spellbook of healing": {
+      "acquired": 2,
+      "actions": {
+        "unknown": 2
+      }
+    },
+    "scroll of teleportation": {
+      "acquired": 2,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of stinking cloud": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "oil lamp": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    }
+  },
+  "category_actions": {
+    "rings": {
+      "acquired": 2,
+      "actions": {}
+    },
+    "wands": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbooks": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "scrolls": {
+      "acquired": 11,
+      "actions": {
+        "move_up": 2,
+        "drop": 4,
+        "pray": 1,
+        "move_n": 1,
+        "move_e": 1,
+        "remove": 1
+      }
+    },
+    "potions": {
+      "acquired": 10,
+      "actions": {
+        "pray": 3,
+        "move_up": 2
+      }
+    },
+    "gems": {
+      "acquired": 6,
+      "actions": {
+        "wield": 1,
+        "move_up": 1,
+        "move_sw": 1,
+        "invoke": 1,
+        "quaff": 1,
+        "read": 1
+      }
+    },
+    "comestibles": {
+      "acquired": 4,
+      "actions": {
+        "move_sw": 1,
+        "pray": 1,
+        "move_s": 1,
+        "read": 1
+      }
+    }
+  },
+  "session_legacy": {
+    "acquired_by_cat": {
+      "rings": 2,
+      "wands": 1,
+      "spellbooks": 1,
+      "scrolls": 11,
+      "potions": 10,
+      "gems": 6,
+      "comestibles": 4
+    },
+    "used_by_cat": {
+      "scrolls": 10,
+      "gems": 6,
+      "potions": 5,
+      "comestibles": 4
+    },
+    "acquired_by_item": {
+      "pair of leather gloves": 1,
+      "robe": 1,
+      "spellbook of sleep": 6,
+      "scroll of light": 3,
+      "potions of healing": 2,
+      "potion of healing": 6,
+      "food rations": 1,
+      "apples": 1,
+      "oranges": 1,
+      "fortune cookies": 1,
+      "spellbook of protection": 4,
+      "scroll of enchant armor": 1,
+      "fizzy potion": 4,
+      "gold pieces": 6,
+      "scroll of identify": 4,
+      "newt corpse": 4,
+      "lichen corpse": 1,
+      "tripe rations": 1,
+      "magic marker": 4,
+      "ruby potion": 1,
+      "potion of extra healing": 1,
+      "scroll of taming": 2,
+      "spellbook of healing": 2,
+      "scroll of teleportation": 2,
+      "scroll of remove curse": 1,
+      "scroll of stinking cloud": 1,
+      "oil lamp": 1,
+      "clear potion": 1
+    },
+    "used_by_item": {
+      "spellbook of sleep": 5,
+      "scroll of light": 3,
+      "potion of healing": 6,
+      "spellbook of protection": 4,
+      "scroll of enchant armor": 1,
+      "fizzy potion": 4,
+      "gold pieces": 6,
+      "newt corpse": 3,
+      "potions of healing": 1,
+      "lichen corpse": 1,
+      "tripe rations": 1,
+      "ruby potion": 1,
+      "scroll of identify": 4,
+      "potion of extra healing": 1,
+      "scroll of taming": 2,
+      "magic marker": 4,
+      "spellbook of healing": 2,
+      "scroll of teleportation": 1,
+      "scroll of remove curse": 1,
+      "scroll of stinking cloud": 1,
+      "oil lamp": 1,
+      "clear potion": 1
+    }
+  }
+}

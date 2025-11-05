@@ -1,0 +1,609 @@
+{
+  "worker_idx": 6,
+  "env_idx": 1,
+  "experiment": "debug2",
+  "mode": "train",
+  "total_episodes": 18,
+  "item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of healing": {
+      "acquired": 3,
+      "actions": {
+        "unknown": 3
+      }
+    },
+    "scroll of light": {
+      "acquired": 4,
+      "actions": {
+        "read": 4
+      }
+    },
+    "potions of healing": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "food rations": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "newt corpse": {
+      "acquired": 8,
+      "actions": {
+        "eat": 8
+      }
+    },
+    "gold pieces": {
+      "acquired": 4,
+      "actions": {
+        "unknown": 4
+      }
+    },
+    "spellbook of sleep": {
+      "acquired": 5,
+      "actions": {
+        "unknown": 4
+      }
+    },
+    "scroll of identify": {
+      "acquired": 5,
+      "actions": {
+        "read": 4,
+        "wield": 1
+      }
+    },
+    "potion of healing": {
+      "acquired": 4,
+      "actions": {
+        "drink": 4
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 2,
+      "actions": {
+        "read": 1,
+        "drop": 1
+      }
+    },
+    "spellbook of protection": {
+      "acquired": 4,
+      "actions": {
+        "unknown": 3,
+        "wield": 1
+      }
+    },
+    "scroll of destroy armor": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "swirly potion": {
+      "acquired": 3,
+      "actions": {
+        "drop": 3
+      }
+    },
+    "dark potion": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "drink": 1
+      }
+    },
+    "potion of speed": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "magic marker": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "scroll of food detection": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "tripe rations": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "scroll of scare monster": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "tripe ration": {
+      "acquired": 2,
+      "actions": {
+        "unknown": 1,
+        "wield": 1
+      }
+    },
+    "scroll labeled duam xnaht": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "read": 1
+      }
+    },
+    "scroll of gold detection": {
+      "acquired": 2,
+      "actions": {
+        "read": 1
+      }
+    },
+    "magenta potion": {
+      "acquired": 3,
+      "actions": {
+        "drop": 2,
+        "drink": 1
+      }
+    },
+    "lichen corpse": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "lichen corpses": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "potion of extra healing": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "scroll of create monster": {
+      "acquired": 2,
+      "actions": {
+        "wield": 1,
+        "read": 1
+      }
+    },
+    "oil lamp": {
+      "acquired": 1,
+      "actions": {
+        "wield": 1
+      }
+    },
+    "newt corpses": {
+      "acquired": 1,
+      "actions": {
+        "wield": 1
+      }
+    },
+    "scroll labeled prirutsenie": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll labeled abra ka dabra": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of enchant armor": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "slime mold": {
+      "acquired": 2,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "scroll labeled lep gex ven zea": {
+      "acquired": 1,
+      "actions": {}
+    }
+  },
+  "base_item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of healing": {
+      "acquired": 3,
+      "actions": {
+        "unknown": 3
+      }
+    },
+    "scroll of light": {
+      "acquired": 4,
+      "actions": {
+        "read": 4
+      }
+    },
+    "potions of healing": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "food rations": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "newt corpse": {
+      "acquired": 8,
+      "actions": {
+        "eat": 8
+      }
+    },
+    "pieces": {
+      "acquired": 4,
+      "actions": {
+        "unknown": 4
+      }
+    },
+    "spellbook of sleep": {
+      "acquired": 5,
+      "actions": {
+        "unknown": 4
+      }
+    },
+    "scroll of identify": {
+      "acquired": 5,
+      "actions": {
+        "read": 4,
+        "wield": 1
+      }
+    },
+    "potion of healing": {
+      "acquired": 4,
+      "actions": {
+        "drink": 4
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 2,
+      "actions": {
+        "read": 1,
+        "drop": 1
+      }
+    },
+    "spellbook of protection": {
+      "acquired": 4,
+      "actions": {
+        "unknown": 3,
+        "wield": 1
+      }
+    },
+    "scroll of destroy armor": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "swirly potion": {
+      "acquired": 3,
+      "actions": {
+        "drop": 3
+      }
+    },
+    "potion": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "drink": 1
+      }
+    },
+    "potion of speed": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "magic marker": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "scroll of food detection": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "tripe rations": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "scroll of scare monster": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "tripe ration": {
+      "acquired": 2,
+      "actions": {
+        "unknown": 1,
+        "wield": 1
+      }
+    },
+    "scroll labeled duam xnaht": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "read": 1
+      }
+    },
+    "scroll of detection": {
+      "acquired": 2,
+      "actions": {
+        "read": 1
+      }
+    },
+    "magenta potion": {
+      "acquired": 3,
+      "actions": {
+        "drop": 2,
+        "drink": 1
+      }
+    },
+    "lichen corpse": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "lichen corpses": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "potion of extra healing": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "scroll of create monster": {
+      "acquired": 2,
+      "actions": {
+        "wield": 1,
+        "read": 1
+      }
+    },
+    "oil lamp": {
+      "acquired": 1,
+      "actions": {
+        "wield": 1
+      }
+    },
+    "newt corpses": {
+      "acquired": 1,
+      "actions": {
+        "wield": 1
+      }
+    },
+    "scroll labeled prirutsenie": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll labeled abra ka dabra": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of enchant armor": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "slime mold": {
+      "acquired": 2,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "scroll labeled lep gex ven zea": {
+      "acquired": 1,
+      "actions": {}
+    }
+  },
+  "category_actions": {
+    "rings": {
+      "acquired": 2,
+      "actions": {}
+    },
+    "wands": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbooks": {
+      "acquired": 7,
+      "actions": {
+        "drop": 1,
+        "move_wait": 1,
+        "wield": 2,
+        "move_s": 1
+      }
+    },
+    "scrolls": {
+      "acquired": 13,
+      "actions": {
+        "move_s": 3,
+        "drop": 6,
+        "move_sw": 1,
+        "move_e": 2
+      }
+    },
+    "potions": {
+      "acquired": 19,
+      "actions": {
+        "pickup": 1,
+        "move_s": 2,
+        "pray": 5,
+        "move_w": 1,
+        "move_e": 3,
+        "wield": 2
+      }
+    },
+    "gems": {
+      "acquired": 4,
+      "actions": {
+        "pickup": 1,
+        "move_s": 2,
+        "move_e": 1
+      }
+    },
+    "comestibles": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "wield": 1
+      }
+    }
+  },
+  "session_legacy": {
+    "acquired_by_cat": {
+      "rings": 2,
+      "wands": 1,
+      "spellbooks": 7,
+      "scrolls": 13,
+      "potions": 19,
+      "gems": 4,
+      "comestibles": 2
+    },
+    "used_by_cat": {
+      "gems": 4,
+      "potions": 14,
+      "scrolls": 12,
+      "comestibles": 2,
+      "spellbooks": 5
+    },
+    "acquired_by_item": {
+      "pair of leather gloves": 1,
+      "robe": 1,
+      "spellbook of healing": 3,
+      "scroll of light": 4,
+      "potions of healing": 1,
+      "food rations": 1,
+      "apples": 1,
+      "oranges": 1,
+      "fortune cookies": 1,
+      "newt corpse": 8,
+      "gold pieces": 4,
+      "spellbook of sleep": 5,
+      "scroll of identify": 5,
+      "potion of healing": 4,
+      "scroll of remove curse": 2,
+      "spellbook of protection": 4,
+      "scroll of destroy armor": 2,
+      "swirly potion": 3,
+      "dark potion": 2,
+      "potion of speed": 1,
+      "magic marker": 1,
+      "scroll of food detection": 1,
+      "tripe rations": 1,
+      "scroll of scare monster": 1,
+      "tripe ration": 2,
+      "scroll labeled duam xnaht": 2,
+      "scroll of gold detection": 2,
+      "magenta potion": 3,
+      "lichen corpse": 2,
+      "lichen corpses": 1,
+      "potion of extra healing": 1,
+      "scroll of create monster": 2,
+      "oil lamp": 1,
+      "newt corpses": 1,
+      "scroll labeled prirutsenie": 1,
+      "scroll labeled abra ka dabra": 1,
+      "scroll of enchant armor": 1,
+      "slime mold": 2,
+      "scroll labeled lep gex ven zea": 1
+    },
+    "used_by_item": {
+      "gold pieces": 4,
+      "spellbook of healing": 3,
+      "scroll of light": 4,
+      "newt corpse": 8,
+      "scroll of identify": 5,
+      "potion of healing": 4,
+      "spellbook of sleep": 4,
+      "scroll of remove curse": 2,
+      "swirly potion": 3,
+      "dark potion": 2,
+      "scroll of destroy armor": 2,
+      "potion of speed": 1,
+      "magic marker": 1,
+      "scroll of food detection": 1,
+      "spellbook of protection": 4,
+      "tripe rations": 1,
+      "scroll of scare monster": 1,
+      "tripe ration": 2,
+      "scroll labeled duam xnaht": 2,
+      "magenta potion": 3,
+      "lichen corpse": 2,
+      "scroll of gold detection": 1,
+      "potion of extra healing": 1,
+      "lichen corpses": 1,
+      "scroll of create monster": 2,
+      "oil lamp": 1,
+      "newt corpses": 1,
+      "scroll labeled prirutsenie": 1,
+      "scroll labeled abra ka dabra": 1,
+      "scroll of enchant armor": 1,
+      "slime mold": 1
+    }
+  }
+}

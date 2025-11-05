@@ -1,0 +1,566 @@
+{
+  "worker_idx": 2,
+  "env_idx": 6,
+  "experiment": "debug2",
+  "mode": "train",
+  "total_episodes": 21,
+  "item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of healing": {
+      "acquired": 7,
+      "actions": {
+        "unknown": 6
+      }
+    },
+    "scroll of identify": {
+      "acquired": 4,
+      "actions": {
+        "read": 3,
+        "eat": 1
+      }
+    },
+    "potions of healing": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "food rations": {
+      "acquired": 2,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of sleep": {
+      "acquired": 4,
+      "actions": {
+        "drop": 1,
+        "unknown": 2,
+        "eat": 1
+      }
+    },
+    "scroll of create monster": {
+      "acquired": 5,
+      "actions": {
+        "read": 5
+      }
+    },
+    "magic marker": {
+      "acquired": 3,
+      "actions": {
+        "unknown": 3
+      }
+    },
+    "scroll of enchant armor": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "read": 1
+      }
+    },
+    "partly eaten food ration": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "potion of healing": {
+      "acquired": 5,
+      "actions": {
+        "drink": 4
+      }
+    },
+    "scroll of scare monster": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "spellbook of protection": {
+      "acquired": 4,
+      "actions": {
+        "unknown": 4
+      }
+    },
+    "scroll of confuse monster": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "unlabeled scroll": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "gold pieces": {
+      "acquired": 5,
+      "actions": {
+        "unknown": 4,
+        "eat": 1
+      }
+    },
+    "scroll of light": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "lichen corpse": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "black potion": {
+      "acquired": 5,
+      "actions": {
+        "drop": 5
+      }
+    },
+    "scroll of gold detection": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "newt corpse": {
+      "acquired": 6,
+      "actions": {
+        "eat": 6
+      }
+    },
+    "scroll labeled phol ende wodan": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of enchant weapon": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of teleportation": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll labeled mapiro mahama diromat": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of charging": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "dark potion": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "food ration": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "emerald potion": {
+      "acquired": 4,
+      "actions": {
+        "drop": 2,
+        "drink": 1
+      }
+    },
+    "potion of fruit juice": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "scroll of food detection": {
+      "acquired": 1,
+      "actions": {}
+    }
+  },
+  "base_item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of healing": {
+      "acquired": 7,
+      "actions": {
+        "unknown": 6
+      }
+    },
+    "scroll of identify": {
+      "acquired": 4,
+      "actions": {
+        "read": 3,
+        "eat": 1
+      }
+    },
+    "potions of healing": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "food rations": {
+      "acquired": 2,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of sleep": {
+      "acquired": 4,
+      "actions": {
+        "drop": 1,
+        "unknown": 2,
+        "eat": 1
+      }
+    },
+    "scroll of create monster": {
+      "acquired": 5,
+      "actions": {
+        "read": 5
+      }
+    },
+    "magic marker": {
+      "acquired": 3,
+      "actions": {
+        "unknown": 3
+      }
+    },
+    "scroll of enchant armor": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "read": 1
+      }
+    },
+    "partly eaten food ration": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "potion of healing": {
+      "acquired": 5,
+      "actions": {
+        "drink": 4
+      }
+    },
+    "scroll of scare monster": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "spellbook of protection": {
+      "acquired": 4,
+      "actions": {
+        "unknown": 4
+      }
+    },
+    "scroll of confuse monster": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "unlabeled scroll": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "pieces": {
+      "acquired": 5,
+      "actions": {
+        "unknown": 4,
+        "eat": 1
+      }
+    },
+    "scroll of light": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "lichen corpse": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "potion": {
+      "acquired": 6,
+      "actions": {
+        "drop": 6
+      }
+    },
+    "scroll of detection": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "newt corpse": {
+      "acquired": 6,
+      "actions": {
+        "eat": 6
+      }
+    },
+    "scroll labeled phol ende wodan": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of enchant weapon": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of teleportation": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll labeled mapiro mahama diromat": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of charging": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "food ration": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "emerald potion": {
+      "acquired": 4,
+      "actions": {
+        "drop": 2,
+        "drink": 1
+      }
+    },
+    "potion of fruit juice": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "scroll of food detection": {
+      "acquired": 1,
+      "actions": {}
+    }
+  },
+  "category_actions": {
+    "rings": {
+      "acquired": 2,
+      "actions": {}
+    },
+    "wands": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbooks": {
+      "acquired": 4,
+      "actions": {
+        "drop": 1,
+        "move_up": 1,
+        "move_down": 1
+      }
+    },
+    "scrolls": {
+      "acquired": 16,
+      "actions": {
+        "move_up": 1,
+        "move_sw": 1,
+        "drop": 8,
+        "move_ne": 1,
+        "move_e": 2
+      }
+    },
+    "potions": {
+      "acquired": 15,
+      "actions": {
+        "drop": 1,
+        "move_wait": 1,
+        "move_n": 1,
+        "move_sw": 1,
+        "pray": 4,
+        "move_ne": 1,
+        "move_e": 2
+      }
+    },
+    "comestibles": {
+      "acquired": 3,
+      "actions": {
+        "kick": 1,
+        "move_sw": 1,
+        "pray": 1
+      }
+    },
+    "gems": {
+      "acquired": 5,
+      "actions": {
+        "move_e": 1,
+        "eat": 1,
+        "move_wait": 1,
+        "invoke": 1,
+        "move_up": 1
+      }
+    }
+  },
+  "session_legacy": {
+    "acquired_by_cat": {
+      "rings": 2,
+      "wands": 1,
+      "spellbooks": 4,
+      "scrolls": 16,
+      "potions": 15,
+      "comestibles": 3,
+      "gems": 5
+    },
+    "used_by_cat": {
+      "comestibles": 3,
+      "potions": 11,
+      "scrolls": 13,
+      "spellbooks": 3,
+      "gems": 5
+    },
+    "acquired_by_item": {
+      "pair of leather gloves": 1,
+      "robe": 1,
+      "spellbook of healing": 7,
+      "scroll of identify": 4,
+      "potions of healing": 1,
+      "food rations": 2,
+      "apples": 1,
+      "oranges": 1,
+      "fortune cookies": 1,
+      "spellbook of sleep": 4,
+      "scroll of create monster": 5,
+      "magic marker": 3,
+      "scroll of enchant armor": 2,
+      "partly eaten food ration": 1,
+      "potion of healing": 5,
+      "scroll of scare monster": 1,
+      "spellbook of protection": 4,
+      "scroll of confuse monster": 1,
+      "unlabeled scroll": 1,
+      "gold pieces": 5,
+      "scroll of light": 1,
+      "lichen corpse": 2,
+      "scroll of remove curse": 2,
+      "black potion": 5,
+      "scroll of gold detection": 2,
+      "newt corpse": 6,
+      "scroll labeled phol ende wodan": 1,
+      "scroll of enchant weapon": 1,
+      "scroll of teleportation": 1,
+      "scroll labeled mapiro mahama diromat": 1,
+      "scroll of charging": 1,
+      "dark potion": 1,
+      "food ration": 2,
+      "emerald potion": 4,
+      "potion of fruit juice": 1,
+      "scroll of food detection": 1
+    },
+    "used_by_item": {
+      "spellbook of healing": 6,
+      "scroll of identify": 4,
+      "scroll of create monster": 5,
+      "magic marker": 3,
+      "spellbook of sleep": 4,
+      "scroll of enchant armor": 2,
+      "partly eaten food ration": 1,
+      "potion of healing": 4,
+      "scroll of scare monster": 1,
+      "unlabeled scroll": 1,
+      "gold pieces": 5,
+      "spellbook of protection": 4,
+      "scroll of confuse monster": 1,
+      "scroll of light": 1,
+      "lichen corpse": 2,
+      "scroll of remove curse": 2,
+      "black potion": 5,
+      "scroll of gold detection": 2,
+      "newt corpse": 6,
+      "scroll labeled phol ende wodan": 1,
+      "scroll of enchant weapon": 1,
+      "scroll labeled mapiro mahama diromat": 1,
+      "scroll of teleportation": 1,
+      "dark potion": 1,
+      "scroll of charging": 1,
+      "food ration": 2,
+      "emerald potion": 3,
+      "food rations": 1,
+      "potion of fruit juice": 1
+    }
+  }
+}

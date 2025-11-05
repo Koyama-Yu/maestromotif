@@ -494,8 +494,8 @@ class ModifierWrapper(gym.Wrapper):
         enable_detailed = os.getenv('EXPORT_NAME', 'false').lower() == 'true'
         # worker_idx = getattr(env, 'worker_index', 0)
         # env_idx = getattr(env, 'env_index', 0)
-        worker_idx = None
         env_idx = None
+        worker_idx = None
 
         # 方法1: env_config から取得（最優先）
         if hasattr(env, 'env_config'):
@@ -554,6 +554,9 @@ class ModifierWrapper(gym.Wrapper):
         
         log.info(f'ModifierWrapper init: worker={final_worker_idx}, env={final_env_idx}, experiment={experiment}')
 
+        # 追記
+        self._indices_resolved = False
+
         #is_training = getattr(env, 'is_training', True)  # デフォルトは学習モード
         self.item_tracker = ItemTracker(
             experiment_name=experiment, 
@@ -564,6 +567,9 @@ class ModifierWrapper(gym.Wrapper):
             env_idx=final_env_idx,
             enable_detailed_logging=enable_detailed
         )
+
+        # 追加
+        self._update_item_tracker_indices(log_on_change=True)
 
         # 評価フラグの初期化
         self.evaluation = getattr(env, 'evaluation', False)
@@ -582,8 +588,89 @@ class ModifierWrapper(gym.Wrapper):
             [(k, self.env.observation_space[k]) for k in self.env.observation_space]
         )
         self.observation_space = gym.spaces.Dict(obs_spaces)
+    
+    # 追加: worker/envインデックスを解決
+    def _resolve_worker_env_indices(self):
+        """env_config/属性/ラッパーチェーンからworker_idx, env_idxを解決"""
+        worker_idx, env_idx = None, None
+
+        # 1) 自身にenv_config/属性があれば優先
+        if hasattr(self, 'env_config'):
+            ec = self.env_config
+            worker_idx = getattr(ec, 'worker_idx', None) or getattr(ec, 'worker_index', None)
+            env_idx = getattr(ec, 'env_idx', None) or getattr(ec, 'vector_index', None)
+        if worker_idx is None:
+            worker_idx = getattr(self, 'worker_idx', None) or getattr(self, 'worker_index', None)
+        if env_idx is None:
+            env_idx = (
+                getattr(self, 'env_idx', None) or
+                getattr(self, 'env_index', None) or
+                getattr(self, 'vector_index', None)
+            )
+        
+        # 2) 下位ラッパーを走査
+        current = getattr(self, 'env', None)
+        depth = 0
+        while (worker_idx is None or env_idx is None) and current is not None and depth < 20:
+            if hasattr(current, 'env_config'):
+                ec = current.env_config
+                if worker_idx is None:
+                    worker_idx = getattr(ec, 'worker_idx', None) or getattr(ec, 'worker_index', None)
+                if env_idx is None:
+                    env_idx = getattr(ec, 'env_idx', None) or getattr(ec, 'vector_index', None)
+
+            if worker_idx is None:
+                worker_idx = getattr(current, 'worker_idx', None) or getattr(current, 'worker_index', None)
+            if env_idx is None:
+                env_idx = (
+                    getattr(current, 'env_idx', None) or
+                    getattr(current, 'env_index', None) or
+                    getattr(current, 'vector_index', None)
+                )
+
+            if worker_idx is not None and env_idx is not None:
+                break
+
+            current = getattr(current, 'env', None)
+            depth += 1
+
+        return worker_idx, env_idx
+    
+    # 追加: ItemTrackerのインデックスを更新
+    def _update_item_tracker_indices(self, log_on_change=False):
+        w, e = self._resolve_worker_env_indices()
+        changed = False
+
+        if w is not None and w != self.item_tracker.worker_idx:
+            try:
+                self.item_tracker.worker_idx = int(w)
+            except Exception:
+                self.item_tracker.worker_idx = w
+            changed = True
+
+        if e is not None and e != self.item_tracker.env_idx:
+            try:
+                self.item_tracker.env_idx = int(e)
+            except Exception:
+                self.item_tracker.env_idx = e
+            changed = True
+
+        if (
+            self.item_tracker.worker_idx is not None and
+            self.item_tracker.env_idx is not None and
+            self.item_tracker.worker_idx >= 0 and
+            self.item_tracker.env_idx >= 0
+        ):
+            self._indices_resolved = True
+
+        if log_on_change and changed:
+            log.info(f'ModifierWrapper indices updated: worker={self.item_tracker.worker_idx}, env={self.item_tracker.env_idx}')
+    
 
     def step(self, action):
+        # 追加: 最初のstep前に一度だけ再解決
+        if not getattr(self, '_indices_resolved', False):
+            self._update_item_tracker_indices(log_on_change=True)
         obs, reward, done, info = self.env.step(action)
         intrinsic_reward = 0.0
         extrinsic_reward = reward
@@ -776,6 +863,7 @@ class ModifierWrapper(gym.Wrapper):
         return obs, extrinsic_reward, done, info
 
     def reset(self):
+        self._update_item_tracker_indices(log_on_change=True)
         self.prev_msg = b''
         self.num_buc = 0
         self.num_sold = 0
@@ -798,6 +886,7 @@ class ModifierWrapper(gym.Wrapper):
         self.skill_start_time = 0
 
         obs = self.env.reset()
+        self._update_item_tracker_indices(log_on_change=True)
 
         # 共通の統計情報初期化（nethack_playerがNoneでも必要）
         self.altar_seen = False
@@ -818,6 +907,8 @@ class ModifierWrapper(gym.Wrapper):
     def close(self):
         """ワーカー終了時の自動保存"""
         try:
+            self._update_item_tracker_indices(log_on_change=True)
+
             # 統計が収集されている場合のみ保存
             if hasattr(self, 'item_tracker') and self.item_tracker:
                 worker_idx = getattr(self.item_tracker, 'worker_idx', -1)
@@ -851,7 +942,7 @@ class ModifierWrapper(gym.Wrapper):
     def save_item_statistics(self, save_dir=None):
         """APPOから呼び出されるセッション統計保存"""
         if not hasattr(self, 'item_tracker') or self.item_tracker is None:
-            return None, None
+            return None
 
         if save_dir is None:
             experiment_name = getattr(self, 'experiment', 'default')
@@ -861,10 +952,10 @@ class ModifierWrapper(gym.Wrapper):
             os.makedirs(save_dir, exist_ok=True)
             json_path = self.item_tracker.save_worker_stats(save_dir)  # メソッド名変更
             log.info(f'Item stats saved: {json_path}')
-            return json_path, json_path  # 両方ともjson_pathを返す
+            return json_path
         except Exception as e:
             log.error(f"Failed to save item statistics: {e}")
-            return None, None
+            return None
 
     def get_item_summary(self):
         """

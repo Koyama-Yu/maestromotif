@@ -1,0 +1,661 @@
+{
+  "worker_idx": 3,
+  "env_idx": 6,
+  "experiment": "debug2",
+  "mode": "train",
+  "total_episodes": 18,
+  "item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of protection": {
+      "acquired": 8,
+      "actions": {
+        "unknown": 5,
+        "wield": 1,
+        "drop": 1,
+        "wear": 1
+      }
+    },
+    "scroll of stinking cloud": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "potions of healing": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "food rations": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "gold pieces": {
+      "acquired": 6,
+      "actions": {
+        "unknown": 4,
+        "read": 1,
+        "drop": 1
+      }
+    },
+    "spellbook of sleep": {
+      "acquired": 6,
+      "actions": {
+        "read": 1,
+        "unknown": 4
+      }
+    },
+    "scroll of enchant armor": {
+      "acquired": 3,
+      "actions": {
+        "read": 3
+      }
+    },
+    "scroll of scare monster": {
+      "acquired": 2,
+      "actions": {
+        "wield": 1,
+        "wear": 1
+      }
+    },
+    "scroll of light": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "magic marker": {
+      "acquired": 2,
+      "actions": {
+        "unknown": 2
+      }
+    },
+    "scroll labeled fnord": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "newt corpse": {
+      "acquired": 6,
+      "actions": {
+        "eat": 6
+      }
+    },
+    "egg": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "scroll of confuse monster": {
+      "acquired": 2,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of food detection": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "scroll of identify": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "potion of healing": {
+      "acquired": 2,
+      "actions": {
+        "drink": 2
+      }
+    },
+    "lichen corpse": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "newt corpses": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "dark potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of object detection": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "spellbook of healing": {
+      "acquired": 2,
+      "actions": {
+        "unknown": 2
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "fizzy potion": {
+      "acquired": 2,
+      "actions": {
+        "drop": 2
+      }
+    },
+    "milky potion": {
+      "acquired": 3,
+      "actions": {
+        "drop": 1,
+        "drink": 2
+      }
+    },
+    "yellow potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of gain energy": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "tripe ration": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "scroll of destroy armor": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "oil lamp": {
+      "acquired": 2,
+      "actions": {
+        "unknown": 1,
+        "wear": 1
+      }
+    },
+    "scroll of genocide": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "purple-red potion": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "scroll labeled ko bate": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "lembas wafers": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "potion of extra healing": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "scroll labeled mapiro mahama diromat": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "read": 1
+      }
+    },
+    "scroll of teleportation": {
+      "acquired": 1,
+      "actions": {
+        "wear": 1
+      }
+    }
+  },
+  "base_item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of protection": {
+      "acquired": 8,
+      "actions": {
+        "unknown": 5,
+        "wield": 1,
+        "drop": 1,
+        "wear": 1
+      }
+    },
+    "scroll of stinking cloud": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "potions of healing": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "food rations": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "pieces": {
+      "acquired": 6,
+      "actions": {
+        "unknown": 4,
+        "read": 1,
+        "drop": 1
+      }
+    },
+    "spellbook of sleep": {
+      "acquired": 6,
+      "actions": {
+        "read": 1,
+        "unknown": 4
+      }
+    },
+    "scroll of enchant armor": {
+      "acquired": 3,
+      "actions": {
+        "read": 3
+      }
+    },
+    "scroll of scare monster": {
+      "acquired": 2,
+      "actions": {
+        "wield": 1,
+        "wear": 1
+      }
+    },
+    "scroll of light": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "magic marker": {
+      "acquired": 2,
+      "actions": {
+        "unknown": 2
+      }
+    },
+    "scroll labeled fnord": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "newt corpse": {
+      "acquired": 6,
+      "actions": {
+        "eat": 6
+      }
+    },
+    "egg": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "scroll of confuse monster": {
+      "acquired": 2,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of food detection": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "scroll of identify": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "potion of healing": {
+      "acquired": 2,
+      "actions": {
+        "drink": 2
+      }
+    },
+    "lichen corpse": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "newt corpses": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "potion": {
+      "acquired": 2,
+      "actions": {
+        "drink": 2
+      }
+    },
+    "potion of object detection": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "spellbook of healing": {
+      "acquired": 2,
+      "actions": {
+        "unknown": 2
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "fizzy potion": {
+      "acquired": 2,
+      "actions": {
+        "drop": 2
+      }
+    },
+    "milky potion": {
+      "acquired": 3,
+      "actions": {
+        "drop": 1,
+        "drink": 2
+      }
+    },
+    "potion of gain energy": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "tripe ration": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "scroll of destroy armor": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "oil lamp": {
+      "acquired": 2,
+      "actions": {
+        "unknown": 1,
+        "wear": 1
+      }
+    },
+    "scroll of genocide": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "purple-potion": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "scroll labeled ko bate": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "lembas wafers": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "potion of extra healing": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "scroll labeled mapiro mahama diromat": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "read": 1
+      }
+    },
+    "scroll of teleportation": {
+      "acquired": 1,
+      "actions": {
+        "wear": 1
+      }
+    }
+  },
+  "category_actions": {
+    "rings": {
+      "acquired": 2,
+      "actions": {}
+    },
+    "wands": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbooks": {
+      "acquired": 5,
+      "actions": {
+        "drop": 2,
+        "move_wait": 1,
+        "wear": 1
+      }
+    },
+    "scrolls": {
+      "acquired": 11,
+      "actions": {
+        "move_up": 1,
+        "pray": 1,
+        "drop": 4,
+        "remove": 1,
+        "move_se": 1,
+        "move_wait": 2
+      }
+    },
+    "potions": {
+      "acquired": 15,
+      "actions": {
+        "move_ne": 1,
+        "move_wait": 2,
+        "move_up": 1,
+        "pray": 4,
+        "move_sw": 1,
+        "kick": 1,
+        "move_s": 1
+      }
+    },
+    "gems": {
+      "acquired": 6,
+      "actions": {
+        "move_e": 1,
+        "read": 1,
+        "move_ne": 1,
+        "move_up": 1,
+        "move_se": 1,
+        "drop": 1
+      }
+    },
+    "comestibles": {
+      "acquired": 4,
+      "actions": {
+        "move_ne": 1,
+        "pray": 1,
+        "move_e": 1,
+        "wear": 1
+      }
+    }
+  },
+  "session_legacy": {
+    "acquired_by_cat": {
+      "rings": 2,
+      "wands": 1,
+      "spellbooks": 5,
+      "scrolls": 11,
+      "potions": 15,
+      "gems": 6,
+      "comestibles": 4
+    },
+    "used_by_cat": {
+      "gems": 6,
+      "spellbooks": 4,
+      "potions": 11,
+      "comestibles": 4,
+      "scrolls": 10
+    },
+    "acquired_by_item": {
+      "pair of leather gloves": 1,
+      "robe": 1,
+      "spellbook of protection": 8,
+      "scroll of stinking cloud": 2,
+      "potions of healing": 1,
+      "food rations": 1,
+      "apples": 1,
+      "oranges": 1,
+      "fortune cookies": 1,
+      "gold pieces": 6,
+      "spellbook of sleep": 6,
+      "scroll of enchant armor": 3,
+      "scroll of scare monster": 2,
+      "scroll of light": 1,
+      "magic marker": 2,
+      "scroll labeled fnord": 1,
+      "newt corpse": 6,
+      "egg": 1,
+      "scroll of confuse monster": 2,
+      "scroll of food detection": 2,
+      "scroll of identify": 2,
+      "potion of healing": 2,
+      "lichen corpse": 2,
+      "newt corpses": 1,
+      "dark potion": 1,
+      "potion of object detection": 1,
+      "spellbook of healing": 2,
+      "scroll of remove curse": 2,
+      "fizzy potion": 2,
+      "milky potion": 3,
+      "yellow potion": 1,
+      "potion of gain energy": 1,
+      "tripe ration": 1,
+      "scroll of destroy armor": 1,
+      "oil lamp": 2,
+      "scroll of genocide": 1,
+      "purple-red potion": 1,
+      "scroll labeled ko bate": 1,
+      "lembas wafers": 1,
+      "potion of extra healing": 1,
+      "scroll labeled mapiro mahama diromat": 2,
+      "scroll of teleportation": 1
+    },
+    "used_by_item": {
+      "gold pieces": 6,
+      "spellbook of protection": 8,
+      "scroll of stinking cloud": 2,
+      "spellbook of sleep": 5,
+      "scroll of enchant armor": 3,
+      "scroll of scare monster": 2,
+      "scroll labeled fnord": 1,
+      "scroll of light": 1,
+      "magic marker": 2,
+      "newt corpse": 6,
+      "egg": 1,
+      "scroll of confuse monster": 1,
+      "scroll of food detection": 2,
+      "potion of healing": 2,
+      "lichen corpse": 2,
+      "dark potion": 1,
+      "scroll of identify": 2,
+      "newt corpses": 1,
+      "potion of object detection": 1,
+      "fizzy potion": 2,
+      "milky potion": 3,
+      "spellbook of healing": 2,
+      "scroll of remove curse": 2,
+      "yellow potion": 1,
+      "potion of gain energy": 1,
+      "tripe ration": 1,
+      "scroll of destroy armor": 1,
+      "oil lamp": 2,
+      "purple-red potion": 1,
+      "scroll of genocide": 1,
+      "scroll labeled ko bate": 1,
+      "potion of extra healing": 1,
+      "lembas wafers": 1,
+      "scroll labeled mapiro mahama diromat": 2,
+      "scroll of teleportation": 1
+    }
+  }
+}

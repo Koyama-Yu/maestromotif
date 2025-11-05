@@ -1,0 +1,672 @@
+{
+  "worker_idx": 15,
+  "env_idx": 7,
+  "experiment": "debug2",
+  "mode": "train",
+  "total_episodes": 22,
+  "item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of healing": {
+      "acquired": 6,
+      "actions": {
+        "read": 1,
+        "unknown": 5
+      }
+    },
+    "scroll of destroy armor": {
+      "acquired": 3,
+      "actions": {
+        "read": 2
+      }
+    },
+    "potions of healing": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "potion of healing": {
+      "acquired": 6,
+      "actions": {
+        "read": 1,
+        "drink": 4,
+        "drop": 1
+      }
+    },
+    "food rations": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "gold pieces": {
+      "acquired": 9,
+      "actions": {
+        "read": 1,
+        "unknown": 7,
+        "drop": 1
+      }
+    },
+    "spellbook of sleep": {
+      "acquired": 5,
+      "actions": {
+        "unknown": 4
+      }
+    },
+    "scroll of create monster": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "partly eaten food ration": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "scroll of light": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "scroll of magic mapping": {
+      "acquired": 2,
+      "actions": {
+        "read": 1,
+        "wear": 1
+      }
+    },
+    "scroll of teleportation": {
+      "acquired": 4,
+      "actions": {
+        "read": 4
+      }
+    },
+    "spellbook of protection": {
+      "acquired": 5,
+      "actions": {
+        "unknown": 4,
+        "drop": 1
+      }
+    },
+    "scroll of confuse monster": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "scroll of gold detection": {
+      "acquired": 3,
+      "actions": {
+        "read": 3
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "magic marker": {
+      "acquired": 3,
+      "actions": {
+        "unknown": 3
+      }
+    },
+    "scroll of charging": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "cyan potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of booze": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "scroll of identify": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "read": 1
+      }
+    },
+    "newt corpse": {
+      "acquired": 4,
+      "actions": {
+        "eat": 4
+      }
+    },
+    "lichen corpse": {
+      "acquired": 4,
+      "actions": {
+        "eat": 4
+      }
+    },
+    "newt corpses": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "tripe ration": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "unknown": 1
+      }
+    },
+    "lichen corpses": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "eat": 1
+      }
+    },
+    "dark potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "sky blue potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "slime mold": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "potion of extra healing": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of gain level": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "scroll of stinking cloud": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll labeled hapax legomenon": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "read": 1
+      }
+    },
+    "scroll labeled xixaxa xoxaxa xuxaxa": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of earth": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll labeled vas corp bet mani": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "read": 1
+      }
+    },
+    "scroll of scare monster": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    }
+  },
+  "base_item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of healing": {
+      "acquired": 6,
+      "actions": {
+        "read": 1,
+        "unknown": 5
+      }
+    },
+    "scroll of destroy armor": {
+      "acquired": 3,
+      "actions": {
+        "read": 2
+      }
+    },
+    "potions of healing": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "potion of healing": {
+      "acquired": 6,
+      "actions": {
+        "read": 1,
+        "drink": 4,
+        "drop": 1
+      }
+    },
+    "food rations": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "pieces": {
+      "acquired": 9,
+      "actions": {
+        "read": 1,
+        "unknown": 7,
+        "drop": 1
+      }
+    },
+    "spellbook of sleep": {
+      "acquired": 5,
+      "actions": {
+        "unknown": 4
+      }
+    },
+    "scroll of create monster": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "partly eaten food ration": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "scroll of light": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "scroll of magic mapping": {
+      "acquired": 2,
+      "actions": {
+        "read": 1,
+        "wear": 1
+      }
+    },
+    "scroll of teleportation": {
+      "acquired": 4,
+      "actions": {
+        "read": 4
+      }
+    },
+    "spellbook of protection": {
+      "acquired": 5,
+      "actions": {
+        "unknown": 4,
+        "drop": 1
+      }
+    },
+    "scroll of confuse monster": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "scroll of detection": {
+      "acquired": 3,
+      "actions": {
+        "read": 3
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "magic marker": {
+      "acquired": 3,
+      "actions": {
+        "unknown": 3
+      }
+    },
+    "scroll of charging": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "cyan potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of booze": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "scroll of identify": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "read": 1
+      }
+    },
+    "newt corpse": {
+      "acquired": 4,
+      "actions": {
+        "eat": 4
+      }
+    },
+    "lichen corpse": {
+      "acquired": 4,
+      "actions": {
+        "eat": 4
+      }
+    },
+    "newt corpses": {
+      "acquired": 1,
+      "actions": {
+        "eat": 1
+      }
+    },
+    "tripe ration": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "unknown": 1
+      }
+    },
+    "lichen corpses": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "eat": 1
+      }
+    },
+    "potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "sky potion": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "slime mold": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "potion of extra healing": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "potion of gain level": {
+      "acquired": 1,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "scroll of stinking cloud": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll labeled hapax legomenon": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "read": 1
+      }
+    },
+    "scroll labeled xixaxa xoxaxa xuxaxa": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of earth": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll labeled vas corp bet mani": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "read": 1
+      }
+    },
+    "scroll of scare monster": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    }
+  },
+  "category_actions": {
+    "rings": {
+      "acquired": 2,
+      "actions": {}
+    },
+    "wands": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbooks": {
+      "acquired": 6,
+      "actions": {
+        "drop": 2,
+        "move_w": 2,
+        "move_sw": 1
+      }
+    },
+    "scrolls": {
+      "acquired": 10,
+      "actions": {
+        "read": 1,
+        "move_down": 1,
+        "move_w": 1,
+        "move_e": 4,
+        "move_se": 1,
+        "drop": 1
+      }
+    },
+    "potions": {
+      "acquired": 17,
+      "actions": {
+        "pray": 3,
+        "takeoff": 1,
+        "kick": 1,
+        "drop": 2,
+        "move_e": 3,
+        "move_ne": 1,
+        "move_w": 2
+      }
+    },
+    "gems": {
+      "acquired": 9,
+      "actions": {
+        "read": 1,
+        "move_n": 1,
+        "pickup": 1,
+        "move_wait": 1,
+        "drop": 1,
+        "move_ne": 2,
+        "move_sw": 1,
+        "move_e": 1
+      }
+    },
+    "comestibles": {
+      "acquired": 3,
+      "actions": {
+        "move_w": 1,
+        "move_e": 1,
+        "move_se": 1
+      }
+    }
+  },
+  "session_legacy": {
+    "acquired_by_cat": {
+      "rings": 2,
+      "wands": 1,
+      "spellbooks": 6,
+      "scrolls": 10,
+      "potions": 17,
+      "gems": 9,
+      "comestibles": 3
+    },
+    "used_by_cat": {
+      "gems": 9,
+      "scrolls": 9,
+      "potions": 13,
+      "comestibles": 3,
+      "spellbooks": 5
+    },
+    "acquired_by_item": {
+      "pair of leather gloves": 1,
+      "robe": 1,
+      "spellbook of healing": 6,
+      "scroll of destroy armor": 3,
+      "potions of healing": 1,
+      "potion of healing": 6,
+      "food rations": 1,
+      "apples": 1,
+      "oranges": 1,
+      "fortune cookies": 1,
+      "gold pieces": 9,
+      "spellbook of sleep": 5,
+      "scroll of create monster": 2,
+      "partly eaten food ration": 2,
+      "scroll of light": 2,
+      "scroll of magic mapping": 2,
+      "scroll of teleportation": 4,
+      "spellbook of protection": 5,
+      "scroll of confuse monster": 2,
+      "scroll of gold detection": 3,
+      "scroll of remove curse": 1,
+      "magic marker": 3,
+      "scroll of charging": 1,
+      "cyan potion": 1,
+      "potion of booze": 1,
+      "scroll of identify": 2,
+      "newt corpse": 4,
+      "lichen corpse": 4,
+      "newt corpses": 1,
+      "tripe ration": 2,
+      "lichen corpses": 2,
+      "dark potion": 1,
+      "sky blue potion": 1,
+      "slime mold": 1,
+      "potion of extra healing": 1,
+      "potion of gain level": 1,
+      "scroll of stinking cloud": 1,
+      "scroll labeled hapax legomenon": 2,
+      "scroll labeled xixaxa xoxaxa xuxaxa": 1,
+      "scroll of earth": 1,
+      "scroll labeled vas corp bet mani": 2,
+      "scroll of scare monster": 1
+    },
+    "used_by_item": {
+      "gold pieces": 9,
+      "spellbook of healing": 6,
+      "scroll of destroy armor": 2,
+      "potion of healing": 6,
+      "spellbook of sleep": 4,
+      "scroll of create monster": 2,
+      "partly eaten food ration": 2,
+      "scroll of light": 2,
+      "scroll of magic mapping": 2,
+      "scroll of teleportation": 4,
+      "scroll of confuse monster": 2,
+      "spellbook of protection": 5,
+      "scroll of gold detection": 3,
+      "scroll of remove curse": 1,
+      "magic marker": 3,
+      "scroll of charging": 1,
+      "cyan potion": 1,
+      "potion of booze": 1,
+      "newt corpse": 4,
+      "newt corpses": 1,
+      "lichen corpse": 4,
+      "scroll of identify": 2,
+      "lichen corpses": 2,
+      "tripe ration": 2,
+      "dark potion": 1,
+      "sky blue potion": 1,
+      "potion of extra healing": 1,
+      "potion of gain level": 1,
+      "slime mold": 1,
+      "scroll of stinking cloud": 1,
+      "scroll labeled hapax legomenon": 2,
+      "scroll labeled xixaxa xoxaxa xuxaxa": 1,
+      "scroll of earth": 1,
+      "scroll labeled vas corp bet mani": 2,
+      "scroll of scare monster": 1
+    }
+  }
+}

@@ -1,0 +1,530 @@
+{
+  "worker_idx": 21,
+  "env_idx": 8,
+  "experiment": "debug2",
+  "mode": "train",
+  "total_episodes": 25,
+  "item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of healing": {
+      "acquired": 6,
+      "actions": {
+        "quaff": 1,
+        "unknown": 4,
+        "apply": 1
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 5,
+      "actions": {
+        "quaff": 1,
+        "read": 4
+      }
+    },
+    "potions of healing": {
+      "acquired": 2,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "food rations": {
+      "acquired": 2,
+      "actions": {}
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of protection": {
+      "acquired": 6,
+      "actions": {
+        "unknown": 6
+      }
+    },
+    "scroll of charging": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "spellbook of sleep": {
+      "acquired": 6,
+      "actions": {
+        "unknown": 5
+      }
+    },
+    "scroll of punishment": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "potion of healing": {
+      "acquired": 8,
+      "actions": {
+        "drink": 7
+      }
+    },
+    "scroll of magic mapping": {
+      "acquired": 2,
+      "actions": {
+        "read": 1,
+        "wear": 1
+      }
+    },
+    "scroll of create monster": {
+      "acquired": 3,
+      "actions": {
+        "read": 3
+      }
+    },
+    "food ration": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "scroll of food detection": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "gold pieces": {
+      "acquired": 4,
+      "actions": {
+        "unknown": 3,
+        "wear": 1
+      }
+    },
+    "scroll labeled pratyavayah": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "read": 1
+      }
+    },
+    "scroll of light": {
+      "acquired": 3,
+      "actions": {
+        "read": 3
+      }
+    },
+    "magic marker": {
+      "acquired": 3,
+      "actions": {
+        "unknown": 3
+      }
+    },
+    "scroll of confuse monster": {
+      "acquired": 3,
+      "actions": {
+        "read": 2,
+        "apply": 1
+      }
+    },
+    "scroll of identify": {
+      "acquired": 4,
+      "actions": {
+        "read": 4
+      }
+    },
+    "lichen corpse": {
+      "acquired": 3,
+      "actions": {
+        "eat": 3
+      }
+    },
+    "newt corpse": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "scroll labeled garven deh": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "scroll of destroy armor": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "oil lamp": {
+      "acquired": 1,
+      "actions": {
+        "apply": 1
+      }
+    },
+    "scroll labeled venzar borgavve": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of gold detection": {
+      "acquired": 2,
+      "actions": {
+        "read": 1
+      }
+    },
+    "pear": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "scroll labeled hapax legomenon": {
+      "acquired": 1,
+      "actions": {}
+    }
+  },
+  "base_item_actions": {
+    "pair of leather gloves": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "robe": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of healing": {
+      "acquired": 6,
+      "actions": {
+        "quaff": 1,
+        "unknown": 4,
+        "apply": 1
+      }
+    },
+    "scroll of remove curse": {
+      "acquired": 5,
+      "actions": {
+        "quaff": 1,
+        "read": 4
+      }
+    },
+    "potions of healing": {
+      "acquired": 2,
+      "actions": {
+        "drink": 1
+      }
+    },
+    "food rations": {
+      "acquired": 2,
+      "actions": {}
+    },
+    "apples": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "oranges": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "fortune cookies": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbook of protection": {
+      "acquired": 6,
+      "actions": {
+        "unknown": 6
+      }
+    },
+    "scroll of charging": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "spellbook of sleep": {
+      "acquired": 6,
+      "actions": {
+        "unknown": 5
+      }
+    },
+    "scroll of punishment": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "potion of healing": {
+      "acquired": 8,
+      "actions": {
+        "drink": 7
+      }
+    },
+    "scroll of magic mapping": {
+      "acquired": 2,
+      "actions": {
+        "read": 1,
+        "wear": 1
+      }
+    },
+    "scroll of create monster": {
+      "acquired": 3,
+      "actions": {
+        "read": 3
+      }
+    },
+    "food ration": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "scroll of food detection": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "pieces": {
+      "acquired": 4,
+      "actions": {
+        "unknown": 3,
+        "wear": 1
+      }
+    },
+    "scroll labeled pratyavayah": {
+      "acquired": 2,
+      "actions": {
+        "drop": 1,
+        "read": 1
+      }
+    },
+    "scroll of light": {
+      "acquired": 3,
+      "actions": {
+        "read": 3
+      }
+    },
+    "magic marker": {
+      "acquired": 3,
+      "actions": {
+        "unknown": 3
+      }
+    },
+    "scroll of confuse monster": {
+      "acquired": 3,
+      "actions": {
+        "read": 2,
+        "apply": 1
+      }
+    },
+    "scroll of identify": {
+      "acquired": 4,
+      "actions": {
+        "read": 4
+      }
+    },
+    "lichen corpse": {
+      "acquired": 3,
+      "actions": {
+        "eat": 3
+      }
+    },
+    "newt corpse": {
+      "acquired": 2,
+      "actions": {
+        "eat": 2
+      }
+    },
+    "scroll labeled garven deh": {
+      "acquired": 1,
+      "actions": {
+        "drop": 1
+      }
+    },
+    "scroll of destroy armor": {
+      "acquired": 2,
+      "actions": {
+        "read": 2
+      }
+    },
+    "oil lamp": {
+      "acquired": 1,
+      "actions": {
+        "apply": 1
+      }
+    },
+    "scroll labeled venzar borgavve": {
+      "acquired": 1,
+      "actions": {
+        "read": 1
+      }
+    },
+    "scroll of detection": {
+      "acquired": 2,
+      "actions": {
+        "read": 1
+      }
+    },
+    "pear": {
+      "acquired": 1,
+      "actions": {
+        "unknown": 1
+      }
+    },
+    "scroll labeled hapax legomenon": {
+      "acquired": 1,
+      "actions": {}
+    }
+  },
+  "category_actions": {
+    "rings": {
+      "acquired": 2,
+      "actions": {}
+    },
+    "wands": {
+      "acquired": 1,
+      "actions": {}
+    },
+    "spellbooks": {
+      "acquired": 6,
+      "actions": {
+        "drop": 2,
+        "move_nw": 1,
+        "takeoff": 1
+      }
+    },
+    "scrolls": {
+      "acquired": 8,
+      "actions": {
+        "move_s": 1,
+        "move_wait": 1,
+        "invoke": 1,
+        "pickup": 1,
+        "puton": 1,
+        "move_e": 1
+      }
+    },
+    "potions": {
+      "acquired": 13,
+      "actions": {
+        "move_wait": 1,
+        "pray": 3,
+        "move_se": 1,
+        "move_e": 3
+      }
+    },
+    "gems": {
+      "acquired": 4,
+      "actions": {
+        "move_nw": 1,
+        "move_up": 1,
+        "wear": 1,
+        "takeoff": 1
+      }
+    },
+    "comestibles": {
+      "acquired": 4,
+      "actions": {
+        "move_up": 1,
+        "pray": 1,
+        "eat": 1,
+        "move_w": 1
+      }
+    }
+  },
+  "session_legacy": {
+    "acquired_by_cat": {
+      "rings": 2,
+      "wands": 1,
+      "spellbooks": 6,
+      "scrolls": 8,
+      "potions": 13,
+      "gems": 4,
+      "comestibles": 4
+    },
+    "used_by_cat": {
+      "scrolls": 6,
+      "potions": 8,
+      "spellbooks": 4,
+      "gems": 4,
+      "comestibles": 4
+    },
+    "acquired_by_item": {
+      "pair of leather gloves": 1,
+      "robe": 1,
+      "spellbook of healing": 6,
+      "scroll of remove curse": 5,
+      "potions of healing": 2,
+      "food rations": 2,
+      "apples": 1,
+      "oranges": 1,
+      "fortune cookies": 1,
+      "spellbook of protection": 6,
+      "scroll of charging": 1,
+      "spellbook of sleep": 6,
+      "scroll of punishment": 1,
+      "potion of healing": 8,
+      "scroll of magic mapping": 2,
+      "scroll of create monster": 3,
+      "food ration": 2,
+      "scroll of food detection": 1,
+      "gold pieces": 4,
+      "scroll labeled pratyavayah": 2,
+      "scroll of light": 3,
+      "magic marker": 3,
+      "scroll of confuse monster": 3,
+      "scroll of identify": 4,
+      "lichen corpse": 3,
+      "newt corpse": 2,
+      "scroll labeled garven deh": 1,
+      "scroll of destroy armor": 2,
+      "oil lamp": 1,
+      "scroll labeled venzar borgavve": 1,
+      "scroll of gold detection": 2,
+      "pear": 1,
+      "scroll labeled hapax legomenon": 1
+    },
+    "used_by_item": {
+      "spellbook of healing": 6,
+      "scroll of remove curse": 5,
+      "spellbook of protection": 6,
+      "scroll of charging": 1,
+      "spellbook of sleep": 5,
+      "scroll of punishment": 1,
+      "potion of healing": 7,
+      "scroll of magic mapping": 2,
+      "scroll of create monster": 3,
+      "food ration": 2,
+      "potions of healing": 1,
+      "scroll of food detection": 1,
+      "scroll labeled pratyavayah": 2,
+      "gold pieces": 4,
+      "scroll of light": 3,
+      "magic marker": 3,
+      "scroll of confuse monster": 3,
+      "scroll of identify": 4,
+      "newt corpse": 2,
+      "scroll labeled garven deh": 1,
+      "lichen corpse": 3,
+      "scroll of destroy armor": 2,
+      "oil lamp": 1,
+      "scroll labeled venzar borgavve": 1,
+      "scroll of gold detection": 1,
+      "pear": 1
+    }
+  }
+}
