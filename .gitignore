@@ -169,12 +169,11 @@ dmypy.json
 /typescript
 /nld-aa-taster
 /nld-aa-trainer.zip
+
 # Training outputs
-train_dir/
-**/debug/
-**/debug2/
-**/item_stats/
-**/*.json
+train_dir/skill_policy/debug
+train_dir/skill_policy/debug*
+
 
 # TensorBoard logs
 **/*.tfevents.*

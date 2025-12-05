@@ -552,7 +552,7 @@ class ModifierWrapper(gym.Wrapper):
         final_worker_idx = worker_idx if worker_idx is not None else 0
         final_env_idx = env_idx if env_idx is not None else 0
         
-        log.info(f'ModifierWrapper init: worker={final_worker_idx}, env={final_env_idx}, experiment={experiment}')
+        #log.info(f'ModifierWrapper init: worker={final_worker_idx}, env={final_env_idx}, experiment={experiment}')
 
         # 追記
         self._indices_resolved = False
@@ -663,8 +663,8 @@ class ModifierWrapper(gym.Wrapper):
         ):
             self._indices_resolved = True
 
-        if log_on_change and changed:
-            log.info(f'ModifierWrapper indices updated: worker={self.item_tracker.worker_idx}, env={self.item_tracker.env_idx}')
+        # if log_on_change and changed:
+        #     log.info(f'ModifierWrapper indices updated: worker={self.item_tracker.worker_idx}, env={self.item_tracker.env_idx}')
     
 
     def step(self, action):
