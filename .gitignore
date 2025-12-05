@@ -167,3 +167,24 @@ dmypy.json
 **.DS_Store
 
 /typescript
+/nld-aa-taster
+/nld-aa-trainer.zip
+# Training outputs
+train_dir/
+**/debug/
+**/debug2/
+**/item_stats/
+**/*.json
+
+# TensorBoard logs
+**/*.tfevents.*
+
+# NFS temporary files
+.nfs*
+
+# Dumps
+*.sql
+*.zip
+
+# Temporary dev files
+check.txt

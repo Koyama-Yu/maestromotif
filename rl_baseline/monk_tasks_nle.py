@@ -3,6 +3,8 @@ exec
 import enum
 import re
 import time
+import warnings
+from pathlib import Path
 
 import gym
 import numpy as np
@@ -14,6 +16,52 @@ from nle.nethack import NETHACKOPTIONS
 
 from sample_factory.utils.utils import log
 from utils.forked_pdb import ForkedPdb
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+NETHACKRC_PATH = PROJECT_ROOT / ".nethackrc"
+_BASE_OPTIONS = tuple(NETHACKOPTIONS) + (
+    "role:mon",
+    "race:hum",
+    "gender:mal",
+    "align:neu",
+)
+
+def _load_custom_options():
+    rc_options = []
+    if not NETHACKRC_PATH.exists():
+        warnings.warn(
+            f"Custom .nethackrc not found at {NETHACKRC_PATH}; using built-in defaults"
+        )
+        return _BASE_OPTIONS
+
+    try:
+        for raw_line in NETHACKRC_PATH.read_text().splitlines():
+            line = raw_line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+
+            key, value = line.split("=", 1)
+            key = key.strip().lower()
+            value = value.strip()
+
+            if key.startswith("option"):
+                rc_options.append(value)
+
+        merged = []
+        seen_prefixes = set()
+        for opt in rc_options + list(_BASE_OPTIONS):
+            prefix = opt.split(":", 1)[0]
+            if prefix in seen_prefixes:
+                continue
+            seen_prefixes.add(prefix)
+            merged.append(opt)
+        return tuple(merged)
+    except OSError as err:
+        warnings.warn(f"Failed to load custom .nethackrc ({err}); using defaults")
+        return _BASE_OPTIONS
+
+
+CUSTOM_OPTIONS = _load_custom_options()
 
 TASK_ACTIONS = tuple(
     [nethack.MiscAction.MORE]
@@ -33,8 +81,6 @@ TASK_ACTIONS = tuple(
         nethack.Command.PRAY,
     ]
 )
-
-CUSTOM_OPTIONS=("@.nethackrc",)
 
 SKIP_EXCEPTIONS = (b"eat", b"attack", b"direction?", b"pray", b"drop", b'drink', b'Sell')
 
@@ -88,6 +134,8 @@ class NetHackScoreMonk(base.NLE):
             options=CUSTOM_OPTIONS, 
             max_episode_steps=max_episode_steps,
             **kwargs)
+        self._inv_oclasses_index = self._observation_keys.index("inv_oclasses")
+        self._inv_letters_index = self._observation_keys.index("inv_letters")
 
     def _get_time_penalty(self, last_observation, observation):
         blstats_old = last_observation[self._blstats_index]
@@ -486,6 +534,9 @@ class NetHackScoreMonk(base.NLE):
         self.inv_items = self.get_inv_items(observation)
         self.encodings_and_colors()
 
+        if self._inventory_tracker:
+            self._inventory_tracker.record_step(action, observation)
+
         if self._check_abort(observation):
             end_status = self.StepStatus.ABORTED
         else:
@@ -517,6 +568,12 @@ class NetHackScoreMonk(base.NLE):
         info['just_eaten'] = just_eaten
 
         self.penalty = self._get_time_penalty(last_observation, observation)
+
+        if done and self._inventory_tracker:
+            metadata = self._inventory_tracker.finalize_episode()
+            if metadata:
+                info["inventory_metadata"] = metadata
+                self._write_inventory_metadata(metadata)
 
         #if reward > 0.:
             #log.info("NetHackScoreMonk: Reward: %s, Penalty: %s", reward, self.penalty)
