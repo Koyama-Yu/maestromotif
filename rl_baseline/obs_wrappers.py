@@ -14,7 +14,7 @@ from PIL import Image, ImageDraw, ImageFont
 from nle.nethack.actions import Command, MiscDirection, WizardCommand
 
 from rl_baseline.price_id import is_item_identified
-from rl_baseline.item_tracker import ItemTracker
+# from rl_baseline.item_tracker import ItemTracker  # Disabled: xlogfile now stores item stats
 from sample_factory.utils.utils import log
 from utils.forked_pdb import ForkedPdb
 
@@ -557,19 +557,8 @@ class ModifierWrapper(gym.Wrapper):
         # 追記
         self._indices_resolved = False
 
-        #is_training = getattr(env, 'is_training', True)  # デフォルトは学習モード
-        self.item_tracker = ItemTracker(
-            experiment_name=experiment, 
-            mode=mode,
-            #worker_idx=worker_idx,
-            worker_idx=final_worker_idx,
-            #env_idx=env_idx
-            env_idx=final_env_idx,
-            enable_detailed_logging=enable_detailed
-        )
-
-        # 追加
-        self._update_item_tracker_indices(log_on_change=True)
+        # アイテム統計はxlogfileに移行したためトラッカーを無効化
+        self.item_tracker = None
 
         # 評価フラグの初期化
         self.evaluation = getattr(env, 'evaluation', False)
@@ -638,6 +627,9 @@ class ModifierWrapper(gym.Wrapper):
     
     # 追加: ItemTrackerのインデックスを更新
     def _update_item_tracker_indices(self, log_on_change=False):
+        # ItemTrackerが無効化されているため何もしない
+        if not hasattr(self, 'item_tracker') or self.item_tracker is None:
+            return
         w, e = self._resolve_worker_env_indices()
         changed = False
 
@@ -669,8 +661,8 @@ class ModifierWrapper(gym.Wrapper):
 
     def step(self, action):
         # 追加: 最初のstep前に一度だけ再解決
-        if not getattr(self, '_indices_resolved', False):
-            self._update_item_tracker_indices(log_on_change=True)
+        # if not getattr(self, '_indices_resolved', False):
+        #     self._update_item_tracker_indices(log_on_change=True)
         obs, reward, done, info = self.env.step(action)
         intrinsic_reward = 0.0
         extrinsic_reward = reward
@@ -727,13 +719,13 @@ class ModifierWrapper(gym.Wrapper):
             self.altar_seen = True
 
         msg_str = self.env.message[1]
-        # アイテム追跡の実行
-        try:
-            # self.item_tracker.update_from_obs(obs)
-            # self.item_tracker.update_usage_from_message(msg_str)
-            self.item_tracker.update_from_obs(obs, action, msg_str)
-        except Exception as e:
-            log.warning(f"ItemTracker update failed: {e}")
+        # アイテム追跡の実行（JSON出力は無効化）
+        # try:
+        #     # self.item_tracker.update_from_obs(obs)
+        #     # self.item_tracker.update_usage_from_message(msg_str)
+        #     self.item_tracker.update_from_obs(obs, action, msg_str)
+        # except Exception as e:
+        #     log.warning(f"ItemTracker update failed: {e}")
 
         # 売却統計
         if b'sold' in msg_str:
@@ -835,22 +827,22 @@ class ModifierWrapper(gym.Wrapper):
         info['intrinsic_reward'] = intrinsic_reward
         info['extrinsic_reward'] = extrinsic_reward
 
-        # エピソード終了時の処理
-        if done:
-            try:
-                ep_stats = self.item_tracker.episode_summary()
-                for k, v in ep_stats.items():
-                    info[f'item_{k}'] = v
-                timestep = int(obs.get('blstats', [0]*30)[20]) if 'blstats' in obs else 0
-                meta = {
-                    'timestep': timestep,
-                    'episode_length': timestep,
-                    'reward': float(reward),
-                }
-                #self.item_tracker.on_episode_end(meta=meta)
-                self.item_tracker.on_episode_end()
-            except Exception as e:
-                log.warning(f"ItemTracker episode end failed: {e}")
+        # エピソード終了時の処理（アイテム統計のJSON出力は無効化）
+        # if done:
+        #     try:
+        #         ep_stats = self.item_tracker.episode_summary()
+        #         for k, v in ep_stats.items():
+        #             info[f'item_{k}'] = v
+        #         timestep = int(obs.get('blstats', [0]*30)[20]) if 'blstats' in obs else 0
+        #         meta = {
+        #             'timestep': timestep,
+        #             'episode_length': timestep,
+        #             'reward': float(reward),
+        #         }
+        #         #self.item_tracker.on_episode_end(meta=meta)
+        #         self.item_tracker.on_episode_end()
+        #     except Exception as e:
+        #         log.warning(f"ItemTracker episode end failed: {e}")
 
         # if done:
         #     episode_length = obs.get('blstats', [0]*30)[20] if 'blstats' in obs else 0  # timestep
@@ -863,7 +855,7 @@ class ModifierWrapper(gym.Wrapper):
         return obs, extrinsic_reward, done, info
 
     def reset(self):
-        self._update_item_tracker_indices(log_on_change=True)
+        #self._update_item_tracker_indices(log_on_change=True)
         self.prev_msg = b''
         self.num_buc = 0
         self.num_sold = 0
@@ -871,7 +863,7 @@ class ModifierWrapper(gym.Wrapper):
         self.num_price_id = 0
 
         # アイテム追跡機能のリセット
-        self.item_tracker.reset_episode()
+        # self.item_tracker.reset_episode()
 
         # start with dummy values and the initiate all necessary attributes
         if self.meta_policy_class is not None:
@@ -886,7 +878,7 @@ class ModifierWrapper(gym.Wrapper):
         self.skill_start_time = 0
 
         obs = self.env.reset()
-        self._update_item_tracker_indices(log_on_change=True)
+        # self._update_item_tracker_indices(log_on_change=True)
 
         # 共通の統計情報初期化（nethack_playerがNoneでも必要）
         self.altar_seen = False
@@ -906,30 +898,7 @@ class ModifierWrapper(gym.Wrapper):
     ## 追記 ##
     def close(self):
         """ワーカー終了時の自動保存"""
-        try:
-            self._update_item_tracker_indices(log_on_change=True)
-
-            # 統計が収集されている場合のみ保存
-            if hasattr(self, 'item_tracker') and self.item_tracker:
-                worker_idx = getattr(self.item_tracker, 'worker_idx', -1)
-                env_idx = getattr(self.item_tracker, 'env_idx', -1)
-                total_episodes = self.item_tracker.total_episodes
-                
-                log.info(f'ModifierWrapper close called: worker={worker_idx}, env={env_idx}, episodes={total_episodes}')
-                
-                # エピソードが1つでも完了していれば保存
-                if total_episodes > 0:
-                    experiment_name = getattr(self, 'experiment', 'default')
-                    save_dir = os.path.join("train_dir", "skill_policy", experiment_name, "item_stats", "final")
-                    json_path = self.save_item_statistics(save_dir)
-                    log.info(f'✓ Saved item statistics: worker={worker_idx}, env={env_idx}, file={json_path}')
-                else:
-                    log.debug(f'No episodes completed for worker={worker_idx}, env={env_idx}')
-            else:
-                log.debug('No item_tracker found in ModifierWrapper')
-        except Exception as e:
-            log.error(f'Failed to save item statistics: {e}', exc_info=True)
-        
+        # ItemTracker経由のJSON出力は無効化したため、保存処理はスキップ
         # 親クラスのclose処理
         try:
             if hasattr(super(), 'close'):
@@ -941,21 +910,8 @@ class ModifierWrapper(gym.Wrapper):
 
     def save_item_statistics(self, save_dir=None):
         """APPOから呼び出されるセッション統計保存"""
-        if not hasattr(self, 'item_tracker') or self.item_tracker is None:
-            return None
-
-        if save_dir is None:
-            experiment_name = getattr(self, 'experiment', 'default')
-            save_dir = os.path.join("train_dir", "skill_policy", experiment_name, "item_stats")
-
-        try:
-            os.makedirs(save_dir, exist_ok=True)
-            json_path = self.item_tracker.save_worker_stats(save_dir)  # メソッド名変更
-            log.info(f'Item stats saved: {json_path}')
-            return json_path
-        except Exception as e:
-            log.error(f"Failed to save item statistics: {e}")
-            return None
+        # アイテム統計のJSON保存はxlogfileに移行したため無効化
+        return None
 
     def get_item_summary(self):
         """
@@ -965,16 +921,16 @@ class ModifierWrapper(gym.Wrapper):
             dict: アイテム統計のサマリー辞書
         """
         #return self.item_tracker.get_usage_stats()
-        if hasattr(self, 'item_tracker'):
-            return self.item_tracker.get_worker_statistics()
+        # if hasattr(self, 'item_tracker'):
+        #     return self.item_tracker.get_worker_statistics()
         return {}
     
     def get_normalized_item_summary(self):
         """正規化されたアイテム統計のサマリーを取得"""
-        if hasattr(self, 'item_tracker'):
-            # return self.item_tracker.get_normalized_item_stats()  # 削除
-            stats = self.item_tracker.get_worker_statistics()
-            return stats.get('base_item_actions', {})  # 修正！
+        # if hasattr(self, 'item_tracker'):
+        #     # return self.item_tracker.get_normalized_item_stats()  # 削除
+        #     stats = self.item_tracker.get_worker_statistics()
+        #     return stats.get('base_item_actions', {})  # 修正！
         return {}
     
     def get_glyph_statistics(self):
@@ -984,7 +940,8 @@ class ModifierWrapper(gym.Wrapper):
         Returns:
             dict: グリフベースアイテム統計辞書
         """
-        return self.item_tracker.get_usage_stats(glyph_based=True)
+        # return self.item_tracker.get_usage_stats(glyph_based=True)
+        return {}
     
     def get_detailed_item_statistics(self):
         """
@@ -993,10 +950,12 @@ class ModifierWrapper(gym.Wrapper):
         Returns:
             dict: 詳細アイテム統計辞書
         """
-        return self.item_tracker.get_usage_stats(detailed=True)
+        # return self.item_tracker.get_usage_stats(detailed=True)
+        return {}
     
     def print_current_item_stats(self):
         """現在のアイテム統計をコンソールに表示"""
-        if hasattr(self, 'item_tracker'):
-            # self.item_tracker.print_summary(show_detailed=True, show_glyph=True)  # 削除
-            self.item_tracker.print_action_summary()  # 修正！パラメータも削除
+        # if hasattr(self, 'item_tracker'):
+        #     # self.item_tracker.print_summary(show_detailed=True, show_glyph=True)  # 削除
+        #     self.item_tracker.print_action_summary()  # 修正！パラメータも削除
+        pass

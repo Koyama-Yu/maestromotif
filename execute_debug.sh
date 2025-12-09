@@ -17,6 +17,6 @@ python -m scripts.main --algo APPO --num_workers 24 --num_envs_per_worker 20 \
                        --reward_dir "[]" \
                        --extrinsic_reward 1.0 --llm_reward 0.0 \
                        --train_dir train_dir/skill_policy/ \
-                       --experiment debug6 \
+                       --experiment debug7 \
                        --ttyrec 1 \
                        --eval_target none
