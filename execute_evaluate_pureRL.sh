@@ -1,6 +1,6 @@
 python -m scripts.main --algo APPO --num_workers 24 --num_envs_per_worker 20 \
                        --batch_size 4096 --reward_scale 0.1 --obs_scale 255.0 \
-                       --train_for_env_steps 5_000_000_000 \
+                       --train_for_env_steps 3_000_000_000 \
                        --save_every_steps 6_000_000_000 \
                        --keep_checkpoints 5 --stats_avg 1000 --seed 2 --code_seed -1 \
                        --reward_dir "[]" \

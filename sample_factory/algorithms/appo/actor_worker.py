@@ -375,7 +375,7 @@ class VectorEnvRunner:
 
             env = make_env_func(self.cfg, env_config=env_config)
 
-            log.debug(f'Setting attributes for worker={self.worker_idx} env_i={env_i} env_id={env_id}')
+            #log.debug(f'Setting attributes for worker={self.worker_idx} env_i={env_i} env_id={env_id}')
 
             # setattr(env, 'worker_index', self.worker_idx)
             # setattr(env, 'env_index', env_i)
@@ -395,7 +395,7 @@ class VectorEnvRunner:
                 setattr(current_env, 'vector_index', vector_idx)
                 setattr(current_env, 'env_config', env_config)
                 
-                log.debug(f'Set attributes on {type(current_env).__name__}: worker={self.worker_idx}, env={env_i}')
+                #log.debug(f'Set attributes on {type(current_env).__name__}: worker={self.worker_idx}, env={env_i}')
                 
                 current_env = getattr(current_env, 'env', None)
                 depth += 1
@@ -685,14 +685,14 @@ class VectorEnvRunner:
         # for e in self.envs:
         #     e.close()
         """全環境をクローズ"""
-        log.info(f'VectorEnvRunner closing: worker={self.worker_idx}, split={self.split_idx}, num_envs={len(self.envs)}')
+        #log.info(f'VectorEnvRunner closing: worker={self.worker_idx}, split={self.split_idx}, num_envs={len(self.envs)}')
         for env_i, e in enumerate(self.envs):
             try:
-                log.debug(f'Closing env: worker={self.worker_idx}, split={self.split_idx}, env={env_i}')
+                #log.debug(f'Closing env: worker={self.worker_idx}, split={self.split_idx}, env={env_i}')
                 e.close()
             except Exception as ex:
                 log.warning(f'Failed to close env {env_i}: {ex}')
-        log.info(f'VectorEnvRunner closed: worker={self.worker_idx}, split={self.split_idx}')
+        #log.info(f'VectorEnvRunner closed: worker={self.worker_idx}, split={self.split_idx}')
 
 
 class ActorWorker:

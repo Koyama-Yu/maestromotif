@@ -185,3 +185,11 @@ train_dir/skill_policy/
 
 # Temporary dev files
 check.txt
+/xlogfiles/
+/rank_csv/
+*.amlignore
+*.amlignore.amltmp
+result_*.json
+*.sh.amltmp
+rank_*.txt
+.gitignore.amltmp
