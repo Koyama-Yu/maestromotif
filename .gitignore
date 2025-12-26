@@ -193,3 +193,5 @@ result_*.json
 *.sh.amltmp
 rank_*.txt
 .gitignore.amltmp
+og_dataset_copy/
+error_output.txt

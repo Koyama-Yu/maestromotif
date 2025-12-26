@@ -6,7 +6,8 @@ import numpy as np
 import torchvision
 
 from rlaif.annotators_transforms import BlstatsTransform, MessageTransform
-from rlaif.prompts import system_prompts, prompt_templates, goal_strings, regexes, retry_prompts
+from rlaif import prompts as prompts_default
+from rlaif import prompts_foritem as prompts_items
 from rlaif.llms import LocalLanguageModel, AnnotationIdx
 
 
@@ -55,16 +56,18 @@ class LanguageModelAnnotator(Annotator):
            'NLE_BL_DEPTH', 'NLE_BL_GOLD', 'NLE_BL_HP',
            'NLE_BL_HPMAX', 'NLE_BL_XP', 'NLE_BL_HUNGER'
         ]
+        prompts_module = prompts_items if goal_key in prompts_items.goal_strings else prompts_default
+
         if debug:
             self.llm = None
         else:
-            self.llm = LocalLanguageModel(seed=seed, system_prompt=system_prompts[prompt],
-                                        answer_regex=regexes[prompt],
-                                        retry_prompt=retry_prompts[prompt],
+            self.llm = LocalLanguageModel(seed=seed, system_prompt=prompts_module.system_prompts[prompt],
+                                        answer_regex=prompts_module.regexes[prompt],
+                                        retry_prompt=prompts_module.retry_prompts[prompt],
                                         model_name=model_name, num_gpus=num_gpus,
                                         logdir=logdir, annotator_string=annotator_string)
 
-        self.prompt_template = prompt_templates[prompt]
+        self.prompt_template = prompts_module.prompt_templates[prompt]
         self.goal_key = goal_key
         super().__init__(batch_size)
 
