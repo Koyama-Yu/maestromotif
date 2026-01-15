@@ -3,7 +3,7 @@ retry_prompts = {
 }
 
 regexes = {
-    "default": r"\W*[bB][eE][sS][tT]\\*_*\s*[dD][eE][sS][cC][rR][iI][pP][tT][iI][oO][nN]\W*(?:\s*:*\s*)?(?:\w+\s*)?(1|2|[Nn]one)",
+    "default": r"(?i)\bbest[_\s-]*description\b\"?\s*:?\s*(1|2|none)",
 }
 
 

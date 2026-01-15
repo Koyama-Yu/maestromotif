@@ -1,0 +1,21 @@
+
+    def skill_precondition(self, char_ascii_encodings, char_ascii_colors, num_items, color_map):
+        """
+        Determine preconditions for item-use skills.
+
+        Args:
+            char_ascii_encodings: numpy array representing ASCII encodings of surrounding characters.
+            char_ascii_colors: numpy array representing the colors of the surrounding characters.
+            num_items: number of items the agent has.
+            color_map: a map from common characters to their expected color.
+
+        Returns:
+            Tuple (food_precondition, scroll_precondition):
+                - food_precondition: True if food use should be considered.
+                - scroll_precondition: True if scroll use should be considered.
+        """
+        # Default to no forced preconditions; the policy can choose based on state.
+        food_precondition = False
+        scroll_precondition = False
+
+        return food_precondition, scroll_precondition

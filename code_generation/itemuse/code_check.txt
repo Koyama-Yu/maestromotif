@@ -1,0 +1,15 @@
+Here is the output obtained when running the proposed code with the unit test:
+
+"
+{}
+"
+
+Here was the desired strategy:
+
+Play the NetHackScoreHumanMonk score task (Human Monk, neutral alignment). The goal is to maximize score by surviving, exploring, and managing resources efficiently. There is no explicit win condition; the agent should avoid unnecessary risk while making progress.
+
+The skill policy should choose between none, food_eat, and scroll_read depending on the situation. Prefer food_eat when hunger is high or HP is low and it is safe to eat. Prefer scroll_read when it is useful and safe (e.g., not in combat) and when a scroll is available. Prefer none when neither item use is appropriate, and it is acceptable to return to none after using an item.
+
+Does the output seem correct to you? Yes or no. Tell me why you say so.
+
+Do not write any code.

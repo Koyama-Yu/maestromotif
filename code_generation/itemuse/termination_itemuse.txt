@@ -1,0 +1,25 @@
+
+    def skill_termination(self, skill, skill_time, current_depth, previous_depth, preconditions):
+        """
+        Determines when a skill should terminate.
+
+        Args:
+        - skill (str): The current skill being used.
+        - skill_time (int): The time the skill has been active.
+        - current_depth (int): The current dungeon depth.
+        - previous_depth (int): The previous dungeon depth.
+        - preconditions (list): Preconditions that can force a switch.
+
+        Returns:
+        - bool: True if the skill should terminate, False otherwise.
+        """
+
+        # If any precondition is met, allow switching immediately
+        if any(preconditions):
+            return True
+
+        # Item-use skills are short-horizon; terminate quickly to allow re-selection.
+        if skill in ("none", "food_eat", "scroll_read"):
+            return skill_time >= 1
+
+        return False

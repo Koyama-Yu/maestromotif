@@ -163,7 +163,6 @@ class ItemTracker:
         self.prev_items: Counter[str] = Counter()
         self.prev_cats: Counter[str] = Counter()
         self.prev_normalized_items: Counter[str] = Counter()
-
         # アイテム別行動記録（新機能）
         # 構造: {item_name: {'acquired': int, 'actions': Counter({'drink': 2, 'drop': 4, ...})}}
         self.item_actions: Dict[str, Dict] = defaultdict(lambda: {'acquired': 0, 'actions': Counter()})
@@ -416,6 +415,7 @@ class ItemTracker:
             return self.action_mapping.get(action, f'action_{action}')
         
         return 'unknown'
+
 
     def _log_detailed_action(self, item_name: str, action_name: str, count: int, obs: dict):
         """詳細ログの記録（オプション機能）"""

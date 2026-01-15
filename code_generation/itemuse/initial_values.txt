@@ -1,0 +1,6 @@
+
+    def set_initial_values(self,):
+        # Initiating values from execution.py and from termination_itemuse.txt
+        self.skill = 'none'
+        self.food_skill_steps = 1
+        self.scroll_skill_steps = 1

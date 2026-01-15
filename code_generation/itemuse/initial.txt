@@ -1,0 +1,76 @@
+You are to write code which defines the method "perform_task" of the NetHack Player class that selects amongst a set of skills in the videogame of NetHack. The set of skills corresponds to {{"none", "food_eat", "scroll_read"}}. 
+
+When activated, None means continue normal exploration without item use. Food_eat should decide to eat a food item when it is useful or necessary, and avoid eating when it is risky or wasteful. Scroll_read should decide to read a scroll when it is useful, and avoid reading when it is risky or wasteful.
+
+Here is your current implementation of the NetHackPlayer class:
+
+###
+{}
+###
+
+You are faced with the following task.
+
+Play the NetHackScoreHumanMonk score task (Human Monk, neutral alignment). The goal is to maximize score by surviving, exploring, and managing resources efficiently. There is no explicit win condition; the agent should avoid unnecessary risk while making progress.
+
+Your skill policy should decide between eating food and reading scrolls based on the current situation. Use food when hunger makes it useful or necessary. Read scrolls when it is useful and safe to do so. Avoid both when wasteful or risky.
+
+Your code will be executed through this unit test. 
+
+###
+
+# Starting conditions
+skill = 'none'
+hunger_level = 3  # 0 (not hungry) to 10 (starving)
+hp = 12
+max_hp = 20
+food_in_inventory = 2
+scroll_in_inventory = 1
+in_combat = False
+scroll_safe = True
+
+player = NetHackPlayer()
+
+for turn in range(20):
+    print(
+        f"Turn {{turn + 1}}: Skill={{skill}}, Hunger={{hunger_level}}, "
+        f"HP={{hp}}/{{max_hp}}, Food={{food_in_inventory}}, Scroll={{scroll_in_inventory}}, "
+        f"InCombat={{in_combat}}, ScrollSafe={{scroll_safe}}"
+    )
+
+    if food_in_inventory == 0 and scroll_in_inventory == 0:
+        print("Task was completed!")
+        break
+
+    skill = player.perform_task(
+        skill,
+        hunger_level,
+        hp,
+        max_hp,
+        food_in_inventory,
+        scroll_in_inventory,
+        in_combat,
+        scroll_safe,
+    )
+
+    # the environment updates hunger and combat status
+    hunger_level = min(10, hunger_level + 1)
+    in_combat = (turn % 3 == 0)
+    scroll_safe = not in_combat
+
+    # the environment updates inventory and health based on skill
+    if skill == 'food_eat' and food_in_inventory > 0:
+        food_in_inventory -= 1
+        hunger_level = max(0, hunger_level - 4)
+        hp = min(max_hp, hp + 2)
+    elif skill == 'scroll_read' and scroll_in_inventory > 0 and scroll_safe:
+        scroll_in_inventory -= 1
+        hp = min(max_hp, hp + 1)
+
+    # additional method calls to update attributes go here
+###
+
+Before writing the code, write a few questions for yourself, and answer them to make sure you understand the assignment.
+
+Identify if you need to define any additional attributes. If you define additional attributes, for each of them you must write methods that will simulate changes to their values. These methods must be called upon in the unit test (not in perform_task), as if the environment is updating them. The values should also be printed at each iteration.
+
+In your response make sure to include the code for the class definition and the unit test in a python markdown.

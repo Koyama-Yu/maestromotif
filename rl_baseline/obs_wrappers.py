@@ -564,10 +564,12 @@ class ModifierWrapper(gym.Wrapper):
         self.evaluation = getattr(env, 'evaluation', False)
         self.eval_target = getattr(env, 'eval_target', None)
 
-        self.skill_to_int = {string: i for i, string 
-            in enumerate(['discoverer', 'descender', 'ascender', 'worshipper', 'merchant'])}
-        self.int_to_skill = {i: string for i, string 
-            in enumerate(['discoverer', 'descender', 'ascender', 'worshipper', 'merchant'])}
+        # self.skill_to_int = {string: i for i, string
+        #     in enumerate(['discoverer', 'descender', 'ascender', 'worshipper', 'merchant'])}
+        # self.int_to_skill = {i: string for i, string
+        #     in enumerate(['discoverer', 'descender', 'ascender', 'worshipper', 'merchant'])}
+        self.skill_to_int = {string: i for i, string in enumerate(['none', 'food_eat', 'scroll_read'])}
+        self.int_to_skill = {i: string for i, string in enumerate(['none', 'food_eat', 'scroll_read'])}
 
         obs_spaces = {
             "option": gym.spaces.Box(0, num_skills+1, shape=(1,), dtype=np.int64),
@@ -692,16 +694,24 @@ class ModifierWrapper(gym.Wrapper):
         if self.nethack_player is not None:
             # 必要な属性が存在する場合のみskill_preconditionを呼び出す
             if hasattr(self, 'char_ascii_encodings') and hasattr(self, 'char_ascii_colors') and hasattr(self, 'cur_num_items') and hasattr(self, 'color_map'):
-                worshipper_precondition, merchant_precondition = self.nethack_player.skill_precondition(
-                    self.char_ascii_encodings, 
-                    self.char_ascii_colors, 
-                    self.cur_num_items, 
+                # worshipper_precondition, merchant_precondition = self.nethack_player.skill_precondition(
+                #     self.char_ascii_encodings,
+                #     self.char_ascii_colors,
+                #     self.cur_num_items,
+                #     self.color_map
+                # )
+                food_precondition, scroll_precondition = self.nethack_player.skill_precondition(
+                    self.char_ascii_encodings,
+                    self.char_ascii_colors,
+                    self.cur_num_items,
                     self.color_map
                 )
             else:
-                worshipper_precondition, merchant_precondition = False, False
+                # worshipper_precondition, merchant_precondition = False, False
+                food_precondition, scroll_precondition = False, False
         else:
-            worshipper_precondition, merchant_precondition = False, False
+            # worshipper_precondition, merchant_precondition = False, False
+            food_precondition, scroll_precondition = False, False
 
         # 基本的なメッセージ解析（nethack_playerがNoneでも実行）
         # BUC判定
@@ -761,7 +771,8 @@ class ModifierWrapper(gym.Wrapper):
             if self.evaluation and 'levelupsell' in self.eval_target:
                 self.nethack_player.update_xp_level(self.xlvl)
 
-            preconditions = [worshipper_precondition, merchant_precondition]
+            # preconditions = [worshipper_precondition, merchant_precondition]
+            preconditions = [food_precondition, scroll_precondition]
 
             self.skill_time = obs['blstats'][20] - self.skill_start_time
 
@@ -775,17 +786,28 @@ class ModifierWrapper(gym.Wrapper):
             )
 
             if player_skill_end:
-                if self.env.env.env.env.env.branch_dlvl == -2 and self.dungeon_number != 0 and self.skill == 1:
+                # if self.env.env.env.env.env.branch_dlvl == -2 and self.dungeon_number != 0 and self.skill == 1:
+                #     self.env.env.env.env.env.branch_dlvl = self.previous_depth
+                #     self.nethack_player.branch_depth = self.env.env.env.env.env.branch_dlvl
+                if skill_str == 'descender' and self.env.env.env.env.env.branch_dlvl == -2 and self.dungeon_number != 0:
                     self.env.env.env.env.env.branch_dlvl = self.previous_depth
                     self.nethack_player.branch_depth = self.env.env.env.env.env.branch_dlvl
 
                 skill_str = self.int_to_skill[self.skill]
-                skill_str = self.nethack_player.perform_task(skill_str, 
-                                                            self.depth, 
-                                                            self.dungeon_number, 
-                                                            merchant_precondition, 
-                                                            worshipper_precondition
-                                                            )
+                # skill_str = self.nethack_player.perform_task(
+                #     skill_str,
+                #     self.depth,
+                #     self.dungeon_number,
+                #     merchant_precondition,
+                #     worshipper_precondition,
+                # )
+                skill_str = self.nethack_player.perform_task(
+                    skill_str,
+                    self.depth,
+                    self.dungeon_number,
+                    food_precondition,
+                    scroll_precondition,
+                )
                 if skill_str not in self.skill_to_int:
                     print("obs[blstats]: ", obs['blstats'])
                     print(f"brancH_dlvl: {self.env.env.env.env.env.branch_dlvl}")
@@ -872,7 +894,8 @@ class ModifierWrapper(gym.Wrapper):
             self.skill = self.skill_to_int[self.nethack_player.skill]
         else:
             self.nethack_player = None
-            self.skill = 0
+            # self.skill = 0
+            self.skill = self.skill_to_int['none']
         
         self.previous_depth = 1
         self.skill_start_time = 0

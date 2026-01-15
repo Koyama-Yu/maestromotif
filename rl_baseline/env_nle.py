@@ -140,11 +140,13 @@ def make_custom_env_func(full_env_name, cfg=None, env_config=None):
         exp_folder = cfg.eval_target
     else:
         exp_folder = exploration_str
+        if cfg.meta_policy_name:
+            exp_folder = cfg.meta_policy_name
 
     seed = cfg.code_seed if cfg.code_seed != -1 else cfg.seed
 
-    # If pure RL mode, do not load meta policy class
-    if llm_reward > 0.0 and cfg.eval_target != 'none':
+    # If pure RL mode, do not load meta policy class unless explicitly forced
+    if llm_reward > 0.0 and (cfg.eval_target != 'none' or cfg.meta_policy):
         policy_name = f"meta_policies.{exp_folder}.seed{seed}"
         player_class = "NetHackPlayer"
         MetaPolicyClass = load_player_class(policy_name, player_class)

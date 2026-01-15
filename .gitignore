@@ -195,3 +195,10 @@ rank_*.txt
 .gitignore.amltmp
 og_dataset_copy/
 error_output.txt
+annotate_output*.txt
+annotate_error*.txt.amltmp
+preference_csv/
+eval_item_*.txt
+reward_output_*.txt
+train_*.txt
+item_summary_*.json

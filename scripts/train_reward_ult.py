@@ -106,15 +106,55 @@ def train_reward(cfg):
     os.makedirs(saving_path, exist_ok=True)
     annotation_filename = os.path.join(saving_path, cfg.experiment + ".npy")
     annotations = np.load(annotation_filename)
-    annotations = torch.from_numpy(annotations)
-    agent = cfg.experiment.split('_')[1]
-    all_samples , _ = get_dataset(f"{cfg.dataset_dir}/{agent}.pkl")
+    # Expect experiment name like "llama3.3_70B_foundry_xxx_ooo_default";
+    # use the token after "foundry" as the agent name (xxx).
+    exp_parts = cfg.experiment.split('_')
+    agent = None
+    if 'foundry' in exp_parts:
+        foundry_idx = exp_parts.index('foundry')
+        if foundry_idx + 1 < len(exp_parts):
+            agent = exp_parts[foundry_idx + 1]
+    if agent is None:
+        agent = exp_parts[1]
+
+    dataset_dir = cfg.dataset_dir
+    if not os.path.isdir(dataset_dir) and os.path.isdir('og_dataset_copy'):
+        dataset_dir = 'og_dataset_copy'
+    all_samples , _ = get_dataset(f"{dataset_dir}/{agent}.pkl")
     all_msgs_input, pairs_inputs = get_all_messages(cfg, all_samples, agent)
 
     if len(pairs_inputs['message']) != len(annotations):
         print("Shapes are wrong!")
         input()
         annotations = annotations[:len(pairs_inputs['message'])]
+
+    indices = np.arange(len(annotations))
+    if cfg.exclude_label >= 0:
+        indices = indices[annotations != cfg.exclude_label]
+    if cfg.limit_pairs_fraction < 1.0:
+        target_len = int(len(annotations) * cfg.limit_pairs_fraction)
+        if target_len > 0:
+            indices = indices[:target_len]
+    if len(indices) == 0:
+        raise ValueError("No annotations left after filtering.")
+
+    annotations = annotations[indices]
+    pairs_inputs['message'] = pairs_inputs['message'][indices]
+    pairs_inputs['diffstats'] = pairs_inputs['diffstats'][indices]
+    annotations = torch.from_numpy(annotations)
+
+    last_idx = int(indices[-1])
+    print(
+        f"Filtered annotations: total={len(annotations)}, "
+        f"last_index={last_idx}, label={int(annotations[-1])}"
+    )
+    print("Last record (message/diffstats):")
+    print(pairs_inputs['message'][-1])
+    print(pairs_inputs['diffstats'][-1])
+    print("Last record (decoded messages):")
+    for row in pairs_inputs['message'][-1]:
+        chars = [chr(int(x)) for x in row if int(x) != 0]
+        print("".join(chars))
     
     # Training
     tot_num_iter = 0
@@ -287,6 +327,10 @@ def add_extra_params(parser):
                    help="Directory from which we load the dataset.")
     p.add_argument("--debug", default=False, type=str2bool, 
                    help="To debug or not the reward model")
+    p.add_argument("--exclude_label", default=-1, type=int,
+                   help="Exclude annotations with this label (-1 disables).")
+    p.add_argument("--limit_pairs_fraction", default=1.0, type=float,
+                   help="Fraction of pairs to keep after filtering (0-1].")
 
 
 def parse_all_args(argv=None, evaluation=True):

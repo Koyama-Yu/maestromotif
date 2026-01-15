@@ -3,13 +3,14 @@ import glob
 import os
 import random
 import pickle
+import sys
 import tqdm
 
 import numpy as np
 import torch
 
 from rlaif.data import get_dataset
-from rlaif.annotators import RandomAnnotator, LanguageModelAnnotator
+from rlaif.annotators import RandomAnnotator, LanguageModelAnnotator, FoundryLanguageModelAnnotator
 from rlaif.llms import AnnotationIdx
 
 
@@ -28,6 +29,12 @@ parser.add_argument('--goal_key', type=str, default='discoverer',
                     help="Key for the behavior-specification string to be added to the prompt.")
 parser.add_argument('--logdir', type=str, default=None,
                     help="Name of the directory to log the conversations of the LLM.")
+parser.add_argument('--api_key', type=str, default=None,
+                    help="API key for Foundry-hosted models (required for Foundry annotators).")
+parser.add_argument('--endpoint', type=str, default=None,
+                    help="Foundry endpoint URL (required for Foundry annotators).")
+parser.add_argument('--deployment_name', type=str, default='Llama-3.3-70B-Instruct',
+                    help="Foundry deployment name for the model.")
 
 # "System" parameters
 parser.add_argument('--batch_size', type=int, default=2000,
@@ -42,6 +49,10 @@ parser.add_argument('--debug', type=int, default=0,
                     help='To debug or not the code.')
 parser.add_argument('--ignore_existing', type=int, default=0,
                     help='To ignore_existing some experiments.')
+parser.add_argument('--unknown_limit', type=int, default=10,
+                    help='Exit early if unknown annotations reach this count.')
+parser.add_argument('--max_batches', type=int, default=0,
+                    help='Limit the number of processed batches (0 means no limit).')
 
 flags = parser.parse_args()
 
@@ -103,6 +114,20 @@ for action_goal_key in action_goal_keys:
                                            prompt=flags.prompt,
                                            goal_key=action_goal_key, 
                                            num_gpus=torch.cuda.device_count())
+    elif flags.annotator_type == 'llama3.3_70B_foundry':
+        if not flags.api_key:
+            raise ValueError("Missing --api_key for Foundry annotator.")
+        if not flags.endpoint:
+            raise ValueError("Missing --endpoint for Foundry annotator.")
+        annotator = FoundryLanguageModelAnnotator(seed=seed, batch_size=flags.batch_size,
+                                                  debug=flags.debug,
+                                                  annotator_string=annotator_string,
+                                                  endpoint=flags.endpoint,
+                                                  api_key=flags.api_key,
+                                                  deployment_name=flags.deployment_name,
+                                                  logdir=flags.logdir,
+                                                  prompt=flags.prompt,
+                                                  goal_key=action_goal_key)
     elif flags.annotator_type == 'random':
         annotator = RandomAnnotator(batch_size=flags.batch_size)
     else:
@@ -116,29 +141,48 @@ for action_goal_key in action_goal_keys:
     else:
         annotation_array = np.load(annotation_filename)
 
-    # Restrict the dataset to the portion that (1) is part of this chunk and (2) has the mask at False
+    # Restrict the dataset to the portion that (1) is part of this chunk and (2) is still unknown.
     low_idx = flags.chunk_number * pairs_size // flags.n_chunks
-    high_idx = (flags.chunk_number+1) * pairs_size // flags.n_chunks
+    high_idx = (flags.chunk_number + 1) * pairs_size // flags.n_chunks
     indices = np.arange(low_idx, high_idx)[annotation_array[low_idx:high_idx] == AnnotationIdx.UNKOWN]
 
-    num_iterations = chunk_size // flags.batch_size
+    if len(indices) == 0:
+        print("No unknown annotations in this chunk. Skipping.")
+        continue
+
+    num_iterations = (len(indices) + flags.batch_size - 1) // flags.batch_size
+    if flags.max_batches > 0:
+        num_iterations = min(num_iterations, flags.max_batches)
+    unknown_count = 0
     for i in tqdm.tqdm(range(num_iterations)):
-
-        cur_batch = dataset[flags.batch_size * 2 * i: flags.batch_size * 2 * (i+1)]
-        samples = []
-        for j in range(0, len(cur_batch), 2):
-            samples.append([cur_batch[j], cur_batch[j+1]])
-
         curr_idx = i * flags.batch_size
-        end_idx = min((i+1) * flags.batch_size, chunk_size)
+        end_idx = min((i + 1) * flags.batch_size, len(indices))
+        inds = indices[curr_idx:end_idx]
 
-        inds = indices[list(range(curr_idx, end_idx))]
+        samples = []
+        for pair_idx in inds:
+            dataset_idx = pair_idx * 2
+            samples.append([dataset[dataset_idx], dataset[dataset_idx + 1]])
 
-        annotation = annotator(batch=samples, logging_indices=inds, iteration=i)
+        try:
+            annotation = annotator(batch=samples, logging_indices=inds, iteration=i)
+        except Exception as exc:
+            np.save(annotation_filename, annotation_array)
+            print(f"Annotator failed at batch {i}: {exc}")
+            print("Saved progress; please retry to resume from the first unknown index.")
+            sys.exit(1)
+
         annotation_array[inds] = annotation
+        unknown_count += int(np.count_nonzero(annotation == AnnotationIdx.UNKOWN))
+        if unknown_count >= flags.unknown_limit:
+            np.save(annotation_filename, annotation_array)
+            print(f"Reached unknown_limit={flags.unknown_limit}. Exiting early.")
+            sys.exit(0)
 
         if i % flags.flushing_freq == 0:
             np.save(annotation_filename, annotation_array)
 
     # Final save
     np.save(annotation_filename, annotation_array)
+    unknown_total = int(np.count_nonzero(annotation_array == AnnotationIdx.UNKOWN))
+    print(f"Total unknown annotations: {unknown_total}")

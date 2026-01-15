@@ -43,6 +43,8 @@ def arg_parser(argv=None, evaluation=False):
     parser.add_argument('--evaluation', type=str2bool, default=False, help='Evaluate the algorithm or not')
     parser.add_argument('--eval_target', type=str, default='none', help='Evaluate the algorithm or not')
     parser.add_argument('--code_seed', type=int, default=-1, help='Evaluate the algorithm or not')
+    parser.add_argument('--meta_policy', type=str2bool, default=False, help='Force loading a meta policy even when eval_target is none')
+    parser.add_argument('--meta_policy_name', type=str, default=None, help='Override meta policy folder name when loading meta policy')
 
     # Environment args
     parser.add_argument('--root_env', type=str, default='NetHackScoreMonk-v1', required=False, help='Fully-qualified environment name in the form envfamily_envname, e.g. atari_breakout or doom_battle')

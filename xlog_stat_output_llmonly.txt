@@ -1,0 +1,46 @@
+Source: A
+score_mean    : 1108.4 +/- 802.6
+score_median  : 1015.0
+turn_mean     : 8400.2 +/- 4871.2
+turn_median   : 8012.0
+max_depth_mean    : 1.1 +/- 0.3
+max_depth_median  : 1.0
+
+End reason ranking (normalized):
+  1. killed by monster                         55.59%
+  2. death: was poisoned. poisoned by a rotted corpse  28.39%
+  3. choked                                    11.30%
+  4. killed by bolt                             1.73%
+  5. died of starvation                         1.43%
+  6. killed by wand                             0.89%
+  7. killed by magic missile                    0.30%
+  8. killed by boulder                          0.21%
+  9. killed by death ray                        0.08%
+ 10. killed by trap                             0.03%
+
+Normalized (monsters only):
+  1. killed by monster                        100.00%
+
+Normalized (non-monster):
+  1. death: was poisoned. poisoned by a rotted corpse  63.92%
+  2. choked                                    25.45%
+  3. killed by bolt                             3.91%
+  4. died of starvation                         3.23%
+  5. killed by wand                             2.01%
+  6. killed by magic missile                    0.67%
+  7. killed by boulder                          0.47%
+  8. killed by death ray                        0.17%
+  9. killed by trap                             0.07%
+ 10. poisoned by a dart                         0.03%
+
+End reason ranking (raw, unnormalized):
+  1. choked on a food ration                    5.27%
+  2. killed by a jackal                         4.57%
+  3. killed by the wrath of Chih Sung-tzu       4.54%
+  4. poisoned by a rotted jackal corpse         3.43%
+  5. killed by a hobbit                         3.24%
+  6. poisoned by a rotted newt corpse           2.74%
+  7. poisoned by a rotted gecko corpse          2.36%
+  8. killed by a gecko                          2.17%
+  9. killed by a giant rat                      2.08%
+ 10. killed by a goblin                         2.07%

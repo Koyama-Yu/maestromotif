@@ -8,7 +8,7 @@ import torchvision
 from rlaif.annotators_transforms import BlstatsTransform, MessageTransform
 from rlaif import prompts as prompts_default
 from rlaif import prompts_foritem as prompts_items
-from rlaif.llms import LocalLanguageModel, AnnotationIdx
+from rlaif.llms import LocalLanguageModel, FoundryLanguageModel, AnnotationIdx
 
 
 class Annotator(ABC):
@@ -69,6 +69,7 @@ class LanguageModelAnnotator(Annotator):
 
         self.prompt_template = prompts_module.prompt_templates[prompt]
         self.goal_key = goal_key
+        self.goal_strings = prompts_module.goal_strings
         super().__init__(batch_size)
 
     def __call__(self, batch: Dict[str, np.ndarray], logging_indices: Sequence[int] = None, iteration: int = 0) -> np.ndarray:
@@ -93,7 +94,85 @@ class LanguageModelAnnotator(Annotator):
             seq_1 = "\n".join(seq_1)
             seq_2 = "\n".join(seq_2)
             preserved_indices.append(prompt_idx)
-            prompts.append(self.prompt_template.format(goal_strings[self.goal_key], seq_1, seq_2))
+            prompts.append(self.prompt_template.format(self.goal_strings[self.goal_key], seq_1, seq_2))
+        return prompts, preserved_indices
+
+    @property
+    def data_keys(self) -> List[str]:
+        needed_keys = []
+        if self.use_messages:
+            needed_keys.append('message')
+        if self.use_blstats:
+            needed_keys.append('blstats')
+        return needed_keys
+
+    @property
+    def info_keys(self) -> Optional[List[str]]:
+        return None
+
+    @property
+    def transform(self):
+        transforms = []
+        if self.use_messages:
+            transforms.append(MessageTransform())
+        if self.use_blstats:
+            transforms.append(BlstatsTransform(self.blstats_keys))
+        return torchvision.transforms.Compose(transforms)
+
+
+class FoundryLanguageModelAnnotator(Annotator):
+    """Annotator that annotates based on the output of a Foundry-hosted language model."""
+    def __init__(self, seed: int, batch_size: int, debug: int, annotator_string: str,
+                 endpoint: str, api_key: str, deployment_name: str,
+                 logdir: Optional[str] = None,
+                 prompt: str = 'original',
+                 goal_key: str = '') -> None:
+
+        self.blstats_keys = [
+           'NLE_BL_DEPTH', 'NLE_BL_GOLD', 'NLE_BL_HP',
+           'NLE_BL_HPMAX', 'NLE_BL_XP', 'NLE_BL_HUNGER'
+        ]
+        prompts_module = prompts_items if goal_key in prompts_items.goal_strings else prompts_default
+
+        if debug:
+            self.llm = None
+        else:
+            self.llm = FoundryLanguageModel(seed=seed, system_prompt=prompts_module.system_prompts[prompt],
+                                            answer_regex=prompts_module.regexes[prompt],
+                                            retry_prompt=prompts_module.retry_prompts[prompt],
+                                            endpoint=endpoint,
+                                            api_key=api_key,
+                                            deployment_name=deployment_name,
+                                            logdir=logdir, annotator_string=annotator_string)
+
+        self.prompt_template = prompts_module.prompt_templates[prompt]
+        self.goal_key = goal_key
+        self.goal_strings = prompts_module.goal_strings
+        super().__init__(batch_size)
+
+    def __call__(self, batch: Dict[str, np.ndarray], logging_indices: Sequence[int] = None, iteration: int = 0) -> np.ndarray:
+        messages = list(map(lambda x: [x[0]['llm_strs'], x[1]['llm_strs']], batch))
+        prompts, preserved_indices = self.prepare_prompts(messages)
+        print('Sample prompt:')
+        print(prompts[0])
+
+        results = self.llm.generate(prompts,
+                                    np.array(logging_indices)[preserved_indices] if logging_indices is not None else None,
+                                    iteration)
+
+        recomposed_results = np.full(len(messages), AnnotationIdx.TIE)
+        recomposed_results[preserved_indices] = results
+        return recomposed_results
+
+    def prepare_prompts(self, batched_messages: List[List[str]],) -> Tuple[List[str], List[int]]:
+
+        preserved_indices = []
+        prompts = []
+        for prompt_idx, (seq_1, seq_2) in enumerate(batched_messages):
+            seq_1 = "\n".join(seq_1)
+            seq_2 = "\n".join(seq_2)
+            preserved_indices.append(prompt_idx)
+            prompts.append(self.prompt_template.format(self.goal_strings[self.goal_key], seq_1, seq_2))
         return prompts, preserved_indices
 
     @property
