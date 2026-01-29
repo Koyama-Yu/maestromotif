@@ -1,8 +1,12 @@
 import copy
+import json
 import os
 import re
 import sys
+import time
 from collections import defaultdict, deque, OrderedDict
+from pathlib import Path
+import heapq
 
 import cv2
 import gym
@@ -463,6 +467,202 @@ class MessageWrapper(gym.Wrapper):
         return obs
 
 
+ACTION_COMMAND_MAP = {
+    "eat": Command.EAT,
+    "read": Command.READ,
+    "drop": Command.DROP,
+    "quaff": Command.QUAFF,
+    "zap": Command.ZAP,
+}
+
+
+class RuntimeMetricsTracker:
+    def __init__(
+        self,
+        *,
+        experiment: str,
+        worker_idx: int,
+        env_idx: int,
+        output_dir: Path,
+        non_hungry_max: int = 1,
+        top_n: int = 20,
+        flush_every: int = 100,
+    ) -> None:
+        self.experiment = experiment
+        self.worker_idx = worker_idx
+        self.env_idx = env_idx
+        self.output_dir = output_dir
+        self.non_hungry_max = non_hungry_max
+        self.top_n = top_n
+        self.flush_every = max(1, flush_every)
+        self.pid = os.getpid()
+
+        self.episode_idx = 0
+        self.total_steps = 0
+        self.total_action_counts = defaultdict(int)
+
+        self._jsonl_path = output_dir / f"runtime_metrics_w{worker_idx}_e{env_idx}_pid{self.pid}.jsonl"
+        self._summary_path = output_dir / f"runtime_metrics_summary_w{worker_idx}_e{env_idx}_pid{self.pid}.json"
+        self._jsonl_handle = self._jsonl_path.open("a", encoding="utf-8")
+
+        self._reset_episode()
+
+        self._top_eat = []
+        self._top_read = []
+        self._top_hunger_recovery = []
+        self._top_non_hungry = []
+        self._top_counter = 0
+
+    def _reset_episode(self) -> None:
+        self._episode_action_counts = defaultdict(int)
+        self._episode_steps = 0
+        self._episode_non_hungry_steps = 0
+        self._episode_hunger_recovery = 0.0
+        self._episode_last_hunger = None
+        self._episode_hunger_seen = False
+
+    def record_step(self, *, action_name: str | None, hunger_value: int | None) -> None:
+        if action_name:
+            self._episode_action_counts[action_name] += 1
+            self.total_action_counts[action_name] += 1
+
+        if hunger_value is not None:
+            self._episode_hunger_seen = True
+            if hunger_value <= self.non_hungry_max:
+                self._episode_non_hungry_steps += 1
+            if self._episode_last_hunger is not None:
+                self._episode_hunger_recovery += max(
+                    self._episode_last_hunger - hunger_value, 0
+                )
+            self._episode_last_hunger = hunger_value
+
+        self._episode_steps += 1
+        self.total_steps += 1
+
+    def _extract_game_id(self, info: dict) -> int | None:
+        for key in ("gameid", "game_id", "episode_id"):
+            if key in info:
+                try:
+                    return int(info[key])
+                except Exception:
+                    return None
+        return None
+
+    def _extract_ttyrec_name(self, info: dict) -> str | None:
+        for key, value in info.items():
+            if "ttyrec" in key.lower() and value:
+                return str(value)
+        return None
+
+    def _push_top(self, heap, value: float, entry: dict) -> None:
+        self._top_counter += 1
+        item = (value, self._top_counter, entry)
+        if len(heap) < self.top_n:
+            heapq.heappush(heap, item)
+            return
+        if heap[0][0] < value:
+            heapq.heapreplace(heap, item)
+
+    def _heap_to_sorted(self, heap) -> list[dict]:
+        return [entry for _, _, entry in sorted(heap, reverse=True)]
+
+    def finalize_episode(
+        self,
+        *,
+        info: dict,
+        ttyrec_name: str | None,
+        ttyrec_candidates: list[str] | None,
+    ) -> None:
+        self.episode_idx += 1
+        steps = self._episode_steps
+        if steps == 0:
+            self._reset_episode()
+            return
+
+        action_freq = {
+            name: (count / steps) for name, count in self._episode_action_counts.items()
+        }
+        non_hungry_rate = None
+        if self._episode_hunger_seen:
+            non_hungry_rate = self._episode_non_hungry_steps / steps
+
+        episode_id = f"w{self.worker_idx}_e{self.env_idx}_{self.episode_idx}"
+        entry = {
+            "episode_id": episode_id,
+            "gameid": self._extract_game_id(info),
+            "worker_idx": self.worker_idx,
+            "env_idx": self.env_idx,
+            "episode_idx": self.episode_idx,
+            "steps": steps,
+            "action_counts": dict(self._episode_action_counts),
+            "action_freq": action_freq,
+            "hunger_recovery": self._episode_hunger_recovery,
+            "non_hungry_rate": non_hungry_rate,
+            "non_hungry_steps": self._episode_non_hungry_steps,
+            "non_hungry_max": self.non_hungry_max,
+            "hunger_available": self._episode_hunger_seen,
+            "ttyrec": ttyrec_name,
+            "ttyrec_candidates": ttyrec_candidates or [],
+        }
+
+        self._jsonl_handle.write(json.dumps(entry, ensure_ascii=True) + "\n")
+        self._jsonl_handle.flush()
+
+        self._push_top(
+            self._top_eat,
+            action_freq.get("eat", 0.0),
+            {**entry, "metric": "eat_freq", "value": action_freq.get("eat", 0.0)},
+        )
+        self._push_top(
+            self._top_read,
+            action_freq.get("read", 0.0),
+            {**entry, "metric": "read_freq", "value": action_freq.get("read", 0.0)},
+        )
+        self._push_top(
+            self._top_hunger_recovery,
+            self._episode_hunger_recovery if self._episode_hunger_seen else 0.0,
+            {
+                **entry,
+                "metric": "hunger_recovery",
+                "value": self._episode_hunger_recovery,
+            },
+        )
+        self._push_top(
+            self._top_non_hungry,
+            non_hungry_rate if non_hungry_rate is not None else 0.0,
+            {**entry, "metric": "non_hungry_rate", "value": non_hungry_rate},
+        )
+
+        if self.episode_idx % self.flush_every == 0:
+            self._write_summary()
+
+        self._reset_episode()
+
+    def _write_summary(self) -> None:
+        action_freq = {}
+        if self.total_steps > 0:
+            for name, count in self.total_action_counts.items():
+                action_freq[name] = count / self.total_steps
+        summary = {
+            "experiment": self.experiment,
+            "worker_idx": self.worker_idx,
+            "env_idx": self.env_idx,
+            "pid": self.pid,
+            "total_episodes": self.episode_idx,
+            "total_steps": self.total_steps,
+            "action_counts": dict(self.total_action_counts),
+            "action_freq": action_freq,
+            "top": {
+                "eat_freq": self._heap_to_sorted(self._top_eat),
+                "read_freq": self._heap_to_sorted(self._top_read),
+                "hunger_recovery": self._heap_to_sorted(self._top_hunger_recovery),
+                "non_hungry_rate": self._heap_to_sorted(self._top_non_hungry),
+            },
+            "generated_at": time.time(),
+        }
+        self._summary_path.write_text(json.dumps(summary, ensure_ascii=True), encoding="utf-8")
+
+
 class ModifierWrapper(gym.Wrapper):
 
     def __init__(self, env, llm_reward, experiment, num_skills, meta_policy_class):
@@ -579,6 +779,115 @@ class ModifierWrapper(gym.Wrapper):
             [(k, self.env.observation_space[k]) for k in self.env.observation_space]
         )
         self.observation_space = gym.spaces.Dict(obs_spaces)
+
+        self.worker_idx = final_worker_idx
+        self.env_idx = final_env_idx
+        self._ttyrec_dir = self._resolve_ttyrec_dir()
+        self._known_ttyrecs = set()
+        self._last_ttyrec_scan = 0.0
+        self._metrics_tracker = self._init_runtime_metrics()
+
+    def _resolve_ttyrec_dir(self) -> Path | None:
+        savedir = self._find_attr_in_wrappers(("savedir", "save_dir", "_savedir"))
+        if not savedir:
+            return None
+        try:
+            path = Path(savedir)
+        except Exception:
+            return None
+        if path.name in ("A", "B") and path.parent.name == "ttyrecs":
+            return path
+        return path if path.exists() else None
+
+    def _resolve_metrics_dir(self) -> Path:
+        if self._ttyrec_dir is not None:
+            base = self._ttyrec_dir
+            if base.name in ("A", "B") and base.parent.name == "ttyrecs":
+                base = base.parent.parent
+            return base / "runtime_metrics"
+        return Path("runtime_metrics") / self.experiment
+
+    def _find_attr_in_wrappers(self, keys: tuple[str, ...]) -> str | None:
+        current = self
+        depth = 0
+        while current is not None and depth < 20:
+            for key in keys:
+                if hasattr(current, key):
+                    value = getattr(current, key)
+                    if isinstance(value, str) and value:
+                        return value
+            current = getattr(current, "env", None)
+            depth += 1
+        return None
+
+    def _init_runtime_metrics(self) -> RuntimeMetricsTracker | None:
+        metrics_dir = self._resolve_metrics_dir()
+        try:
+            metrics_dir.mkdir(parents=True, exist_ok=True)
+        except Exception as exc:
+            log.warning(f"Failed to create runtime metrics dir {metrics_dir}: {exc}")
+            return None
+
+        non_hungry_max = int(os.getenv("HUNGER_NON_HUNGRY_MAX", "1"))
+        top_n = int(os.getenv("RUNTIME_METRICS_TOP_N", "20"))
+        flush_every = int(os.getenv("RUNTIME_METRICS_FLUSH_EVERY", "100"))
+
+        return RuntimeMetricsTracker(
+            experiment=self.experiment,
+            worker_idx=self.worker_idx,
+            env_idx=self.env_idx,
+            output_dir=metrics_dir,
+            non_hungry_max=non_hungry_max,
+            top_n=top_n,
+            flush_every=flush_every,
+        )
+
+    def _scan_for_new_ttyrecs(self) -> tuple[str | None, list[str]]:
+        if self._ttyrec_dir is None:
+            return None, []
+        scan_enabled = os.getenv("RUNTIME_METRICS_SCAN_TTYREC", "false").lower() == "true"
+        if not scan_enabled:
+            return None, []
+        now = time.time()
+        if now - self._last_ttyrec_scan < 0.5:
+            return None, []
+        self._last_ttyrec_scan = now
+        candidates = []
+        try:
+            for entry in self._ttyrec_dir.iterdir():
+                if not entry.is_file():
+                    continue
+                if not entry.name.endswith((".ttyrec", ".ttyrec.bz2", ".ttyrec.bz3")):
+                    continue
+                if entry.name in self._known_ttyrecs:
+                    continue
+                self._known_ttyrecs.add(entry.name)
+                candidates.append(entry)
+        except Exception as exc:
+            log.warning(f"Failed to scan ttyrec dir {self._ttyrec_dir}: {exc}")
+            return None, []
+
+        if not candidates:
+            return None, []
+        latest = max(candidates, key=lambda p: p.stat().st_mtime)
+        return str(latest), [str(p) for p in candidates]
+
+    def _action_to_name(self, action: int) -> str | None:
+        if hasattr(self, "actions") and action < len(self.actions):
+            try:
+                action_cmd = self.actions[action]
+            except Exception:
+                return None
+            for name, cmd in ACTION_COMMAND_MAP.items():
+                if action_cmd == cmd:
+                    return name
+        return None
+
+    def _extract_ttyrec_from_info(self, info: dict) -> str | None:
+        for key, value in info.items():
+            if "ttyrec" in key.lower() and value:
+                return str(value)
+        return None
     
     # 追加: worker/envインデックスを解決
     def _resolve_worker_env_indices(self):
@@ -676,6 +985,16 @@ class ModifierWrapper(gym.Wrapper):
 
         #if reward > 0.:
             #log.info(f"Reward: {reward}, Action: {self.actions[action]}")
+
+        if self._metrics_tracker is not None:
+            hunger_value = None
+            if "blstats" in obs and len(obs["blstats"]) > 21:
+                hunger_value = int(obs["blstats"][21])
+            action_name = self._action_to_name(action)
+            self._metrics_tracker.record_step(
+                action_name=action_name,
+                hunger_value=hunger_value,
+            )
 
         msg_str = self.env.message[1]
         cur_buc = 0
@@ -872,6 +1191,17 @@ class ModifierWrapper(gym.Wrapper):
         #         episode_length=episode_length,
         #         episode_reward=extrinsic_reward
         #     )
+
+        if done and self._metrics_tracker is not None:
+            ttyrec_name = self._extract_ttyrec_from_info(info)
+            ttyrec_candidates = []
+            if ttyrec_name is None:
+                ttyrec_name, ttyrec_candidates = self._scan_for_new_ttyrecs()
+            self._metrics_tracker.finalize_episode(
+                info=info,
+                ttyrec_name=ttyrec_name,
+                ttyrec_candidates=ttyrec_candidates,
+            )
 
         # Return extrinsic_reward as reward, intrinsic_reward separately in info
         return obs, extrinsic_reward, done, info

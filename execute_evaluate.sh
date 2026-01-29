@@ -29,17 +29,17 @@ python3 -m scripts.main --algo APPO \
                        --batch_size 4096 \
                        --reward_scale 0.1 \
                        --obs_scale 255.0 \
-                       --train_for_env_steps 3_000_000_000 \
+                       --train_for_env_steps 2_000_000_000 \
                        --save_every_steps 4_000_000_000 \
                        --code_seed 42 \
                        --seed 2 \
                        --stats_avg 1000 \
                        --train_dir train_dir/skill_policy/ \
-                       --experiment itemuse_extrinsic \
+                       --experiment itemuse_only_llm \
                        --reward_dir "['train_dir/skill_rewards/llama3.3_70B_foundry_food_eat_default',
                                       'train_dir/skill_rewards/llama3.3_70B_foundry_scroll_read_default']"   \
                         --evaluation True \
-                        --extrinsic_reward 1.0 \
+                        --extrinsic_reward 0.0 \
                         --llm_reward 0.1 \
                         --ttyrec 1 \
                         --eval_target none \

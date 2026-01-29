@@ -9,4 +9,5 @@ python -m scripts.main --algo APPO --num_workers 24 --num_envs_per_worker 20 \
                        --experiment pureRL \
                        --eval_target none \
                        --ttyrec 1 \
-                       --evaluation True
+                       --evaluation True \
+                       --meta_policy false
