@@ -1,0 +1,2627 @@
+{
+  "episodes": [
+    {
+      "episode": 0,
+      "seed": [
+        766813823,
+        766813823,
+        0
+      ],
+      "steps": 7296,
+      "hunger_recovery": 13,
+      "non_hungry_steps": 6968,
+      "non_hungry_rate": 0.9550438596491229,
+      "action_counts": {
+        "eat": 231,
+        "read": 6,
+        "drop": 0,
+        "quaff": 1,
+        "zap": 3
+      },
+      "action_freq": {
+        "eat": 0.031661184210526314,
+        "read": 0.0008223684210526315,
+        "drop": 0.0,
+        "quaff": 0.00013706140350877192,
+        "zap": 0.00041118421052631577
+      }
+    },
+    {
+      "episode": 1,
+      "seed": [
+        766813824,
+        766813824,
+        0
+      ],
+      "steps": 26085,
+      "hunger_recovery": 126,
+      "non_hungry_steps": 22269,
+      "non_hungry_rate": 0.8537090281771132,
+      "action_counts": {
+        "eat": 628,
+        "read": 1,
+        "drop": 15,
+        "quaff": 4,
+        "zap": 5
+      },
+      "action_freq": {
+        "eat": 0.02407513896875599,
+        "read": 3.8336208548974504e-05,
+        "drop": 0.0005750431282346176,
+        "quaff": 0.00015334483419589801,
+        "zap": 0.00019168104274487253
+      }
+    },
+    {
+      "episode": 2,
+      "seed": [
+        766813825,
+        766813825,
+        0
+      ],
+      "steps": 45500,
+      "hunger_recovery": 68,
+      "non_hungry_steps": 42852,
+      "non_hungry_rate": 0.9418021978021978,
+      "action_counts": {
+        "eat": 875,
+        "read": 14,
+        "drop": 247,
+        "quaff": 2,
+        "zap": 2
+      },
+      "action_freq": {
+        "eat": 0.019230769230769232,
+        "read": 0.0003076923076923077,
+        "drop": 0.0054285714285714284,
+        "quaff": 4.3956043956043955e-05,
+        "zap": 4.3956043956043955e-05
+      }
+    },
+    {
+      "episode": 3,
+      "seed": [
+        766813826,
+        766813826,
+        0
+      ],
+      "steps": 34715,
+      "hunger_recovery": 94,
+      "non_hungry_steps": 30474,
+      "non_hungry_rate": 0.8778337894282011,
+      "action_counts": {
+        "eat": 778,
+        "read": 1,
+        "drop": 22,
+        "quaff": 4,
+        "zap": 1
+      },
+      "action_freq": {
+        "eat": 0.022411061500792164,
+        "read": 2.8805991646262422e-05,
+        "drop": 0.0006337318162177733,
+        "quaff": 0.00011522396658504969,
+        "zap": 2.8805991646262422e-05
+      }
+    },
+    {
+      "episode": 4,
+      "seed": [
+        766813827,
+        766813827,
+        0
+      ],
+      "steps": 3888,
+      "hunger_recovery": 34,
+      "non_hungry_steps": 3353,
+      "non_hungry_rate": 0.8623971193415638,
+      "action_counts": {
+        "eat": 103,
+        "read": 1,
+        "drop": 0,
+        "quaff": 1,
+        "zap": 0
+      },
+      "action_freq": {
+        "eat": 0.026491769547325104,
+        "read": 0.000257201646090535,
+        "drop": 0.0,
+        "quaff": 0.000257201646090535,
+        "zap": 0.0
+      }
+    },
+    {
+      "episode": 5,
+      "seed": [
+        766813828,
+        766813828,
+        0
+      ],
+      "steps": 70105,
+      "hunger_recovery": 89,
+      "non_hungry_steps": 67241,
+      "non_hungry_rate": 0.9591469937950218,
+      "action_counts": {
+        "eat": 1155,
+        "read": 46,
+        "drop": 95,
+        "quaff": 6,
+        "zap": 38
+      },
+      "action_freq": {
+        "eat": 0.016475287069395907,
+        "read": 0.0006561586192140361,
+        "drop": 0.0013551101918550744,
+        "quaff": 8.55859068540047e-05,
+        "zap": 0.0005420440767420298
+      }
+    },
+    {
+      "episode": 6,
+      "seed": [
+        766813829,
+        766813829,
+        0
+      ],
+      "steps": 63091,
+      "hunger_recovery": 80,
+      "non_hungry_steps": 56962,
+      "non_hungry_rate": 0.9028546068377423,
+      "action_counts": {
+        "eat": 1128,
+        "read": 7,
+        "drop": 24,
+        "quaff": 4,
+        "zap": 1
+      },
+      "action_freq": {
+        "eat": 0.01787893677386632,
+        "read": 0.00011095084877399312,
+        "drop": 0.0003804029100822621,
+        "quaff": 6.340048501371036e-05,
+        "zap": 1.585012125342759e-05
+      }
+    },
+    {
+      "episode": 7,
+      "seed": [
+        766813830,
+        766813830,
+        0
+      ],
+      "steps": 82727,
+      "hunger_recovery": 118,
+      "non_hungry_steps": 78572,
+      "non_hungry_rate": 0.9497745596963506,
+      "action_counts": {
+        "eat": 1164,
+        "read": 42,
+        "drop": 139,
+        "quaff": 36,
+        "zap": 22
+      },
+      "action_freq": {
+        "eat": 0.0140703760561848,
+        "read": 0.0005076939814087299,
+        "drop": 0.00168022531942413,
+        "quaff": 0.00043516626977891136,
+        "zap": 0.00026593494264266803
+      }
+    },
+    {
+      "episode": 8,
+      "seed": [
+        766813831,
+        766813831,
+        0
+      ],
+      "steps": 43525,
+      "hunger_recovery": 88,
+      "non_hungry_steps": 38745,
+      "non_hungry_rate": 0.8901780585870189,
+      "action_counts": {
+        "eat": 927,
+        "read": 39,
+        "drop": 61,
+        "quaff": 10,
+        "zap": 26
+      },
+      "action_freq": {
+        "eat": 0.021298104537622056,
+        "read": 0.0008960367604824814,
+        "drop": 0.001401493394600804,
+        "quaff": 0.00022975301550832856,
+        "zap": 0.0005973578403216542
+      }
+    },
+    {
+      "episode": 9,
+      "seed": [
+        766813832,
+        766813832,
+        0
+      ],
+      "steps": 26458,
+      "hunger_recovery": 72,
+      "non_hungry_steps": 23610,
+      "non_hungry_rate": 0.892357698994633,
+      "action_counts": {
+        "eat": 765,
+        "read": 1,
+        "drop": 7,
+        "quaff": 1,
+        "zap": 0
+      },
+      "action_freq": {
+        "eat": 0.02891375009448938,
+        "read": 3.779575175750246e-05,
+        "drop": 0.0002645702623025172,
+        "quaff": 3.779575175750246e-05,
+        "zap": 0.0
+      }
+    },
+    {
+      "episode": 10,
+      "seed": [
+        766813833,
+        766813833,
+        0
+      ],
+      "steps": 46727,
+      "hunger_recovery": 84,
+      "non_hungry_steps": 42580,
+      "non_hungry_rate": 0.9112504547691913,
+      "action_counts": {
+        "eat": 934,
+        "read": 14,
+        "drop": 117,
+        "quaff": 1,
+        "zap": 2
+      },
+      "action_freq": {
+        "eat": 0.01998844351231622,
+        "read": 0.0002996126436535622,
+        "drop": 0.0025039056648190556,
+        "quaff": 2.1400903118111584e-05,
+        "zap": 4.280180623622317e-05
+      }
+    },
+    {
+      "episode": 11,
+      "seed": [
+        766813834,
+        766813834,
+        0
+      ],
+      "steps": 14192,
+      "hunger_recovery": 88,
+      "non_hungry_steps": 12175,
+      "non_hungry_rate": 0.8578776775648252,
+      "action_counts": {
+        "eat": 351,
+        "read": 0,
+        "drop": 3,
+        "quaff": 0,
+        "zap": 1
+      },
+      "action_freq": {
+        "eat": 0.024732243517474634,
+        "read": 0.0,
+        "drop": 0.00021138669673055241,
+        "quaff": 0.0,
+        "zap": 7.046223224351747e-05
+      }
+    },
+    {
+      "episode": 12,
+      "seed": [
+        766813835,
+        766813835,
+        0
+      ],
+      "steps": 8851,
+      "hunger_recovery": 22,
+      "non_hungry_steps": 8467,
+      "non_hungry_rate": 0.9566150717433058,
+      "action_counts": {
+        "eat": 286,
+        "read": 9,
+        "drop": 3,
+        "quaff": 2,
+        "zap": 12
+      },
+      "action_freq": {
+        "eat": 0.032312733024517,
+        "read": 0.0010168342560162693,
+        "drop": 0.00033894475200542314,
+        "quaff": 0.00022596316800361542,
+        "zap": 0.0013557790080216926
+      }
+    },
+    {
+      "episode": 13,
+      "seed": [
+        766813836,
+        766813836,
+        0
+      ],
+      "steps": 52655,
+      "hunger_recovery": 94,
+      "non_hungry_steps": 48148,
+      "non_hungry_rate": 0.9144050897350678,
+      "action_counts": {
+        "eat": 922,
+        "read": 21,
+        "drop": 31,
+        "quaff": 0,
+        "zap": 65
+      },
+      "action_freq": {
+        "eat": 0.01751020795745893,
+        "read": 0.0003988225239768303,
+        "drop": 0.0005887380115848447,
+        "quaff": 0.0,
+        "zap": 0.0012344506694520938
+      }
+    },
+    {
+      "episode": 14,
+      "seed": [
+        766813837,
+        766813837,
+        0
+      ],
+      "steps": 12648,
+      "hunger_recovery": 27,
+      "non_hungry_steps": 12344,
+      "non_hungry_rate": 0.9759645793801391,
+      "action_counts": {
+        "eat": 333,
+        "read": 1,
+        "drop": 0,
+        "quaff": 0,
+        "zap": 0
+      },
+      "action_freq": {
+        "eat": 0.026328273244781784,
+        "read": 7.906388361796332e-05,
+        "drop": 0.0,
+        "quaff": 0.0,
+        "zap": 0.0
+      }
+    },
+    {
+      "episode": 15,
+      "seed": [
+        766813838,
+        766813838,
+        0
+      ],
+      "steps": 88052,
+      "hunger_recovery": 77,
+      "non_hungry_steps": 77183,
+      "non_hungry_rate": 0.8765615772498069,
+      "action_counts": {
+        "eat": 1547,
+        "read": 5,
+        "drop": 5,
+        "quaff": 14,
+        "zap": 0
+      },
+      "action_freq": {
+        "eat": 0.01756916367600963,
+        "read": 5.6784627265706625e-05,
+        "drop": 5.6784627265706625e-05,
+        "quaff": 0.00015899695634397857,
+        "zap": 0.0
+      }
+    },
+    {
+      "episode": 16,
+      "seed": [
+        766813839,
+        766813839,
+        0
+      ],
+      "steps": 42713,
+      "hunger_recovery": 71,
+      "non_hungry_steps": 39200,
+      "non_hungry_rate": 0.9177533771919556,
+      "action_counts": {
+        "eat": 842,
+        "read": 19,
+        "drop": 25,
+        "quaff": 8,
+        "zap": 7
+      },
+      "action_freq": {
+        "eat": 0.019712967948868027,
+        "read": 0.0004448294430267132,
+        "drop": 0.0005853018987193594,
+        "quaff": 0.00018729660759019502,
+        "zap": 0.00016388453164142066
+      }
+    },
+    {
+      "episode": 17,
+      "seed": [
+        766813840,
+        766813840,
+        0
+      ],
+      "steps": 23427,
+      "hunger_recovery": 52,
+      "non_hungry_steps": 21172,
+      "non_hungry_rate": 0.9037435437742776,
+      "action_counts": {
+        "eat": 548,
+        "read": 0,
+        "drop": 16,
+        "quaff": 1,
+        "zap": 0
+      },
+      "action_freq": {
+        "eat": 0.023391812865497075,
+        "read": 0.0,
+        "drop": 0.0006829726384086738,
+        "quaff": 4.268578990054211e-05,
+        "zap": 0.0
+      }
+    },
+    {
+      "episode": 18,
+      "seed": [
+        766813841,
+        766813841,
+        0
+      ],
+      "steps": 8553,
+      "hunger_recovery": 22,
+      "non_hungry_steps": 7840,
+      "non_hungry_rate": 0.9166374371565532,
+      "action_counts": {
+        "eat": 223,
+        "read": 0,
+        "drop": 0,
+        "quaff": 0,
+        "zap": 0
+      },
+      "action_freq": {
+        "eat": 0.026072723021162165,
+        "read": 0.0,
+        "drop": 0.0,
+        "quaff": 0.0,
+        "zap": 0.0
+      }
+    },
+    {
+      "episode": 19,
+      "seed": [
+        766813842,
+        766813842,
+        0
+      ],
+      "steps": 42284,
+      "hunger_recovery": 72,
+      "non_hungry_steps": 38600,
+      "non_hungry_rate": 0.9128748462775518,
+      "action_counts": {
+        "eat": 1009,
+        "read": 3,
+        "drop": 42,
+        "quaff": 15,
+        "zap": 415
+      },
+      "action_freq": {
+        "eat": 0.02386245388326554,
+        "read": 7.094882224955066e-05,
+        "drop": 0.0009932835114937091,
+        "quaff": 0.0003547441112477533,
+        "zap": 0.009814587077854507
+      }
+    },
+    {
+      "episode": 20,
+      "seed": [
+        766813843,
+        766813843,
+        0
+      ],
+      "steps": 36185,
+      "hunger_recovery": 68,
+      "non_hungry_steps": 31711,
+      "non_hungry_rate": 0.8763576067431256,
+      "action_counts": {
+        "eat": 857,
+        "read": 0,
+        "drop": 25,
+        "quaff": 0,
+        "zap": 102
+      },
+      "action_freq": {
+        "eat": 0.023683846897885864,
+        "read": 0.0,
+        "drop": 0.000690894016857814,
+        "quaff": 0.0,
+        "zap": 0.0028188475887798814
+      }
+    },
+    {
+      "episode": 21,
+      "seed": [
+        766813844,
+        766813844,
+        0
+      ],
+      "steps": 17285,
+      "hunger_recovery": 53,
+      "non_hungry_steps": 15443,
+      "non_hungry_rate": 0.8934336129592132,
+      "action_counts": {
+        "eat": 420,
+        "read": 0,
+        "drop": 3,
+        "quaff": 1,
+        "zap": 12
+      },
+      "action_freq": {
+        "eat": 0.02429852473242696,
+        "read": 0.0,
+        "drop": 0.00017356089094590685,
+        "quaff": 5.785363031530229e-05,
+        "zap": 0.0006942435637836274
+      }
+    },
+    {
+      "episode": 22,
+      "seed": [
+        766813845,
+        766813845,
+        0
+      ],
+      "steps": 30789,
+      "hunger_recovery": 62,
+      "non_hungry_steps": 28553,
+      "non_hungry_rate": 0.9273766604956316,
+      "action_counts": {
+        "eat": 746,
+        "read": 5,
+        "drop": 13,
+        "quaff": 6,
+        "zap": 1
+      },
+      "action_freq": {
+        "eat": 0.024229432589561208,
+        "read": 0.00016239566078794375,
+        "drop": 0.00042222871804865376,
+        "quaff": 0.0001948747929455325,
+        "zap": 3.247913215758875e-05
+      }
+    },
+    {
+      "episode": 23,
+      "seed": [
+        766813846,
+        766813846,
+        0
+      ],
+      "steps": 1324,
+      "hunger_recovery": 3,
+      "non_hungry_steps": 1097,
+      "non_hungry_rate": 0.8285498489425982,
+      "action_counts": {
+        "eat": 39,
+        "read": 0,
+        "drop": 1,
+        "quaff": 0,
+        "zap": 0
+      },
+      "action_freq": {
+        "eat": 0.02945619335347432,
+        "read": 0.0,
+        "drop": 0.0007552870090634441,
+        "quaff": 0.0,
+        "zap": 0.0
+      }
+    },
+    {
+      "episode": 24,
+      "seed": [
+        766813847,
+        766813847,
+        0
+      ],
+      "steps": 42406,
+      "hunger_recovery": 49,
+      "non_hungry_steps": 37207,
+      "non_hungry_rate": 0.8773994246097251,
+      "action_counts": {
+        "eat": 1121,
+        "read": 6,
+        "drop": 71,
+        "quaff": 4,
+        "zap": 2
+      },
+      "action_freq": {
+        "eat": 0.026434938452105834,
+        "read": 0.00014148941187567797,
+        "drop": 0.0016742913738621893,
+        "quaff": 9.432627458378532e-05,
+        "zap": 4.716313729189266e-05
+      }
+    },
+    {
+      "episode": 25,
+      "seed": [
+        766813848,
+        766813848,
+        0
+      ],
+      "steps": 60270,
+      "hunger_recovery": 77,
+      "non_hungry_steps": 55232,
+      "non_hungry_rate": 0.9164094906255185,
+      "action_counts": {
+        "eat": 999,
+        "read": 9,
+        "drop": 110,
+        "quaff": 4,
+        "zap": 3
+      },
+      "action_freq": {
+        "eat": 0.016575410652065706,
+        "read": 0.00014932802389248383,
+        "drop": 0.0018251202920192466,
+        "quaff": 6.63680106188817e-05,
+        "zap": 4.977600796416127e-05
+      }
+    },
+    {
+      "episode": 26,
+      "seed": [
+        766813849,
+        766813849,
+        0
+      ],
+      "steps": 32072,
+      "hunger_recovery": 64,
+      "non_hungry_steps": 29407,
+      "non_hungry_rate": 0.9169057121476677,
+      "action_counts": {
+        "eat": 808,
+        "read": 29,
+        "drop": 8,
+        "quaff": 1,
+        "zap": 2
+      },
+      "action_freq": {
+        "eat": 0.025193315041157394,
+        "read": 0.0009042155150910451,
+        "drop": 0.0002494387627837366,
+        "quaff": 3.1179845347967076e-05,
+        "zap": 6.235969069593415e-05
+      }
+    },
+    {
+      "episode": 27,
+      "seed": [
+        766813850,
+        766813850,
+        0
+      ],
+      "steps": 69489,
+      "hunger_recovery": 106,
+      "non_hungry_steps": 64681,
+      "non_hungry_rate": 0.9308091928218855,
+      "action_counts": {
+        "eat": 1223,
+        "read": 1,
+        "drop": 69,
+        "quaff": 5,
+        "zap": 1
+      },
+      "action_freq": {
+        "eat": 0.01759990789909194,
+        "read": 1.4390766883967246e-05,
+        "drop": 0.00099296291499374,
+        "quaff": 7.195383441983624e-05,
+        "zap": 1.4390766883967246e-05
+      }
+    },
+    {
+      "episode": 28,
+      "seed": [
+        766813851,
+        766813851,
+        0
+      ],
+      "steps": 29687,
+      "hunger_recovery": 52,
+      "non_hungry_steps": 27235,
+      "non_hungry_rate": 0.9174049247145215,
+      "action_counts": {
+        "eat": 706,
+        "read": 0,
+        "drop": 64,
+        "quaff": 1,
+        "zap": 1
+      },
+      "action_freq": {
+        "eat": 0.023781453161316402,
+        "read": 0.0,
+        "drop": 0.0021558257823289656,
+        "quaff": 3.368477784889009e-05,
+        "zap": 3.368477784889009e-05
+      }
+    },
+    {
+      "episode": 29,
+      "seed": [
+        766813852,
+        766813852,
+        0
+      ],
+      "steps": 12232,
+      "hunger_recovery": 42,
+      "non_hungry_steps": 10419,
+      "non_hungry_rate": 0.8517822105951602,
+      "action_counts": {
+        "eat": 317,
+        "read": 8,
+        "drop": 10,
+        "quaff": 9,
+        "zap": 0
+      },
+      "action_freq": {
+        "eat": 0.02591563113145847,
+        "read": 0.0006540222367560497,
+        "drop": 0.0008175277959450621,
+        "quaff": 0.0007357750163505559,
+        "zap": 0.0
+      }
+    },
+    {
+      "episode": 30,
+      "seed": [
+        766813853,
+        766813853,
+        0
+      ],
+      "steps": 34002,
+      "hunger_recovery": 85,
+      "non_hungry_steps": 31601,
+      "non_hungry_rate": 0.9293865066760779,
+      "action_counts": {
+        "eat": 846,
+        "read": 3,
+        "drop": 23,
+        "quaff": 3,
+        "zap": 19
+      },
+      "action_freq": {
+        "eat": 0.024880889359449446,
+        "read": 8.823010411152286e-05,
+        "drop": 0.0006764307981883418,
+        "quaff": 8.823010411152286e-05,
+        "zap": 0.0005587906593729781
+      }
+    },
+    {
+      "episode": 31,
+      "seed": [
+        766813854,
+        766813854,
+        0
+      ],
+      "steps": 27844,
+      "hunger_recovery": 75,
+      "non_hungry_steps": 24602,
+      "non_hungry_rate": 0.8835655796580951,
+      "action_counts": {
+        "eat": 587,
+        "read": 3,
+        "drop": 5,
+        "quaff": 41,
+        "zap": 3
+      },
+      "action_freq": {
+        "eat": 0.02108174112914811,
+        "read": 0.0001077431403533975,
+        "drop": 0.00017957190058899583,
+        "quaff": 0.0014724895848297658,
+        "zap": 0.0001077431403533975
+      }
+    },
+    {
+      "episode": 32,
+      "seed": [
+        766813855,
+        766813855,
+        0
+      ],
+      "steps": 14610,
+      "hunger_recovery": 44,
+      "non_hungry_steps": 12314,
+      "non_hungry_rate": 0.8428473648186174,
+      "action_counts": {
+        "eat": 304,
+        "read": 27,
+        "drop": 65,
+        "quaff": 1,
+        "zap": 1
+      },
+      "action_freq": {
+        "eat": 0.02080766598220397,
+        "read": 0.0018480492813141684,
+        "drop": 0.004449007529089665,
+        "quaff": 6.844626967830253e-05,
+        "zap": 6.844626967830253e-05
+      }
+    },
+    {
+      "episode": 33,
+      "seed": [
+        766813856,
+        766813856,
+        0
+      ],
+      "steps": 33792,
+      "hunger_recovery": 67,
+      "non_hungry_steps": 30924,
+      "non_hungry_rate": 0.9151278409090909,
+      "action_counts": {
+        "eat": 620,
+        "read": 1,
+        "drop": 16,
+        "quaff": 2,
+        "zap": 0
+      },
+      "action_freq": {
+        "eat": 0.01834753787878788,
+        "read": 2.959280303030303e-05,
+        "drop": 0.0004734848484848485,
+        "quaff": 5.918560606060606e-05,
+        "zap": 0.0
+      }
+    },
+    {
+      "episode": 34,
+      "seed": [
+        766813857,
+        766813857,
+        0
+      ],
+      "steps": 11792,
+      "hunger_recovery": 30,
+      "non_hungry_steps": 10525,
+      "non_hungry_rate": 0.8925542740841248,
+      "action_counts": {
+        "eat": 304,
+        "read": 26,
+        "drop": 0,
+        "quaff": 0,
+        "zap": 25
+      },
+      "action_freq": {
+        "eat": 0.025780189959294438,
+        "read": 0.0022048846675712347,
+        "drop": 0.0,
+        "quaff": 0.0,
+        "zap": 0.002120081411126187
+      }
+    },
+    {
+      "episode": 35,
+      "seed": [
+        766813858,
+        766813858,
+        0
+      ],
+      "steps": 57415,
+      "hunger_recovery": 81,
+      "non_hungry_steps": 54849,
+      "non_hungry_rate": 0.9553078463816076,
+      "action_counts": {
+        "eat": 1130,
+        "read": 1,
+        "drop": 30,
+        "quaff": 7,
+        "zap": 6
+      },
+      "action_freq": {
+        "eat": 0.019681267961334147,
+        "read": 1.741705129321606e-05,
+        "drop": 0.0005225115387964817,
+        "quaff": 0.00012191935905251241,
+        "zap": 0.00010450230775929636
+      }
+    },
+    {
+      "episode": 36,
+      "seed": [
+        766813859,
+        766813859,
+        0
+      ],
+      "steps": 53415,
+      "hunger_recovery": 72,
+      "non_hungry_steps": 50792,
+      "non_hungry_rate": 0.9508939436487878,
+      "action_counts": {
+        "eat": 1056,
+        "read": 2,
+        "drop": 77,
+        "quaff": 19,
+        "zap": 876
+      },
+      "action_freq": {
+        "eat": 0.019769727604605446,
+        "read": 3.744266591781335e-05,
+        "drop": 0.001441542637835814,
+        "quaff": 0.0003557053262192268,
+        "zap": 0.016399887672002247
+      }
+    },
+    {
+      "episode": 37,
+      "seed": [
+        766813860,
+        766813860,
+        0
+      ],
+      "steps": 45468,
+      "hunger_recovery": 85,
+      "non_hungry_steps": 41201,
+      "non_hungry_rate": 0.9061537784815694,
+      "action_counts": {
+        "eat": 840,
+        "read": 3,
+        "drop": 22,
+        "quaff": 102,
+        "zap": 120
+      },
+      "action_freq": {
+        "eat": 0.018474531538664556,
+        "read": 6.598046978094485e-05,
+        "drop": 0.0004838567783935955,
+        "quaff": 0.0022433359725521247,
+        "zap": 0.0026392187912377936
+      }
+    },
+    {
+      "episode": 38,
+      "seed": [
+        766813861,
+        766813861,
+        0
+      ],
+      "steps": 24496,
+      "hunger_recovery": 45,
+      "non_hungry_steps": 22572,
+      "non_hungry_rate": 0.9214565643370346,
+      "action_counts": {
+        "eat": 514,
+        "read": 9,
+        "drop": 2,
+        "quaff": 0,
+        "zap": 0
+      },
+      "action_freq": {
+        "eat": 0.02098301763553233,
+        "read": 0.0003674069235793599,
+        "drop": 8.164598301763554e-05,
+        "quaff": 0.0,
+        "zap": 0.0
+      }
+    },
+    {
+      "episode": 39,
+      "seed": [
+        766813862,
+        766813862,
+        0
+      ],
+      "steps": 25799,
+      "hunger_recovery": 87,
+      "non_hungry_steps": 21896,
+      "non_hungry_rate": 0.8487150664754448,
+      "action_counts": {
+        "eat": 508,
+        "read": 1,
+        "drop": 1,
+        "quaff": 1,
+        "zap": 13
+      },
+      "action_freq": {
+        "eat": 0.019690685685491687,
+        "read": 3.876119229427497e-05,
+        "drop": 3.876119229427497e-05,
+        "quaff": 3.876119229427497e-05,
+        "zap": 0.0005038954998255747
+      }
+    },
+    {
+      "episode": 40,
+      "seed": [
+        766813863,
+        766813863,
+        0
+      ],
+      "steps": 13847,
+      "hunger_recovery": 48,
+      "non_hungry_steps": 11489,
+      "non_hungry_rate": 0.8297104065862642,
+      "action_counts": {
+        "eat": 249,
+        "read": 0,
+        "drop": 7,
+        "quaff": 0,
+        "zap": 25
+      },
+      "action_freq": {
+        "eat": 0.017982234419007728,
+        "read": 0.0,
+        "drop": 0.0005055246623817433,
+        "quaff": 0.0,
+        "zap": 0.0018054452227919404
+      }
+    },
+    {
+      "episode": 41,
+      "seed": [
+        766813864,
+        766813864,
+        0
+      ],
+      "steps": 22238,
+      "hunger_recovery": 50,
+      "non_hungry_steps": 18829,
+      "non_hungry_rate": 0.8467038402734058,
+      "action_counts": {
+        "eat": 522,
+        "read": 95,
+        "drop": 34,
+        "quaff": 9,
+        "zap": 24
+      },
+      "action_freq": {
+        "eat": 0.023473333932907636,
+        "read": 0.004271966903498516,
+        "drop": 0.0015289144707257847,
+        "quaff": 0.00040471265401564887,
+        "zap": 0.0010792337440417303
+      }
+    },
+    {
+      "episode": 42,
+      "seed": [
+        766813865,
+        766813865,
+        0
+      ],
+      "steps": 37886,
+      "hunger_recovery": 77,
+      "non_hungry_steps": 33739,
+      "non_hungry_rate": 0.89054004117616,
+      "action_counts": {
+        "eat": 816,
+        "read": 153,
+        "drop": 20,
+        "quaff": 6,
+        "zap": 1
+      },
+      "action_freq": {
+        "eat": 0.021538299107849865,
+        "read": 0.00403843108272185,
+        "drop": 0.0005278994879374967,
+        "quaff": 0.00015836984638124902,
+        "zap": 2.6394974396874834e-05
+      }
+    },
+    {
+      "episode": 43,
+      "seed": [
+        766813866,
+        766813866,
+        0
+      ],
+      "steps": 15094,
+      "hunger_recovery": 59,
+      "non_hungry_steps": 13076,
+      "non_hungry_rate": 0.8663044918510666,
+      "action_counts": {
+        "eat": 357,
+        "read": 0,
+        "drop": 3,
+        "quaff": 1,
+        "zap": 0
+      },
+      "action_freq": {
+        "eat": 0.023651782165098716,
+        "read": 0.0,
+        "drop": 0.00019875447197561946,
+        "quaff": 6.625149065853981e-05,
+        "zap": 0.0
+      }
+    },
+    {
+      "episode": 44,
+      "seed": [
+        766813867,
+        766813867,
+        0
+      ],
+      "steps": 25666,
+      "hunger_recovery": 51,
+      "non_hungry_steps": 24065,
+      "non_hungry_rate": 0.9376217564092574,
+      "action_counts": {
+        "eat": 598,
+        "read": 7,
+        "drop": 50,
+        "quaff": 0,
+        "zap": 0
+      },
+      "action_freq": {
+        "eat": 0.02329930647549287,
+        "read": 0.0002727343567365386,
+        "drop": 0.0019481025481181329,
+        "quaff": 0.0,
+        "zap": 0.0
+      }
+    },
+    {
+      "episode": 45,
+      "seed": [
+        766813868,
+        766813868,
+        0
+      ],
+      "steps": 17951,
+      "hunger_recovery": 52,
+      "non_hungry_steps": 15808,
+      "non_hungry_rate": 0.8806194640967077,
+      "action_counts": {
+        "eat": 466,
+        "read": 0,
+        "drop": 11,
+        "quaff": 4,
+        "zap": 0
+      },
+      "action_freq": {
+        "eat": 0.025959556570664587,
+        "read": 0.0,
+        "drop": 0.0006127792323547434,
+        "quaff": 0.00022282881176536126,
+        "zap": 0.0
+      }
+    },
+    {
+      "episode": 46,
+      "seed": [
+        766813869,
+        766813869,
+        0
+      ],
+      "steps": 25118,
+      "hunger_recovery": 55,
+      "non_hungry_steps": 23197,
+      "non_hungry_rate": 0.9235209809698225,
+      "action_counts": {
+        "eat": 518,
+        "read": 0,
+        "drop": 7,
+        "quaff": 1,
+        "zap": 0
+      },
+      "action_freq": {
+        "eat": 0.020622661039891712,
+        "read": 0.0,
+        "drop": 0.0002786846086471853,
+        "quaff": 3.9812086949597896e-05,
+        "zap": 0.0
+      }
+    },
+    {
+      "episode": 47,
+      "seed": [
+        766813870,
+        766813870,
+        0
+      ],
+      "steps": 49522,
+      "hunger_recovery": 83,
+      "non_hungry_steps": 44711,
+      "non_hungry_rate": 0.9028512580267356,
+      "action_counts": {
+        "eat": 840,
+        "read": 1,
+        "drop": 36,
+        "quaff": 3,
+        "zap": 25
+      },
+      "action_freq": {
+        "eat": 0.016962158232704656,
+        "read": 2.0193045515124592e-05,
+        "drop": 0.0007269496385444853,
+        "quaff": 6.0579136545373773e-05,
+        "zap": 0.0005048261378781147
+      }
+    },
+    {
+      "episode": 48,
+      "seed": [
+        766813871,
+        766813871,
+        0
+      ],
+      "steps": 53873,
+      "hunger_recovery": 110,
+      "non_hungry_steps": 48274,
+      "non_hungry_rate": 0.8960703877638149,
+      "action_counts": {
+        "eat": 1739,
+        "read": 113,
+        "drop": 60,
+        "quaff": 100,
+        "zap": 43
+      },
+      "action_freq": {
+        "eat": 0.0322796205891634,
+        "read": 0.0020975256622055576,
+        "drop": 0.0011137304401091456,
+        "quaff": 0.0018562174001819094,
+        "zap": 0.000798173482078221
+      }
+    },
+    {
+      "episode": 49,
+      "seed": [
+        766813872,
+        766813872,
+        0
+      ],
+      "steps": 33964,
+      "hunger_recovery": 74,
+      "non_hungry_steps": 30077,
+      "non_hungry_rate": 0.885555293840537,
+      "action_counts": {
+        "eat": 751,
+        "read": 41,
+        "drop": 11,
+        "quaff": 110,
+        "zap": 23
+      },
+      "action_freq": {
+        "eat": 0.02211164762689907,
+        "read": 0.001207160522906607,
+        "drop": 0.0003238723354139677,
+        "quaff": 0.0032387233541396774,
+        "zap": 0.0006771876104110235
+      }
+    },
+    {
+      "episode": 50,
+      "seed": [
+        766813873,
+        766813873,
+        0
+      ],
+      "steps": 41897,
+      "hunger_recovery": 89,
+      "non_hungry_steps": 37784,
+      "non_hungry_rate": 0.9018306800009547,
+      "action_counts": {
+        "eat": 748,
+        "read": 4,
+        "drop": 57,
+        "quaff": 0,
+        "zap": 1
+      },
+      "action_freq": {
+        "eat": 0.017853306919349835,
+        "read": 9.547222951523975e-05,
+        "drop": 0.0013604792705921665,
+        "quaff": 0.0,
+        "zap": 2.3868057378809938e-05
+      }
+    },
+    {
+      "episode": 51,
+      "seed": [
+        766813874,
+        766813874,
+        0
+      ],
+      "steps": 15191,
+      "hunger_recovery": 79,
+      "non_hungry_steps": 12919,
+      "non_hungry_rate": 0.850437759199526,
+      "action_counts": {
+        "eat": 404,
+        "read": 0,
+        "drop": 9,
+        "quaff": 16,
+        "zap": 0
+      },
+      "action_freq": {
+        "eat": 0.026594694226844844,
+        "read": 0.0,
+        "drop": 0.0005924560595089197,
+        "quaff": 0.0010532552169047462,
+        "zap": 0.0
+      }
+    },
+    {
+      "episode": 52,
+      "seed": [
+        766813875,
+        766813875,
+        0
+      ],
+      "steps": 1511,
+      "hunger_recovery": 16,
+      "non_hungry_steps": 1239,
+      "non_hungry_rate": 0.8199867637326274,
+      "action_counts": {
+        "eat": 41,
+        "read": 0,
+        "drop": 0,
+        "quaff": 0,
+        "zap": 0
+      },
+      "action_freq": {
+        "eat": 0.027134348113831898,
+        "read": 0.0,
+        "drop": 0.0,
+        "quaff": 0.0,
+        "zap": 0.0
+      }
+    },
+    {
+      "episode": 53,
+      "seed": [
+        766813876,
+        766813876,
+        0
+      ],
+      "steps": 26014,
+      "hunger_recovery": 81,
+      "non_hungry_steps": 22891,
+      "non_hungry_rate": 0.8799492580917967,
+      "action_counts": {
+        "eat": 654,
+        "read": 0,
+        "drop": 10,
+        "quaff": 0,
+        "zap": 0
+      },
+      "action_freq": {
+        "eat": 0.025140309064349966,
+        "read": 0.0,
+        "drop": 0.00038440839547935725,
+        "quaff": 0.0,
+        "zap": 0.0
+      }
+    },
+    {
+      "episode": 54,
+      "seed": [
+        766813877,
+        766813877,
+        0
+      ],
+      "steps": 54800,
+      "hunger_recovery": 58,
+      "non_hungry_steps": 50828,
+      "non_hungry_rate": 0.9275182481751825,
+      "action_counts": {
+        "eat": 1275,
+        "read": 11,
+        "drop": 6,
+        "quaff": 1,
+        "zap": 4
+      },
+      "action_freq": {
+        "eat": 0.023266423357664233,
+        "read": 0.00020072992700729926,
+        "drop": 0.00010948905109489051,
+        "quaff": 1.8248175182481753e-05,
+        "zap": 7.299270072992701e-05
+      }
+    },
+    {
+      "episode": 55,
+      "seed": [
+        766813878,
+        766813878,
+        0
+      ],
+      "steps": 22546,
+      "hunger_recovery": 43,
+      "non_hungry_steps": 21344,
+      "non_hungry_rate": 0.9466867737070878,
+      "action_counts": {
+        "eat": 614,
+        "read": 1,
+        "drop": 3,
+        "quaff": 5,
+        "zap": 0
+      },
+      "action_freq": {
+        "eat": 0.027233212099707266,
+        "read": 4.435376563470239e-05,
+        "drop": 0.00013306129690410717,
+        "quaff": 0.00022176882817351193,
+        "zap": 0.0
+      }
+    },
+    {
+      "episode": 56,
+      "seed": [
+        766813879,
+        766813879,
+        0
+      ],
+      "steps": 7235,
+      "hunger_recovery": 26,
+      "non_hungry_steps": 6408,
+      "non_hungry_rate": 0.8856945404284727,
+      "action_counts": {
+        "eat": 192,
+        "read": 0,
+        "drop": 5,
+        "quaff": 29,
+        "zap": 1
+      },
+      "action_freq": {
+        "eat": 0.02653766413268832,
+        "read": 0.0,
+        "drop": 0.000691085003455425,
+        "quaff": 0.0040082930200414655,
+        "zap": 0.00013821700069108501
+      }
+    },
+    {
+      "episode": 57,
+      "seed": [
+        766813880,
+        766813880,
+        0
+      ],
+      "steps": 15214,
+      "hunger_recovery": 40,
+      "non_hungry_steps": 13652,
+      "non_hungry_rate": 0.8973314052846063,
+      "action_counts": {
+        "eat": 309,
+        "read": 17,
+        "drop": 4,
+        "quaff": 24,
+        "zap": 1
+      },
+      "action_freq": {
+        "eat": 0.02031024056789799,
+        "read": 0.0011173918759037728,
+        "drop": 0.0002629157355067701,
+        "quaff": 0.0015774944130406204,
+        "zap": 6.572893387669252e-05
+      }
+    },
+    {
+      "episode": 58,
+      "seed": [
+        766813881,
+        766813881,
+        0
+      ],
+      "steps": 4362,
+      "hunger_recovery": 45,
+      "non_hungry_steps": 3026,
+      "non_hungry_rate": 0.6937184777624943,
+      "action_counts": {
+        "eat": 125,
+        "read": 6,
+        "drop": 4,
+        "quaff": 0,
+        "zap": 3
+      },
+      "action_freq": {
+        "eat": 0.02865657955066483,
+        "read": 0.001375515818431912,
+        "drop": 0.0009170105456212746,
+        "quaff": 0.0,
+        "zap": 0.000687757909215956
+      }
+    },
+    {
+      "episode": 59,
+      "seed": [
+        766813882,
+        766813882,
+        0
+      ],
+      "steps": 51201,
+      "hunger_recovery": 71,
+      "non_hungry_steps": 47146,
+      "non_hungry_rate": 0.9208023280795297,
+      "action_counts": {
+        "eat": 1003,
+        "read": 3,
+        "drop": 47,
+        "quaff": 62,
+        "zap": 47
+      },
+      "action_freq": {
+        "eat": 0.019589461143337043,
+        "read": 5.8592605613171615e-05,
+        "drop": 0.000917950821273022,
+        "quaff": 0.0012109138493388801,
+        "zap": 0.000917950821273022
+      }
+    },
+    {
+      "episode": 60,
+      "seed": [
+        766813883,
+        766813883,
+        0
+      ],
+      "steps": 11297,
+      "hunger_recovery": 41,
+      "non_hungry_steps": 9928,
+      "non_hungry_rate": 0.8788173851464991,
+      "action_counts": {
+        "eat": 250,
+        "read": 1,
+        "drop": 2,
+        "quaff": 0,
+        "zap": 0
+      },
+      "action_freq": {
+        "eat": 0.022129768965212,
+        "read": 8.851907586084801e-05,
+        "drop": 0.00017703815172169602,
+        "quaff": 0.0,
+        "zap": 0.0
+      }
+    },
+    {
+      "episode": 61,
+      "seed": [
+        766813884,
+        766813884,
+        0
+      ],
+      "steps": 28694,
+      "hunger_recovery": 82,
+      "non_hungry_steps": 25333,
+      "non_hungry_rate": 0.8828674984317278,
+      "action_counts": {
+        "eat": 733,
+        "read": 23,
+        "drop": 24,
+        "quaff": 0,
+        "zap": 1
+      },
+      "action_freq": {
+        "eat": 0.025545410190283682,
+        "read": 0.0008015613020143584,
+        "drop": 0.0008364117934062871,
+        "quaff": 0.0,
+        "zap": 3.4850491391928626e-05
+      }
+    },
+    {
+      "episode": 62,
+      "seed": [
+        766813885,
+        766813885,
+        0
+      ],
+      "steps": 9118,
+      "hunger_recovery": 39,
+      "non_hungry_steps": 7852,
+      "non_hungry_rate": 0.8611537617898662,
+      "action_counts": {
+        "eat": 271,
+        "read": 0,
+        "drop": 0,
+        "quaff": 0,
+        "zap": 0
+      },
+      "action_freq": {
+        "eat": 0.0297214301381882,
+        "read": 0.0,
+        "drop": 0.0,
+        "quaff": 0.0,
+        "zap": 0.0
+      }
+    },
+    {
+      "episode": 63,
+      "seed": [
+        766813886,
+        766813886,
+        0
+      ],
+      "steps": 47539,
+      "hunger_recovery": 75,
+      "non_hungry_steps": 45046,
+      "non_hungry_rate": 0.9475588464208334,
+      "action_counts": {
+        "eat": 1124,
+        "read": 19,
+        "drop": 28,
+        "quaff": 8,
+        "zap": 3
+      },
+      "action_freq": {
+        "eat": 0.023643745135572897,
+        "read": 0.00039967184837712196,
+        "drop": 0.0005889900923452323,
+        "quaff": 0.00016828288352720925,
+        "zap": 6.310608132270347e-05
+      }
+    },
+    {
+      "episode": 64,
+      "seed": [
+        766813887,
+        766813887,
+        0
+      ],
+      "steps": 10603,
+      "hunger_recovery": 65,
+      "non_hungry_steps": 8789,
+      "non_hungry_rate": 0.8289163444308215,
+      "action_counts": {
+        "eat": 243,
+        "read": 0,
+        "drop": 44,
+        "quaff": 1,
+        "zap": 0
+      },
+      "action_freq": {
+        "eat": 0.022918042063566915,
+        "read": 0.0,
+        "drop": 0.004149768933320758,
+        "quaff": 9.431293030274451e-05,
+        "zap": 0.0
+      }
+    },
+    {
+      "episode": 65,
+      "seed": [
+        766813888,
+        766813888,
+        0
+      ],
+      "steps": 6924,
+      "hunger_recovery": 37,
+      "non_hungry_steps": 5906,
+      "non_hungry_rate": 0.8529751588677065,
+      "action_counts": {
+        "eat": 159,
+        "read": 3,
+        "drop": 0,
+        "quaff": 0,
+        "zap": 0
+      },
+      "action_freq": {
+        "eat": 0.02296360485268631,
+        "read": 0.0004332755632582322,
+        "drop": 0.0,
+        "quaff": 0.0,
+        "zap": 0.0
+      }
+    },
+    {
+      "episode": 66,
+      "seed": [
+        766813889,
+        766813889,
+        0
+      ],
+      "steps": 38322,
+      "hunger_recovery": 80,
+      "non_hungry_steps": 33757,
+      "non_hungry_rate": 0.8808778247481864,
+      "action_counts": {
+        "eat": 751,
+        "read": 80,
+        "drop": 10,
+        "quaff": 2,
+        "zap": 10
+      },
+      "action_freq": {
+        "eat": 0.01959709827253275,
+        "read": 0.002087573717446897,
+        "drop": 0.00026094671468086214,
+        "quaff": 5.218934293617243e-05,
+        "zap": 0.00026094671468086214
+      }
+    },
+    {
+      "episode": 67,
+      "seed": [
+        766813890,
+        766813890,
+        0
+      ],
+      "steps": 14851,
+      "hunger_recovery": 78,
+      "non_hungry_steps": 12524,
+      "non_hungry_rate": 0.8433102148003502,
+      "action_counts": {
+        "eat": 287,
+        "read": 0,
+        "drop": 0,
+        "quaff": 1,
+        "zap": 0
+      },
+      "action_freq": {
+        "eat": 0.01932529795973335,
+        "read": 0.0,
+        "drop": 0.0,
+        "quaff": 6.733553296074339e-05,
+        "zap": 0.0
+      }
+    },
+    {
+      "episode": 68,
+      "seed": [
+        766813891,
+        766813891,
+        0
+      ],
+      "steps": 14161,
+      "hunger_recovery": 62,
+      "non_hungry_steps": 12857,
+      "non_hungry_rate": 0.9079161076195184,
+      "action_counts": {
+        "eat": 359,
+        "read": 0,
+        "drop": 5,
+        "quaff": 2,
+        "zap": 39
+      },
+      "action_freq": {
+        "eat": 0.02535131699738719,
+        "read": 0.0,
+        "drop": 0.00035308240943436196,
+        "quaff": 0.0001412329637737448,
+        "zap": 0.0027540427935880234
+      }
+    },
+    {
+      "episode": 69,
+      "seed": [
+        766813892,
+        766813892,
+        0
+      ],
+      "steps": 37350,
+      "hunger_recovery": 86,
+      "non_hungry_steps": 33469,
+      "non_hungry_rate": 0.896091030789826,
+      "action_counts": {
+        "eat": 776,
+        "read": 5,
+        "drop": 33,
+        "quaff": 1,
+        "zap": 32
+      },
+      "action_freq": {
+        "eat": 0.0207764390896921,
+        "read": 0.00013386880856760375,
+        "drop": 0.0008835341365461848,
+        "quaff": 2.677376171352075e-05,
+        "zap": 0.000856760374832664
+      }
+    },
+    {
+      "episode": 70,
+      "seed": [
+        766813893,
+        766813893,
+        0
+      ],
+      "steps": 33880,
+      "hunger_recovery": 65,
+      "non_hungry_steps": 29908,
+      "non_hungry_rate": 0.8827626918536009,
+      "action_counts": {
+        "eat": 713,
+        "read": 24,
+        "drop": 105,
+        "quaff": 33,
+        "zap": 1
+      },
+      "action_freq": {
+        "eat": 0.02104486422668241,
+        "read": 0.0007083825265643448,
+        "drop": 0.0030991735537190084,
+        "quaff": 0.000974025974025974,
+        "zap": 2.95159386068477e-05
+      }
+    },
+    {
+      "episode": 71,
+      "seed": [
+        766813894,
+        766813894,
+        0
+      ],
+      "steps": 15897,
+      "hunger_recovery": 49,
+      "non_hungry_steps": 15150,
+      "non_hungry_rate": 0.9530100018871486,
+      "action_counts": {
+        "eat": 416,
+        "read": 7,
+        "drop": 7,
+        "quaff": 2,
+        "zap": 0
+      },
+      "action_freq": {
+        "eat": 0.026168459457759325,
+        "read": 0.00044033465433729633,
+        "drop": 0.00044033465433729633,
+        "quaff": 0.00012580990123922753,
+        "zap": 0.0
+      }
+    },
+    {
+      "episode": 72,
+      "seed": [
+        766813895,
+        766813895,
+        0
+      ],
+      "steps": 47949,
+      "hunger_recovery": 89,
+      "non_hungry_steps": 43706,
+      "non_hungry_rate": 0.911510146197001,
+      "action_counts": {
+        "eat": 1054,
+        "read": 2,
+        "drop": 19,
+        "quaff": 9,
+        "zap": 5
+      },
+      "action_freq": {
+        "eat": 0.02198168887776596,
+        "read": 4.171098458779119e-05,
+        "drop": 0.00039625435358401636,
+        "quaff": 0.00018769943064506038,
+        "zap": 0.00010427746146947799
+      }
+    },
+    {
+      "episode": 73,
+      "seed": [
+        766813896,
+        766813896,
+        0
+      ],
+      "steps": 32981,
+      "hunger_recovery": 81,
+      "non_hungry_steps": 27998,
+      "non_hungry_rate": 0.8489130105212092,
+      "action_counts": {
+        "eat": 607,
+        "read": 1,
+        "drop": 5,
+        "quaff": 0,
+        "zap": 0
+      },
+      "action_freq": {
+        "eat": 0.018404535944937996,
+        "read": 3.032048755343986e-05,
+        "drop": 0.00015160243776719928,
+        "quaff": 0.0,
+        "zap": 0.0
+      }
+    },
+    {
+      "episode": 74,
+      "seed": [
+        766813897,
+        766813897,
+        0
+      ],
+      "steps": 14592,
+      "hunger_recovery": 54,
+      "non_hungry_steps": 12737,
+      "non_hungry_rate": 0.8728755482456141,
+      "action_counts": {
+        "eat": 385,
+        "read": 0,
+        "drop": 5,
+        "quaff": 2,
+        "zap": 3
+      },
+      "action_freq": {
+        "eat": 0.026384320175438597,
+        "read": 0.0,
+        "drop": 0.0003426535087719298,
+        "quaff": 0.00013706140350877192,
+        "zap": 0.00020559210526315788
+      }
+    },
+    {
+      "episode": 75,
+      "seed": [
+        766813898,
+        766813898,
+        0
+      ],
+      "steps": 36609,
+      "hunger_recovery": 99,
+      "non_hungry_steps": 33421,
+      "non_hungry_rate": 0.9129175885711164,
+      "action_counts": {
+        "eat": 852,
+        "read": 5,
+        "drop": 24,
+        "quaff": 8,
+        "zap": 57
+      },
+      "action_freq": {
+        "eat": 0.02327296566418094,
+        "read": 0.000136578436996367,
+        "drop": 0.0006555764975825617,
+        "quaff": 0.00021852549919418722,
+        "zap": 0.001556994181758584
+      }
+    },
+    {
+      "episode": 76,
+      "seed": [
+        766813899,
+        766813899,
+        0
+      ],
+      "steps": 35076,
+      "hunger_recovery": 67,
+      "non_hungry_steps": 32106,
+      "non_hungry_rate": 0.9153267191241875,
+      "action_counts": {
+        "eat": 880,
+        "read": 4,
+        "drop": 28,
+        "quaff": 57,
+        "zap": 18
+      },
+      "action_freq": {
+        "eat": 0.025088379518759266,
+        "read": 0.00011403808872163302,
+        "drop": 0.0007982666210514312,
+        "quaff": 0.0016250427642832705,
+        "zap": 0.0005131713992473486
+      }
+    },
+    {
+      "episode": 77,
+      "seed": [
+        766813900,
+        766813900,
+        0
+      ],
+      "steps": 41980,
+      "hunger_recovery": 71,
+      "non_hungry_steps": 40116,
+      "non_hungry_rate": 0.955597903763697,
+      "action_counts": {
+        "eat": 848,
+        "read": 4,
+        "drop": 48,
+        "quaff": 13,
+        "zap": 73
+      },
+      "action_freq": {
+        "eat": 0.02020009528346832,
+        "read": 9.528346831824679e-05,
+        "drop": 0.0011434016198189614,
+        "quaff": 0.00030967127203430206,
+        "zap": 0.0017389232968080038
+      }
+    },
+    {
+      "episode": 78,
+      "seed": [
+        766813901,
+        766813901,
+        0
+      ],
+      "steps": 86506,
+      "hunger_recovery": 136,
+      "non_hungry_steps": 78633,
+      "non_hungry_rate": 0.9089889718632234,
+      "action_counts": {
+        "eat": 1397,
+        "read": 32,
+        "drop": 34,
+        "quaff": 16,
+        "zap": 9
+      },
+      "action_freq": {
+        "eat": 0.01614916884377962,
+        "read": 0.00036991653758120825,
+        "drop": 0.0003930363211800338,
+        "quaff": 0.00018495826879060413,
+        "zap": 0.00010403902619471481
+      }
+    },
+    {
+      "episode": 79,
+      "seed": [
+        766813902,
+        766813902,
+        0
+      ],
+      "steps": 34163,
+      "hunger_recovery": 81,
+      "non_hungry_steps": 30011,
+      "non_hungry_rate": 0.8784650060006439,
+      "action_counts": {
+        "eat": 668,
+        "read": 6,
+        "drop": 6,
+        "quaff": 1,
+        "zap": 4
+      },
+      "action_freq": {
+        "eat": 0.019553317917044757,
+        "read": 0.0001756286040453122,
+        "drop": 0.0001756286040453122,
+        "quaff": 2.927143400755203e-05,
+        "zap": 0.00011708573603020812
+      }
+    },
+    {
+      "episode": 80,
+      "seed": [
+        766813903,
+        766813903,
+        0
+      ],
+      "steps": 16354,
+      "hunger_recovery": 45,
+      "non_hungry_steps": 14389,
+      "non_hungry_rate": 0.8798459092576739,
+      "action_counts": {
+        "eat": 420,
+        "read": 1,
+        "drop": 64,
+        "quaff": 0,
+        "zap": 2
+      },
+      "action_freq": {
+        "eat": 0.02568179038767274,
+        "read": 6.114711997064938e-05,
+        "drop": 0.003913415678121561,
+        "quaff": 0.0,
+        "zap": 0.00012229423994129877
+      }
+    },
+    {
+      "episode": 81,
+      "seed": [
+        766813904,
+        766813904,
+        0
+      ],
+      "steps": 36584,
+      "hunger_recovery": 39,
+      "non_hungry_steps": 35374,
+      "non_hungry_rate": 0.9669254318827903,
+      "action_counts": {
+        "eat": 854,
+        "read": 7,
+        "drop": 13,
+        "quaff": 8,
+        "zap": 1
+      },
+      "action_freq": {
+        "eat": 0.023343538158757927,
+        "read": 0.00019134047671113055,
+        "drop": 0.0003553465996063853,
+        "quaff": 0.00021867483052700635,
+        "zap": 2.7334353815875794e-05
+      }
+    },
+    {
+      "episode": 82,
+      "seed": [
+        766813905,
+        766813905,
+        0
+      ],
+      "steps": 20590,
+      "hunger_recovery": 80,
+      "non_hungry_steps": 18227,
+      "non_hungry_rate": 0.8852355512384653,
+      "action_counts": {
+        "eat": 562,
+        "read": 3,
+        "drop": 5,
+        "quaff": 4,
+        "zap": 1
+      },
+      "action_freq": {
+        "eat": 0.027294803302574066,
+        "read": 0.00014570179698882954,
+        "drop": 0.00024283632831471587,
+        "quaff": 0.0001942690626517727,
+        "zap": 4.856726566294317e-05
+      }
+    },
+    {
+      "episode": 83,
+      "seed": [
+        766813906,
+        766813906,
+        0
+      ],
+      "steps": 21596,
+      "hunger_recovery": 65,
+      "non_hungry_steps": 19541,
+      "non_hungry_rate": 0.9048434895350991,
+      "action_counts": {
+        "eat": 491,
+        "read": 3,
+        "drop": 9,
+        "quaff": 0,
+        "zap": 2
+      },
+      "action_freq": {
+        "eat": 0.02273569179477681,
+        "read": 0.00013891461381737358,
+        "drop": 0.0004167438414521208,
+        "quaff": 0.0,
+        "zap": 9.260974254491573e-05
+      }
+    },
+    {
+      "episode": 84,
+      "seed": [
+        766813907,
+        766813907,
+        0
+      ],
+      "steps": 29643,
+      "hunger_recovery": 54,
+      "non_hungry_steps": 27195,
+      "non_hungry_rate": 0.9174172654589616,
+      "action_counts": {
+        "eat": 659,
+        "read": 15,
+        "drop": 32,
+        "quaff": 3,
+        "zap": 31
+      },
+      "action_freq": {
+        "eat": 0.022231218162804035,
+        "read": 0.0005060216577269508,
+        "drop": 0.0010795128698174949,
+        "quaff": 0.00010120433154539014,
+        "zap": 0.0010457780926356982
+      }
+    },
+    {
+      "episode": 85,
+      "seed": [
+        766813908,
+        766813908,
+        0
+      ],
+      "steps": 34080,
+      "hunger_recovery": 87,
+      "non_hungry_steps": 30687,
+      "non_hungry_rate": 0.9004401408450704,
+      "action_counts": {
+        "eat": 834,
+        "read": 3,
+        "drop": 18,
+        "quaff": 0,
+        "zap": 49
+      },
+      "action_freq": {
+        "eat": 0.02447183098591549,
+        "read": 8.802816901408451e-05,
+        "drop": 0.000528169014084507,
+        "quaff": 0.0,
+        "zap": 0.001437793427230047
+      }
+    },
+    {
+      "episode": 86,
+      "seed": [
+        766813909,
+        766813909,
+        0
+      ],
+      "steps": 34918,
+      "hunger_recovery": 85,
+      "non_hungry_steps": 31056,
+      "non_hungry_rate": 0.8893980182141016,
+      "action_counts": {
+        "eat": 737,
+        "read": 1,
+        "drop": 85,
+        "quaff": 25,
+        "zap": 7
+      },
+      "action_freq": {
+        "eat": 0.02110659258834985,
+        "read": 2.8638524543215534e-05,
+        "drop": 0.0024342745861733205,
+        "quaff": 0.0007159631135803884,
+        "zap": 0.00020046967180250875
+      }
+    },
+    {
+      "episode": 87,
+      "seed": [
+        766813910,
+        766813910,
+        0
+      ],
+      "steps": 57246,
+      "hunger_recovery": 115,
+      "non_hungry_steps": 49184,
+      "non_hungry_rate": 0.8591691995947315,
+      "action_counts": {
+        "eat": 1118,
+        "read": 10,
+        "drop": 85,
+        "quaff": 1,
+        "zap": 1
+      },
+      "action_freq": {
+        "eat": 0.019529748803409845,
+        "read": 0.0001746846941271006,
+        "drop": 0.001484819900080355,
+        "quaff": 1.7468469412710057e-05,
+        "zap": 1.7468469412710057e-05
+      }
+    },
+    {
+      "episode": 88,
+      "seed": [
+        766813911,
+        766813911,
+        0
+      ],
+      "steps": 33225,
+      "hunger_recovery": 92,
+      "non_hungry_steps": 29337,
+      "non_hungry_rate": 0.8829796839729119,
+      "action_counts": {
+        "eat": 814,
+        "read": 4,
+        "drop": 108,
+        "quaff": 5,
+        "zap": 70
+      },
+      "action_freq": {
+        "eat": 0.024499623777276148,
+        "read": 0.00012039127163280663,
+        "drop": 0.0032505643340857786,
+        "quaff": 0.00015048908954100828,
+        "zap": 0.002106847253574116
+      }
+    },
+    {
+      "episode": 89,
+      "seed": [
+        766813912,
+        766813912,
+        0
+      ],
+      "steps": 41000,
+      "hunger_recovery": 108,
+      "non_hungry_steps": 35669,
+      "non_hungry_rate": 0.8699756097560976,
+      "action_counts": {
+        "eat": 996,
+        "read": 12,
+        "drop": 28,
+        "quaff": 3,
+        "zap": 2
+      },
+      "action_freq": {
+        "eat": 0.02429268292682927,
+        "read": 0.0002926829268292683,
+        "drop": 0.0006829268292682926,
+        "quaff": 7.317073170731707e-05,
+        "zap": 4.878048780487805e-05
+      }
+    },
+    {
+      "episode": 90,
+      "seed": [
+        766813913,
+        766813913,
+        0
+      ],
+      "steps": 45875,
+      "hunger_recovery": 75,
+      "non_hungry_steps": 42190,
+      "non_hungry_rate": 0.9196730245231608,
+      "action_counts": {
+        "eat": 829,
+        "read": 160,
+        "drop": 76,
+        "quaff": 20,
+        "zap": 0
+      },
+      "action_freq": {
+        "eat": 0.0180708446866485,
+        "read": 0.0034877384196185285,
+        "drop": 0.001656675749318801,
+        "quaff": 0.00043596730245231606,
+        "zap": 0.0
+      }
+    },
+    {
+      "episode": 91,
+      "seed": [
+        766813914,
+        766813914,
+        0
+      ],
+      "steps": 56322,
+      "hunger_recovery": 85,
+      "non_hungry_steps": 50251,
+      "non_hungry_rate": 0.8922090834842513,
+      "action_counts": {
+        "eat": 869,
+        "read": 11,
+        "drop": 45,
+        "quaff": 104,
+        "zap": 26
+      },
+      "action_freq": {
+        "eat": 0.015429139590213416,
+        "read": 0.00019530556443308122,
+        "drop": 0.0007989773090444232,
+        "quaff": 0.0018465253364582223,
+        "zap": 0.0004616313341145556
+      }
+    },
+    {
+      "episode": 92,
+      "seed": [
+        766813915,
+        766813915,
+        0
+      ],
+      "steps": 139141,
+      "hunger_recovery": 186,
+      "non_hungry_steps": 127892,
+      "non_hungry_rate": 0.9191539517467893,
+      "action_counts": {
+        "eat": 2204,
+        "read": 12,
+        "drop": 104,
+        "quaff": 38,
+        "zap": 19
+      },
+      "action_freq": {
+        "eat": 0.01584004714641982,
+        "read": 8.62434508879482e-05,
+        "drop": 0.0007474432410288843,
+        "quaff": 0.00027310426114516927,
+        "zap": 0.00013655213057258464
+      }
+    },
+    {
+      "episode": 93,
+      "seed": [
+        766813916,
+        766813916,
+        0
+      ],
+      "steps": 20991,
+      "hunger_recovery": 104,
+      "non_hungry_steps": 17691,
+      "non_hungry_rate": 0.8427897670430184,
+      "action_counts": {
+        "eat": 458,
+        "read": 1,
+        "drop": 86,
+        "quaff": 0,
+        "zap": 1
+      },
+      "action_freq": {
+        "eat": 0.021818874755847744,
+        "read": 4.763946453241866e-05,
+        "drop": 0.0040969939497880045,
+        "quaff": 0.0,
+        "zap": 4.763946453241866e-05
+      }
+    },
+    {
+      "episode": 94,
+      "seed": [
+        766813917,
+        766813917,
+        0
+      ],
+      "steps": 26015,
+      "hunger_recovery": 32,
+      "non_hungry_steps": 25502,
+      "non_hungry_rate": 0.9802806073419181,
+      "action_counts": {
+        "eat": 574,
+        "read": 7,
+        "drop": 11,
+        "quaff": 9,
+        "zap": 0
+      },
+      "action_freq": {
+        "eat": 0.022064193734384008,
+        "read": 0.00026907553334614646,
+        "drop": 0.00042283298097251583,
+        "quaff": 0.00034595425715933114,
+        "zap": 0.0
+      }
+    },
+    {
+      "episode": 95,
+      "seed": [
+        766813918,
+        766813918,
+        0
+      ],
+      "steps": 29539,
+      "hunger_recovery": 78,
+      "non_hungry_steps": 26775,
+      "non_hungry_rate": 0.9064287890585327,
+      "action_counts": {
+        "eat": 792,
+        "read": 0,
+        "drop": 27,
+        "quaff": 1,
+        "zap": 6
+      },
+      "action_freq": {
+        "eat": 0.026812011239378448,
+        "read": 0.0,
+        "drop": 0.0009140458377060835,
+        "quaff": 3.3853549544669755e-05,
+        "zap": 0.00020312129726801856
+      }
+    },
+    {
+      "episode": 96,
+      "seed": [
+        766813919,
+        766813919,
+        0
+      ],
+      "steps": 30694,
+      "hunger_recovery": 67,
+      "non_hungry_steps": 27611,
+      "non_hungry_rate": 0.8995569166612367,
+      "action_counts": {
+        "eat": 724,
+        "read": 35,
+        "drop": 26,
+        "quaff": 126,
+        "zap": 0
+      },
+      "action_freq": {
+        "eat": 0.023587671857692057,
+        "read": 0.001140288004170196,
+        "drop": 0.0008470710888121457,
+        "quaff": 0.004105036815012706,
+        "zap": 0.0
+      }
+    },
+    {
+      "episode": 97,
+      "seed": [
+        766813920,
+        766813920,
+        0
+      ],
+      "steps": 44410,
+      "hunger_recovery": 98,
+      "non_hungry_steps": 41004,
+      "non_hungry_rate": 0.923305561810403,
+      "action_counts": {
+        "eat": 1019,
+        "read": 9,
+        "drop": 66,
+        "quaff": 14,
+        "zap": 25
+      },
+      "action_freq": {
+        "eat": 0.02294528259401036,
+        "read": 0.0002026570592208962,
+        "drop": 0.0014861517676199054,
+        "quaff": 0.0003152443143436163,
+        "zap": 0.0005629362756136005
+      }
+    },
+    {
+      "episode": 98,
+      "seed": [
+        766813921,
+        766813921,
+        0
+      ],
+      "steps": 18021,
+      "hunger_recovery": 57,
+      "non_hungry_steps": 16279,
+      "non_hungry_rate": 0.9033349980578215,
+      "action_counts": {
+        "eat": 469,
+        "read": 7,
+        "drop": 2,
+        "quaff": 3,
+        "zap": 1
+      },
+      "action_freq": {
+        "eat": 0.02602519283058654,
+        "read": 0.0003884357138893513,
+        "drop": 0.00011098163253981466,
+        "quaff": 0.000166472448809722,
+        "zap": 5.549081626990733e-05
+      }
+    },
+    {
+      "episode": 99,
+      "seed": [
+        766813922,
+        766813922,
+        0
+      ],
+      "steps": 16563,
+      "hunger_recovery": 38,
+      "non_hungry_steps": 15056,
+      "non_hungry_rate": 0.909014067499849,
+      "action_counts": {
+        "eat": 299,
+        "read": 1,
+        "drop": 11,
+        "quaff": 0,
+        "zap": 1
+      },
+      "action_freq": {
+        "eat": 0.018052285214031273,
+        "read": 6.037553583288052e-05,
+        "drop": 0.0006641308941616856,
+        "quaff": 0.0,
+        "zap": 6.037553583288052e-05
+      }
+    }
+  ],
+  "summary": {
+    "episodes": 100,
+    "steps_mean": 32902.93,
+    "steps_median": 30741.5,
+    "hunger_recovery_mean": 68.72,
+    "hunger_recovery_median": 71.0,
+    "non_hungry_rate_mean": 0.8966750200078886,
+    "non_hungry_rate_median": 0.8999985287531536,
+    "action_totals": {
+      "eat": 69410,
+      "read": 1334,
+      "drop": 3179,
+      "quaff": 1208,
+      "zap": 2485
+    },
+    "action_freq_mean": {
+      "eat": 0.022669031627344016,
+      "read": 0.000413433285482213,
+      "drop": 0.000898980999268085,
+      "quaff": 0.00035756726016835527,
+      "zap": 0.0006284706206663132
+    }
+  }
+}

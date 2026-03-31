@@ -22,7 +22,7 @@
 
 python -m scripts.main --algo APPO \
                        --num_workers 48 \
-                       --num_envs_per_worker 20 \
+                       --num_envs_per_worker 24 \
                        --num_skills 3 \
                        --batch_size 4096 \
                        --reward_scale 0.1 \
@@ -41,4 +41,4 @@ python -m scripts.main --algo APPO \
                        --meta_policy true \
                        --meta_policy_name itemuse \
                        --train_dir train_dir/skill_policy/ \
-                       --experiment itemuse_only_llm
+                       --experiment itemuse_only_llm_ult

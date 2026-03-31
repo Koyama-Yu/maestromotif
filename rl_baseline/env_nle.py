@@ -99,6 +99,8 @@ def make_custom_env_func(full_env_name, cfg=None, env_config=None):
             nethack.Command.PRAY,
             nethack.Command.QUAFF,
             nethack.Command.DROP,
+            nethack.Command.READ,
+            nethack.Command.ZAP,
         ]
 
     ttyrec = cfg.ttyrec if 'ttyrec' in cfg.keys() else cfg.save_ttyrec_every

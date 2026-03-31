@@ -7,7 +7,6 @@ from __future__ import annotations
 
 import argparse
 from pathlib import Path
-import json
 from typing import Dict, List
 
 import matplotlib
@@ -36,6 +35,7 @@ COUNT_METRICS = [
 ]
 
 
+
 def load_experiment_csv(path: Path) -> pd.DataFrame:
     df = pd.read_csv(path)
     if "steps" not in df.columns:
@@ -53,6 +53,9 @@ def load_experiment_csv(path: Path) -> pd.DataFrame:
 def summarize(df: pd.DataFrame) -> Dict[str, Dict[str, float]]:
     stats: Dict[str, Dict[str, float]] = {}
     for metric in METRICS:
+        if metric not in df.columns:
+            stats[metric] = {"mean": float("nan"), "median": float("nan")}
+            continue
         series = df[metric].dropna()
         if series.empty:
             stats[metric] = {"mean": float("nan"), "median": float("nan")}
@@ -136,25 +139,10 @@ def main() -> None:
         raise SystemExit(f"No aggregate.csv found under {root_dir} with glob {args.glob}")
 
     summary: Dict[str, Dict[str, Dict[str, float]]] = {}
-    action_counts_by_exp: Dict[str, Dict[str, float]] = {}
-    action_freq_by_exp: Dict[str, Dict[str, float]] = {}
     for csv_path in csv_paths:
         exp_name = csv_path.parts[-3]
         df = load_experiment_csv(csv_path)
         summary[exp_name] = summarize(df)
-
-        aggregate_json = csv_path.with_name("aggregate.json")
-        if aggregate_json.exists():
-            try:
-                data = json.loads(aggregate_json.read_text(encoding="utf-8"))
-                action_counts_by_exp[exp_name] = data.get("action_counts", {})
-                action_freq_by_exp[exp_name] = data.get("action_freq", {})
-            except Exception:
-                action_counts_by_exp[exp_name] = {}
-                action_freq_by_exp[exp_name] = {}
-        else:
-            action_counts_by_exp[exp_name] = {}
-            action_freq_by_exp[exp_name] = {}
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
     summary_path = args.output_dir / "runtime_metrics_summary.csv"

@@ -1,6 +1,7 @@
 
 class NetHackPlayer:
     def __init__(self, max_depth=None, branch_depth=None):
+        # Keep compatibility with caller signatures that pass these args.
         self.max_depth = max_depth
         self.branch_depth = branch_depth
         self.skill = "none"
@@ -19,20 +20,64 @@ class NetHackPlayer:
         self.last_in_combat = bool(in_combat)
         self.last_scroll_safe = bool(scroll_safe)
 
-    def perform_task(
-        self,
-        current_skill,
-        dungeon_depth,
-        branch_number,
-        food_precondition,
-        scroll_precondition,
-    ):
-        if food_precondition:
-            self.skill = "food_eat"
-        elif scroll_precondition:
-            self.skill = "scroll_read"
-        else:
+    def perform_task(self, current_skill, *args, **kwargs):
+        # Support both the legacy precondition call and the detailed signature.
+        if len(args) == 4 and not kwargs:
+            _, _, food_precondition, scroll_precondition = args
+            if food_precondition:
+                self.skill = "food_eat"
+                return self.skill
+            if scroll_precondition:
+                self.skill = "scroll_read"
+                return self.skill
             self.skill = "none"
+            return self.skill
+
+        hunger_level = kwargs.get("hunger_level", args[0] if len(args) > 0 else None)
+        hp = kwargs.get("hp", args[1] if len(args) > 1 else None)
+        max_hp = kwargs.get("max_hp", args[2] if len(args) > 2 else None)
+        food_in_inventory = kwargs.get("food_in_inventory", args[3] if len(args) > 3 else None)
+        scroll_in_inventory = kwargs.get("scroll_in_inventory", args[4] if len(args) > 4 else None)
+        in_combat = kwargs.get("in_combat", args[5] if len(args) > 5 else self.last_in_combat)
+        scroll_safe = kwargs.get("scroll_safe", args[6] if len(args) > 6 else self.last_scroll_safe)
+
+        if None in (hunger_level, hp, max_hp, food_in_inventory, scroll_in_inventory):
+            food_precondition = kwargs.get("food_precondition", False)
+            scroll_precondition = kwargs.get("scroll_precondition", False)
+            if food_precondition:
+                self.skill = "food_eat"
+                return self.skill
+            if scroll_precondition:
+                self.skill = "scroll_read"
+                return self.skill
+            self.skill = "none"
+            return self.skill
+
+        in_combat = bool(in_combat)
+        scroll_safe = bool(scroll_safe)
+
+        has_food = food_in_inventory > 0
+        has_scroll = scroll_in_inventory > 0
+
+        injured = hp < max_hp
+        meaningfully_injured = hp <= max_hp - 2
+
+        very_hungry = hunger_level >= 7
+        moderately_hungry = hunger_level >= 5
+
+        # Prefer eating when hunger is high, or when moderately hungry and injured.
+        # (Food is always "safe" in this toy test; if you later model unsafe eating,
+        # add a flag and gate this similarly to scrolls.)
+        if has_food and (very_hungry or (moderately_hungry and injured)):
+            self.skill = "food_eat"
+            return self.skill
+
+        # Prefer reading only when safe and not in combat.
+        if has_scroll and scroll_safe and (not in_combat) and meaningfully_injured and hunger_level <= 6:
+            self.skill = "scroll_read"
+            return self.skill
+
+        self.skill = "none"
         return self.skill
 
 

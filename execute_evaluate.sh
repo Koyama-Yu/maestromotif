@@ -35,11 +35,11 @@ python3 -m scripts.main --algo APPO \
                        --seed 2 \
                        --stats_avg 1000 \
                        --train_dir train_dir/skill_policy/ \
-                       --experiment itemuse_only_llm \
+                       --experiment itemuse_extrinsic_ult \
                        --reward_dir "['train_dir/skill_rewards/llama3.3_70B_foundry_food_eat_default',
                                       'train_dir/skill_rewards/llama3.3_70B_foundry_scroll_read_default']"   \
                         --evaluation True \
-                        --extrinsic_reward 0.0 \
+                        --extrinsic_reward 1.0 \
                         --llm_reward 0.1 \
                         --ttyrec 1 \
                         --eval_target none \

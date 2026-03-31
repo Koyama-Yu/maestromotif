@@ -1,0 +1,45 @@
+Source: A
+score_mean    : 6.3 +/- 15.5
+score_median  : 0.0
+turn_mean     : 106.5 +/- 128.9
+turn_median   : 76.0
+max_depth_mean    : 1.0 +/- 0.2
+max_depth_median  : 1.0
+
+End reason ranking (normalized):
+  1. killed by monster                         98.90%
+  2. killed by boulder                          0.38%
+  3. choked                                     0.20%
+  4. crunched in the head by an iron ball       0.10%
+  5. fell into a pit                            0.10%
+  6. killed by trap                             0.08%
+  7. killed by magic missile                    0.08%
+  8. killed by wand                             0.08%
+  9. killed by bolt                             0.05%
+ 10. poisoned by a little dart                  0.03%
+
+Normalized (monsters only):
+  1. killed by monster                        100.00%
+
+Normalized (non-monster):
+  1. killed by boulder                         34.88%
+  2. choked                                    18.60%
+  3. crunched in the head by an iron ball       9.30%
+  4. fell into a pit                            9.30%
+  5. killed by trap                             6.98%
+  6. killed by magic missile                    6.98%
+  7. killed by wand                             6.98%
+  8. killed by bolt                             4.65%
+  9. poisoned by a little dart                  2.33%
+
+End reason ranking (raw, unnormalized):
+  1. killed by the wrath of Chih Sung-tzu      44.82%
+  2. killed by an air elemental of Chih Sung-tzu   8.31%
+  3. killed by a water elemental of Chih Sung-tzu   7.59%
+  4. killed by a fire elemental of Chih Sung-tzu   6.85%
+  5. killed by an earth elemental of Chih Sung-tzu   6.72%
+  6. killed by a jackal                         6.52%
+  7. killed by a goblin                         3.58%
+  8. killed by a fox                            3.58%
+  9. killed by a sewer rat                      3.30%
+ 10. killed by a newt                           2.12%
